@@ -10,6 +10,7 @@ public class HomeController {
 	@RequestMapping(value="/")
 	public ModelAndView home () {
         //git test
+		//git test2
 		return new ModelAndView("/WEB-INF/views/home.jsp");
 	}
 }
