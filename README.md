@@ -23,4 +23,6 @@ Backlog :
 - [Tech]: RESTfull (HATEOAS, la doc et tout le toutim)
 - [Feature] : moteur de recherche (via ElasticSearch)
 - [Feature] : Recommandation de livre (machine learning Hadoop, Hive..)
+- [Feature] : Un bouton "j'attend ce livre STP"
+
 
