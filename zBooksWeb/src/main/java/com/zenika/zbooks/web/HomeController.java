@@ -14,7 +14,7 @@ public class HomeController {
 		return "/views/home.html";
 	}
 	
-	@RequestMapping(value="/#/user/{name}", method=RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value="/user/{name}", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String sayHello (@PathVariable String name) {
 		return "Hello " + name;
 	}
