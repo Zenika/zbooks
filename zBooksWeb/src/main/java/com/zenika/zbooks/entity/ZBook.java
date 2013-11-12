@@ -1,5 +1,7 @@
 package com.zenika.zbooks.entity;
 
+import java.util.Date;
+
 public class ZBook {
 
 	private String ISBN;
@@ -7,6 +9,13 @@ public class ZBook {
 	private String title;
 	private int pagesNumber;
 	private Author[] author;
+	private Date releaseDate;
+	private Language language;
+	private ZenikaCollection collection;
+	private boolean ebook = false;
+	private boolean paper = false;
+	private Borrower borrower;
+	private String summary;
 	
 	public ZBook () {
 		
@@ -50,5 +59,61 @@ public class ZBook {
 
 	public void setAuthor(Author[] author) {
 		this.author = author;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+	public ZenikaCollection getCollection() {
+		return collection;
+	}
+
+	public void setCollection(ZenikaCollection collection) {
+		this.collection = collection;
+	}
+
+	public boolean isEbook() {
+		return ebook;
+	}
+
+	public void setEbook(boolean ebook) {
+		this.ebook = ebook;
+	}
+
+	public boolean isPaper() {
+		return paper;
+	}
+
+	public void setPaper(boolean paper) {
+		this.paper = paper;
+	}
+
+	public Borrower getBorrower() {
+		return borrower;
+	}
+
+	public void setBorrower(Borrower borrower) {
+		this.borrower = borrower;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 }

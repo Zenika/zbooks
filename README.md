@@ -1,26 +1,29 @@
-Outil de gestion de bibliothèque
+Outil de gestion de la bibliothèque Zenika
 
-Use case :
-- gestion et référencement nos livres, avec toutes les infos
-- fonction de livre du mois, propositions et votes
+Itération 1 : 
+- [Feature] : Tableau
+    Un tableau simple avec ISBN, Titre, Langue
+- [Feature] : Fiche
+    Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur)
+- [Tech] Maven, Spring, AngulasJS, MyBatis, H2, REST
 
-Concept de base : 
-- Appli simple de CRUD Spring 3.2
-- IHM Angular + service REST
-- Base relationnelle PosgreSQL ou MySQL
-- Source sur Github, libre à vous du choix de l'organisation (mono master, features branching ou forks)
-- Intégration continue et Déploiement locaux (on a des rapberry pour ça :p -> je vous mets ça à dispo pour mardi)
-- Niveau Accès base, je pense que Mybatis est un bon compromis
-- Récupération des infos sur un service web type http://isbndb.com/ ou amazon
+Backlog : 
+- [Feature] Import ISBN
+- [Tech] MySQL
+- [Feature.Tableau] : Filtre
+- [Feature.Tableau] : détail++
+- [Feature.Fiche] : détail++ (illustration, année)
+- [Feature] Livre du mois (proposition, votes)
+- [Feature] Intégrer les Emprunts (un status + date)
+- [Tech] : NoSQL (couchbase ou MongoDB)
+- [Tech] : OAuth2
+- [Tech] : Cloud
+- [Feature] : notif mail
+- [Feature] : feed back (revue de lecture, commentaires)
+- [Tech]: RESTfull (HATEOAS, la doc et tout le toutim)
+- [Feature] : moteur de recherche (via ElasticSearch)
+- [Feature] : Recommandation de livre (machine learning Hadoop, Hive..)
+- [Feature.emprunt] : Un bouton "j'attend ce livre STP"
+- [Feature] : Ajout d'un livre simplement en scannant le code barre avec un tel Android.
 
-Fonctions + : 
-- un peu de sécurité avec du OAuth2 (genre se connecter avec nos comptes Google)
-- Passae au Cloud (IC + déploiement sur Cloudbees)
-- Du mailing de notif (cron spring simple ou avec du spring batch par exemple)
-- des fonctionnalités de vote, de revue de lecture, des commentaires....
 
-Fonctions ++ : 
-- Passer à une persistance NoSQL sur CouchBase ou MongoDB pour voir la différence.
-- approche RESTfull (avec le HATEOAS, la doc et tout le toutim)
-- on peut ajouter un ElasticSearch pour le moteur de recherche
-- on peut faire un cas d'usage de machine learning Hadoop, Hive et tout le tralala pour faire de la proposition de bouquins en fonction de préférences de navigation
