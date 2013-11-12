@@ -1,7 +1,5 @@
 Outil de gestion de la bibliothèque Zenika
 
-Version 1.0
-
 Itération 1 : 
 - Ecran de consultation de la liste
     Un tableau simple avec ISBN, Titre, Langue
