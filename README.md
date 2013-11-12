@@ -1,12 +1,11 @@
 Outil de gestion de la bibliothèque Zenika
 
 Itération 1 : 
-- Ecran de consultation de la liste
+- [Feature] : Tableau
     Un tableau simple avec ISBN, Titre, Langue
-- Ecran consultation d'une fiche
-    ISBN, titre, langue, editeur, nbPage, autheur
-Technique : 
-Maven, Spring, AngulasJS, MyBatis, H2, REST
+- [Feature@ : Fiche
+    Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur)
+- [Tech] Maven, Spring, AngulasJS, MyBatis, H2, REST
 
 Backlog : 
 - [Feature] Import ISBN
