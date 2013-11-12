@@ -3,7 +3,7 @@ Outil de gestion de la bibliothèque Zenika
 Itération 1 : 
 - [Feature] : Tableau
     Un tableau simple avec ISBN, Titre, Langue
-- [Feature@ : Fiche
+- [Feature] : Fiche
     Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur)
 - [Tech] Maven, Spring, AngulasJS, MyBatis, H2, REST
 
