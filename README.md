@@ -4,7 +4,7 @@ Itération 1 :
 - [Feature] : Tableau
     Un tableau simple avec ISBN, Titre, Langue
 - [Feature] : Fiche
-    Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur)
+    Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur, collection, papier et/ou ebook, date de sortie)
 - [Tech] Maven, Spring, AngulasJS, MyBatis, H2, REST
 
 Backlog : 
