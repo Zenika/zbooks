@@ -24,5 +24,6 @@ Backlog :
 - [Feature] : moteur de recherche (via ElasticSearch)
 - [Feature] : Recommandation de livre (machine learning Hadoop, Hive..)
 - [Feature.emprunt] : Un bouton "j'attend ce livre STP"
+- [Feature] : Ajout d'un livre simplement en scannant le code barre avec un tel Android.
 
 
