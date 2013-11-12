@@ -1,4 +1,4 @@
-﻿package com.zenika.zbooks.entity;
+package com.zenika.zbooks.entity;
 
 public class Author {
 
