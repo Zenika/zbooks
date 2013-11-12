@@ -15,4 +15,5 @@ public interface ZBooksDAO {
 	ZBook getBook (String isbn);
 	
 	void modifyBook (ZBook newBook);
+	
 }

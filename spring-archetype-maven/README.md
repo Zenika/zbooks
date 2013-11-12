@@ -1,1 +1,1 @@
-Arhetype Maven pour créer un projet JavaEE Spring basique.
+Arhetype Maven pour crÃ©er un projet JavaEE Spring basique.
