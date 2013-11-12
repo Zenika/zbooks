@@ -13,8 +13,8 @@ Backlog :
 - [Feature.Tableau] : Filtre
 - [Feature.Tableau] : détail++
 - [Feature.Fiche] : détail++ (illustration, année)
-- [Feature.LDM] : proposition, votes
-- [Feature.Emprunt] : status
+- [Feature] Livre du mois (proposition, votes)
+- [Feature] Intégrer les Emprunts (un status + date)
 - [Tech] : NoSQL (couchbase ou MongoDB)
 - [Tech] : OAuth2
 - [Tech] : Cloud
@@ -23,6 +23,6 @@ Backlog :
 - [Tech]: RESTfull (HATEOAS, la doc et tout le toutim)
 - [Feature] : moteur de recherche (via ElasticSearch)
 - [Feature] : Recommandation de livre (machine learning Hadoop, Hive..)
-- [Feature] : Un bouton "j'attend ce livre STP"
+- [Feature.emprunt] : Un bouton "j'attend ce livre STP"
 
 
