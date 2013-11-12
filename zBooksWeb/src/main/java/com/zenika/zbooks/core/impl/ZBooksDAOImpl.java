@@ -1,8 +1,11 @@
 ﻿package com.zenika.zbooks.core.impl;
 
+import org.springframework.stereotype.Component;
+
 import com.zenika.zbooks.core.ZBooksDAO;
 import com.zenika.zbooks.entity.ZBook;
 
+@Component
 public class ZBooksDAOImpl implements ZBooksDAO {
 
 	@Override
