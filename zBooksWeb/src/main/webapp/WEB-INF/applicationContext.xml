@@ -21,6 +21,6 @@
 	<!-- resources exclusions from servlet mapping -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-	<mvc:resources mapping="/views/**" location="/WEB-INF/views/"/>
+	<mvc:resources mapping="*.html" location="/WEB-INF/views/"/>
 
 </beans>
