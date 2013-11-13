@@ -1,0 +1,59 @@
+package com.zenika.zbooks.persistence;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import com.zenika.zbooks.entity.Author;
+import com.zenika.zbooks.entity.ZBook;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/applicationContext.xml"})
+public class ZBooksMapperTest {
+
+	private static Log log = LogFactory.getLog(ZBooksMapperTest.class);
+	
+	@Autowired
+	private ZBooksMapper zBooksMapper;
+	
+	private ZBook zBook;
+	private Author author;
+	
+	@Before
+	public void initializeData () {
+		ArrayList<Author> authors = new ArrayList<>();
+		this.author = new Author ("Craig", "Walls");
+		authors.add(author);
+		zBook = new ZBook();
+		zBook.setAuthors(authors);
+		zBook.setCollection("SBR");
+		zBook.setEdition("Paperback");
+		zBook.setISBN(1933988134);
+		zBook.setLanguage("EN");
+		zBook.setPagesNumber(650);
+		zBook.setReleaseDate(new Date());
+		zBook.setTitle("Spring in Action");
+		log.debug("Created the zBook : " + zBook);
+	}
+	
+	@Test
+	public void addAuthorTest () {
+		zBooksMapper.addAuthor(author);
+	}
+	
+	@Test
+	public void addBookTest() {
+		zBooksMapper.addBook(zBook);
+		System.out.println(zBooksMapper.getBook(1933988134));
+	}
+
+}
