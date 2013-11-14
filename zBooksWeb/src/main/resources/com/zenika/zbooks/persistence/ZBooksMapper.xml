@@ -63,15 +63,15 @@
 			linkAuthorZBooks (ISBN, authorId)
 		VALUES
 			(#{ISBN}, #{authorId})
-	</insert>
+	</insert> 
 	
 	<delete id="deleteBook" parameterType="int" timeout="10">
-		DELETE * FROM zBooks 
+		DELETE FROM zBooks 
 			WHERE ISBN = #{ISBN}
 	</delete>
 	
 	<delete id="deleteLinkAuthorZBooks" parameterType="int" timeout="10">
-		DELETE * FROM linkAuthorZBooks 
+		DELETE FROM linkAuthorZBooks 
 			WHERE ISBN = #{ISBN}
 	</delete>
 	

@@ -1,16 +1,9 @@
 package com.zenika.zbooks.entity;
 
 public enum Language {
-	FR("fr"), EN("en"), ES("es");
+	FR, EN, ES;
 	
-	private String value;
-	
-	Language (String value) {
-		this.value=value;
+	public static Language getValueOfToUpperCase (String value) {
+		return valueOf(value.toUpperCase());
 	}
-	
-	public String getValue () {
-		return this.value;
-	}
-
 }
