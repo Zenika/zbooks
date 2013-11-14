@@ -27,4 +27,5 @@ public interface ZBooksMapper {
 	
 	void addAuthor(Author author);
 	
+	void addLinkAuthorZBooks(@Param("ISBN") int isbn, @Param("authorId") int id);	
 }

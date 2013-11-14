@@ -6,26 +6,20 @@
     <!-- Mapping ZBooks -->
     <resultMap type="ZBook" id="ZBook">
         <id column="ISBN" property="ISBN"  />
-        <result column="title" property="title"  />
-        <result column="edition" property="edition" />
-        <result column="pagesNumber" property="pagesNumber" />
-        <result column="releaseDate" property="releaseDate" />
-        <result column="language" property="language" />
-        <result column="collection" property="collection" />
-        <collection property="author" column="ISBN" select="selectAllAuthorsByBook" javaType="ArrayList" />
+        <collection property="authors" column="ISBN" select="selectAllAuthorsByBook" javaType="ArrayList" />
     </resultMap>
     
     <resultMap type="Author" id="Author">
     	<id column="id" property="id" />
-    	<result column="firstName" property="firstName" />
-    	<result column="lastName" property="lastName" />
     </resultMap>
  
     <!-- ************************************************************************************* -->
  
     <!-- ZBooksMapper.selectAllAuthors() -->
     <select id="selectAllAuthorsByBook" resultMap="Author" parameterType="int" timeout="10" >
-        SELECT * FROM linkAuthorZBooks WHERE isbn = #{isbn}
+        SELECT * FROM authors 
+        	INNER JOIN linkAuthorZBooks ON authors.id = linkAuthorZBooks.authorId 
+        		WHERE isbn = #{isbn}
     </select>
     
     <select id="selectAllAuthors" resultMap="Author" timeout="10" >
@@ -33,7 +27,8 @@
     </select>
     
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
-    	SELECT * FROM zBooks WHERE isbn = #{isbn}
+    	SELECT * FROM zBooks 
+    		WHERE isbn = #{isbn}
     </select>
     
     <select id="getAllBooks" resultMap="ZBook" timeout="10">
@@ -41,7 +36,8 @@
     </select>
     
     <select id="getAuthorById" resultMap="Author" parameterType="int" timeout="10">
-    	SELECT * FROM authors WHERE id = #{id}
+    	SELECT * FROM authors 
+    		WHERE id = #{id}
     </select>
 
 	<select id="getAuthorByName" resultMap="Author" parameterType="map" timeout="10">
@@ -51,26 +47,34 @@
 	<insert id="addBook" parameterType="ZBook" timeout="10">
 		INSERT INTO 
 			zBooks (ISBN, title, edition, pagesNumber, releaseDate, language, collection) 
-			VALUES
-			(#{ISBN}, #{title}, #{edition}, #{pagesNumber}, #{releaseDate}, #{language}, #{collection});
-		INSERT INTO 
-			linkAuthorZBooks (ISBN, authorId)
-			VALUES
-			<foreach collection="authors" item="author">
-				(#{ISBN}, #{author.id})
-			</foreach>
+		VALUES
+			(#{ISBN}, #{title}, #{edition}, #{pagesNumber}, #{releaseDate}, #{language}, #{collection})
 	</insert>
-	
-	<delete id="deleteBook" parameterType="int" timeout="10">
-		DELETE * FROM zBooks WHERE ISBN = #{ISBN}
-		DELETE * FROM linkAuthorZBooks WHERE ISBN = #{ISBN}
-	</delete>
 	
 	<insert id="addAuthor" parameterType="Author" timeout="10">
 		INSERT INTO 
 			authors (firstName, lastName)
-			VALUES
+		VALUES
 			(#{firstName}, #{lastName})
 	</insert>
+	
+	<insert id="addLinkAuthorZBooks" parameterType="map" timeout="10">
+		INSERT INTO
+			linkAuthorZBooks (ISBN, authorId)
+		VALUES
+			(#{ISBN}, #{authorId})
+	</insert>
+	
+	<delete id="deleteBook" parameterType="int" timeout="10">
+		DELETE * FROM zBooks 
+			WHERE ISBN = #{ISBN}
+	</delete>
+	
+	<delete id="deleteLinkAuthorZBooks" parameterType="int" timeout="10">
+		DELETE * FROM linkAuthorZBooks 
+			WHERE ISBN = #{ISBN}
+	</delete>
+	
+
 
 </mapper>
