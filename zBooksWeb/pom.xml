@@ -11,6 +11,7 @@
 		<java-version>1.7</java-version>
 		<org.springframework-version>3.2.3.RELEASE</org.springframework-version>
 		<version.jackson>1.9.4</version.jackson>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -25,6 +26,12 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.8.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert-core</artifactId>
+			<version>2.0M10</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -80,6 +87,11 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.2.4.RELEASE</version>
+		</dependency>
+		<dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>${version.jackson}</version>
@@ -90,14 +102,19 @@
             <version>${version.jackson}</version>
         </dependency>
 
-		<!--  JSTL Library -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-				
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
 		<!-- MyBatis + H2 DB-->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.3</version>
+		</dependency>
 		<dependency>
 		  <groupId>org.mybatis</groupId>
 		  <artifactId>mybatis-spring</artifactId>
