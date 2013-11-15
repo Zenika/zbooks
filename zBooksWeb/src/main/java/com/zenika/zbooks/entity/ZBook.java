@@ -71,11 +71,11 @@ public class ZBook {
 	}
 
 	public String getLanguage() {
-		return language.getValue();
+		return language.toString();
 	}
 
 	public void setLanguage(String language) {
-		this.language = Language.valueOf(language);
+		this.language = Language.getValueOfToUpperCase(language);
 	}
 
 	public String getCollection() {
@@ -83,7 +83,7 @@ public class ZBook {
 	}
 
 	public void setCollection(String collection) {
-		this.collection = ZenikaCollection.valueOf(collection);
+		this.collection = ZenikaCollection.getValueOfToUpperCase(collection);
 	}
 
 //	public boolean isEbook() {

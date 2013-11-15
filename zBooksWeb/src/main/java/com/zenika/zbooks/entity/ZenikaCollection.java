@@ -5,4 +5,7 @@ public enum ZenikaCollection {
 	RENNES, 
 	NANTES;
 	
+	public static ZenikaCollection getValueOfToUpperCase (String value) {
+		return valueOf(value.toUpperCase());
+	}
 }

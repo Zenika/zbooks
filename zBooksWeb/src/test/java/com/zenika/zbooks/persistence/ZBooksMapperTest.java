@@ -16,7 +16,7 @@ import com.zenika.zbooks.entity.Author;
 import com.zenika.zbooks.entity.ZBook;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:src/main/resources/applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class ZBooksMapperTest {
 
 	private static Log log = LogFactory.getLog(ZBooksMapperTest.class);
@@ -29,6 +29,7 @@ public class ZBooksMapperTest {
 	
 	@Before
 	public void initializeData () {
+		
 		ArrayList<Author> authors = new ArrayList<>();
 		this.author = new Author ("Craig", "Walls");
 		authors.add(author);
@@ -41,6 +42,9 @@ public class ZBooksMapperTest {
 		zBook.setPagesNumber(650);
 		zBook.setReleaseDate(new Date());
 		zBook.setTitle("Spring in Action");
+		if (zBooksMapper.getBook(zBook.getISBN()) != null) {
+			zBooksMapper.deleteBook(zBook.getISBN());
+		}
 		log.debug("Created the zBook : " + zBook);
 	}
 	
@@ -52,7 +56,8 @@ public class ZBooksMapperTest {
 	@Test
 	public void addBookTest() {
 		zBooksMapper.addBook(zBook);
-		System.out.println(zBooksMapper.getBook(1933988134));
+		System.out.println(zBooksMapper.getBook(zBook.getISBN()));
+		
+		
 	}
-
 }
