@@ -4,42 +4,27 @@
     <meta charset="UTF-8">
     <title>Zenika Books</title>
     <script src="resources/js/angular.min.js"></script>
-    <script src="resources/js/homeController.js"></script>
-    <script src="resources/js/home.js"></script>
-
-    <link rel="stylesheet" href="resources/css/home.css">
+    <script src="resources/js/ListController.js"></script>
+    <script src="resources/js/index.js"></script>
+    <script src="resources/js/DetailController.js"></script>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/index.css">
+
 </head>
 <body>
 <div class="page-header container">
         <h1 style="float: left;">z<span class="zenika-red strong">B</span>ooks</h1>
 </div>
-<div class="container">
-    <ol class="breadcrumb">
-        <li><a href="#">Accueil</a></li>
-        <li><a href="#">Library</a></li>
-        <li class="active">Data</li>
-    </ol>
+
+<div class="container" ng-view="">
 </div>
-<div class="container">
-<table class="table table-striped table-bordered table-hover table-condensed" ng-controller="HomeController">
-<tr>
-    <th>Titre</th>
-</tr>
-<tr ng-repeat="book in bookList">
-    <td>{{book.title}}</td>
-</tr>
-</table>
-</div>
+
 <div class="container" style="text-align: center;">
     <hr/>
     <div class="footer">
         <h6>by <img class="zenika-logo" src="resources/image/LogoZenika-H-(Quadri).png"/></h6>
-    </div>
 </div>
-
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

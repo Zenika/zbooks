@@ -1,4 +1,4 @@
-function HomeController ($scope, $routeParams, $http) {
+function ListController ($scope, $routeParams, $http) {
 	$scope.message = $http.get("/user/coucou");
     $scope.bookList = [
     {isbn:"047094224X",title:"Professional NoSQL	John Wiley & Sons Ltd",lang:"EN"},

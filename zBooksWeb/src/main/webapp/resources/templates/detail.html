@@ -1,0 +1,22 @@
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+               <h3>{{book.title}}</h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div><img class="img-cover" src="{{book.cover}}"></div>
+            <div style="float: left">
+                <dl>
+                    <dt>Titre</dt>
+                    <dd>{{book.title}}</dd>
+                    <dt>ISBN</dt>
+                    <dd>{{book.isbn}}</dd>
+                    <dt>Langues</dt>
+                    <dd><img src="./resources/image/{{book.lang}}.png"></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

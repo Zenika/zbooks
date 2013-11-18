@@ -11,7 +11,7 @@ public class HomeController {
 
 	@RequestMapping(value="/")
 	public String home () {
-		return "home.html";
+		return "index.html";
 	}
 	
 	@RequestMapping(value="/user/{name}", method=RequestMethod.GET, produces = "application/json")

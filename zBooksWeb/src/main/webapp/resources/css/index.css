@@ -17,3 +17,21 @@
 .v-align-middle{
     vertical-align:middle;
 }
+
+.img-cover{
+    max-height: 200px;
+    float: left;
+    margin-right: 30px;
+}
+
+dt {
+    width:100px;
+    float: left;
+    clear: left;
+    text-align: right;
+    font-weight: bold;
+}
+dd {
+    margin: 0 0 0 110px;
+    padding: 0 0 0.5em 0;
+}
