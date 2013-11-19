@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation= "
+       	http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans.xsd
+       	http://www.springframework.org/schema/data/jpa 	http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
        
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="org.h2.Driver"/>
-      <property name="url" value="jdbc:h2:~/zBooks"/>
+      <property name="url" value="jdbc:h2:~/zBooksGwt"/>
       <property name="username" value="root" />
       <property name="password" value="pwd"/>
     </bean>
     
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	  <property name="dataSource" ref="dataSource" />
-	  <property name="configLocation" value="classpath:com/zenika/zbooks/mybatis-config.xml"/>
-	</bean>
-	
-	<bean id="zBooksMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-	  <property name="mapperInterface" value="com.zenika.zbooks.persistence.ZBooksMapper" />
-	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
+    <jpa:repositories
+    	base-package="com.zenika.zbooks.gwt.dao" />
+    	
+    <bean class="org.springframework.orm.jpa.JpaTransactionManager"
+         id="transactionManager">
+       <property name="entityManagerFactory"
+                 ref="entityManagerFactory" />
+    </bean>
+    
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.zenika.zbooks.gwt.entity"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true" />
+                <property name="showSql" value="true"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect"/>
+                <property name="database" value="H2"/>
+            </bean>
+        </property>
+    </bean>
 </beans>

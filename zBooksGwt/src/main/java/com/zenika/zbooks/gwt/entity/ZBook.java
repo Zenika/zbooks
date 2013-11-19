@@ -1,18 +1,22 @@
-package com.zenika.zbooks.entity;
+package com.zenika.zbooks.gwt.entity;
 
-import java.util.ArrayList;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="zbooks")
 public class ZBook {
 
+	@Id
 	private int ISBN;
 	private String edition;
 	private String title;
 	private int pagesNumber;
-	private ArrayList<Author> authors;
-	private Date releaseDate;
-	private Language language;
-	private ZenikaCollection collection;
+//	private ArrayList<Author> authors;
+//	private Date releaseDate;
+//	private Language language;
+//	private ZenikaCollection collection;
 //	private boolean ebook = false;
 //	private boolean paper = false;
 //	private Borrower borrower;
@@ -54,37 +58,37 @@ public class ZBook {
 		this.pagesNumber = pagesNumber;
 	}
 
-	public ArrayList<Author> getAuthors() {
-		return authors;
-	}
+//	public ArrayList<Author> getAuthors() {
+//		return authors;
+//	}
+//
+//	public void setAuthors(ArrayList<Author> authors) {
+//		this.authors = authors;
+//	}
+//
+//	public Date getReleaseDate() {
+//		return releaseDate;
+//	}
+//
+//	public void setReleaseDate(Date releaseDate) {
+//		this.releaseDate = releaseDate;
+//	}
 
-	public void setAuthors(ArrayList<Author> authors) {
-		this.authors = authors;
-	}
-
-	public Date getReleaseDate() {
-		return releaseDate;
-	}
-
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
-	}
-
-	public String getLanguage() {
-		return language.toString();
-	}
-
-	public void setLanguage(String language) {
-		this.language = Language.getValueOfToUpperCase(language);
-	}
-
-	public String getCollection() {
-		return collection.toString();
-	}
-
-	public void setCollection(String collection) {
-		this.collection = ZenikaCollection.getValueOfToUpperCase(collection);
-	}
+//	public String getLanguage() {
+//		return language.toString().toUpperCase();
+//	}
+//
+//	public void setLanguage(String language) {
+//		this.language = Language.getValueOfToUpperCase(language);
+//	}
+//
+//	public String getCollection() {
+//		return collection.toString().toUpperCase();
+//	}
+//
+//	public void setCollection(String collection) {
+//		this.collection = ZenikaCollection.getValueOfToUpperCase(collection);
+//	}
 
 //	public boolean isEbook() {
 //		return ebook;
@@ -118,8 +122,4 @@ public class ZBook {
 //		this.summary = summary;
 //	}
 	
-	@Override
-	public String toString () {
-		return this.title + " de " + this.authors + " -- ISBN : " + this.ISBN;
-	}
 }

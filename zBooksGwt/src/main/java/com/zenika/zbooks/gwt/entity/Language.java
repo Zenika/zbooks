@@ -1,4 +1,5 @@
-package com.zenika.zbooks.entity;
+package com.zenika.zbooks.gwt.entity;
+
 
 public enum Language {
 	FR, EN, ES;

@@ -1,1 +1,0 @@
-Projet sous GWT et Hibernate pour l'application zBooks
