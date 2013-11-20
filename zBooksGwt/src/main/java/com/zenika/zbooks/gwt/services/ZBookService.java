@@ -2,7 +2,7 @@ package com.zenika.zbooks.gwt.services;
 
 import java.util.List;
 
-import com.zenika.zbooks.gwt.entity.ZBook;
+import com.zenika.zbooks.gwt.client.entity.ZBook;
 
 public interface ZBookService {
 

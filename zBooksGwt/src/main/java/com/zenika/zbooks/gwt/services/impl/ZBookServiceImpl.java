@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zenika.zbooks.gwt.client.entity.ZBook;
 import com.zenika.zbooks.gwt.dao.ZBookRepository;
-import com.zenika.zbooks.gwt.entity.ZBook;
 import com.zenika.zbooks.gwt.services.ZBookService;
 
 @Service

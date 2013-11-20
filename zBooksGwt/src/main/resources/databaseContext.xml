@@ -4,7 +4,7 @@
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation= "
        	http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans.xsd
-       	http://www.springframework.org/schema/data/jpa 	http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
+       	http://www.springframework.org/schema/data/jpa 	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
        
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="org.h2.Driver"/>
@@ -25,7 +25,7 @@
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="com.zenika.zbooks.gwt.entity"/>
+        <property name="packagesToScan" value="com.zenika.zbooks.gwt.client.entity"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="true" />
