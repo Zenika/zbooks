@@ -1,13 +1,18 @@
 package com.zenika.zbooks.gwt.client.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="zbooks")
+@Table(name="ZBOOKS")
 public class ZBook implements Serializable {
 
 	/**
@@ -19,10 +24,20 @@ public class ZBook implements Serializable {
 	 */
 	@Id
 	private int ISBN;
+	
 	private String edition;
+	
 	private String title;
+	
 	private int pagesNumber;
-//	private ArrayList<Author> authors;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name="LINK_ZBOOKS_AUTHORS",
+			joinColumns={@JoinColumn(name="ZBOOK_ISBN", referencedColumnName="ISBN")},
+				      inverseJoinColumns={@JoinColumn(name="AUTHOR_ID", referencedColumnName="ID")})
+	private List<Author> authors;
+	
 //	private Date releaseDate;
 //	private Language language;
 //	private ZenikaCollection collection;
@@ -67,13 +82,13 @@ public class ZBook implements Serializable {
 		this.pagesNumber = pagesNumber;
 	}
 
-//	public ArrayList<Author> getAuthors() {
-//		return authors;
-//	}
-//
-//	public void setAuthors(ArrayList<Author> authors) {
-//		this.authors = authors;
-//	}
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+	}
 //
 //	public Date getReleaseDate() {
 //		return releaseDate;

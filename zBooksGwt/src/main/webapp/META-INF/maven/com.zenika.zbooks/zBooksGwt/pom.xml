@@ -99,19 +99,37 @@
 		  <scope>compile</scope>
 	</dependency>
 	<dependency>
-          <groupId>org.springframework.data</groupId>
-          <artifactId>spring-data-jpa</artifactId>
-          <version>1.4.1.RELEASE</version>
-    </dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-jdbc</artifactId>
+		  <version>${spring.version}</version>
+		  <scope>compile</scope>
+	</dependency>
+	<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-orm</artifactId>
+		  <version>${spring.version}</version>
+		  <scope>compile</scope>
+	</dependency>
 	     
     
-    <!-- JUnit -->
+    <!-- Tests -->
     <dependency>
 	      <groupId>junit</groupId>
 	      <artifactId>junit</artifactId>
 	      <version>4.7</version>
 	      <scope>test</scope>
     </dependency>
+    <dependency>
+		  <groupId>org.assertj</groupId>
+		  <artifactId>assertj-core</artifactId>
+		  <version>1.5.0</version>
+	</dependency>
+	<dependency>
+		  <groupId>org.mockito</groupId>
+		  <artifactId>mockito-all</artifactId>
+		  <version>1.9.5</version>
+	</dependency>    
+            
     
     <!-- Logger -->
     <dependency>
@@ -156,6 +174,7 @@
                       </execution>
               </executions>
               <configuration>
+					  <!-- The module is the .gwt.xml file which MUST be located in the src/main/java -->
                       <modules>
                               <module>com.zenika.zbooks.gwt.ZBooksGwt</module>
                       </modules>

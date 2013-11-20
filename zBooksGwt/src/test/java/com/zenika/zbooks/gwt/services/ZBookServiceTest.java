@@ -1,5 +1,6 @@
 package com.zenika.zbooks.gwt.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.zenika.zbooks.gwt.client.entity.Author;
 import com.zenika.zbooks.gwt.client.entity.ZBook;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,6 +24,8 @@ public class ZBookServiceTest {
 	private ZBookService zBookService;
 	private ZBook zBook1;
 	private ZBook zBook2;
+	private Author author1;
+	private Author author2;
 	
 	private static final Logger LOG = Logger.getLogger(ZBookServiceTest.class);
 	
@@ -41,6 +45,21 @@ public class ZBookServiceTest {
 		zBook2.setEdition("Pas d'édition n°2");
 		zBook2.setPagesNumber(150);
 
+		author1 = new Author();
+		author1.setFirstName("John");
+		author1.setLastName("Doe");
+		author2 = new Author();
+		author2.setFirstName("Pierre");
+		author2.setLastName("Dupont");
+		
+		ArrayList<Author> authorsZBook1 = new ArrayList<Author>();
+		authorsZBook1.add(author1);
+		authorsZBook1.add(author2);
+		zBook1.setAuthors(authorsZBook1);
+		
+		ArrayList<Author> authorsZBook2 = new ArrayList<Author>();
+		authorsZBook2.add(author1);
+		zBook2.setAuthors(authorsZBook2);
 	}
 
 	@Test
@@ -54,15 +73,24 @@ public class ZBookServiceTest {
 		Assertions.assertThat(zBookFromDB.getEdition()).isEqualTo(zBook1.getEdition());
 		Assertions.assertThat(zBookFromDB.getPagesNumber()).isEqualTo(zBook1.getPagesNumber());
 		Assertions.assertThat(zBookFromDB.getTitle()).isEqualTo(zBook1.getTitle());
+		Assertions.assertThat(zBookFromDB.getAuthors().size()).isEqualTo(zBook1.getAuthors().size());
+		
+		LOG.info("Checking that only 2 authors were created in the DB");
+		
 	}
 	
 	@Test
 	public void testFindAll() {
+		List<ZBook> zBooksInDb = zBookService.findAll();
+		
+		LOG.info("Checking that there is nothing in the DB");
+		Assertions.assertThat(zBooksInDb).isEmpty();
+		
 		zBookService.createOrUpdate(zBook1);
 		zBookService.createOrUpdate(zBook2);
 		zBook2.setTitle("Pas de titre 2bis");
 		zBookService.createOrUpdate(zBook2);
-		List<ZBook> zBooksInDb = zBookService.findAll();
+		zBooksInDb = zBookService.findAll();
 		
 		LOG.info("Checking that there is the right amount of data in the DB");
 		Assertions.assertThat(zBooksInDb.size()).isEqualTo(2);
