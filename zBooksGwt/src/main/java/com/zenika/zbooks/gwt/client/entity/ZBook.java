@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,8 +41,11 @@ public class ZBook implements Serializable {
 	private List<Author> authors;
 	
 //	private Date releaseDate;
-//	private Language language;
-//	private ZenikaCollection collection;
+	@Enumerated(EnumType.ORDINAL)
+	private Language language;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private ZenikaCollection collection;
 //	private boolean ebook = false;
 //	private boolean paper = false;
 //	private Borrower borrower;
@@ -48,6 +53,14 @@ public class ZBook implements Serializable {
 	
 	public ZBook () {
 		
+	}
+	
+	public ZBook (int ISBN, String edition, String title, int pagesNumber, List<Author> authors) {
+		this.ISBN = ISBN;
+		this.edition = edition;
+		this.title = title;
+		this.pagesNumber = pagesNumber;
+		this.authors = authors;
 	}
 
 	public int getISBN() {
@@ -98,21 +111,23 @@ public class ZBook implements Serializable {
 //		this.releaseDate = releaseDate;
 //	}
 
-//	public String getLanguage() {
-//		return language.toString().toUpperCase();
-//	}
-//
-//	public void setLanguage(String language) {
-//		this.language = Language.getValueOfToUpperCase(language);
-//	}
-//
-//	public String getCollection() {
-//		return collection.toString().toUpperCase();
-//	}
-//
-//	public void setCollection(String collection) {
-//		this.collection = ZenikaCollection.getValueOfToUpperCase(collection);
-//	}
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+	public ZenikaCollection getCollection() {
+		return collection;
+	}
+
+	public void setCollection(ZenikaCollection collection) {
+		this.collection = collection;
+	}
+
+
 
 //	public boolean isEbook() {
 //		return ebook;

@@ -1,4 +1,6 @@
 /target
-/src/main/gwt-unitCache/*
+**/gwt-unitCache/*
 *.rpc
 /src/main/webapp/zBooksGwt/*
+**/WEB-INF/deploy/*
+**/META-INF/*

@@ -14,7 +14,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.zenika.zbooks.gwt.client.entity.Author;
+import com.zenika.zbooks.gwt.client.entity.Language;
 import com.zenika.zbooks.gwt.client.entity.ZBook;
+import com.zenika.zbooks.gwt.client.entity.ZenikaCollection;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -38,12 +40,16 @@ public class ZBookServiceTest {
 		zBook1.setTitle("Pas de titre");
 		zBook1.setEdition("Pas d'édition");
 		zBook1.setPagesNumber(100);
+		zBook1.setLanguage(Language.EN);
+		zBook1.setCollection(ZenikaCollection.NANTES);
 		
 		zBook2 = new ZBook();
 		zBook2.setISBN(65);
 		zBook2.setTitle("Pas de titre 2");
 		zBook2.setEdition("Pas d'édition n°2");
 		zBook2.setPagesNumber(150);
+		zBook2.setLanguage(Language.FR);
+		zBook2.setCollection(ZenikaCollection.SBR);
 
 		author1 = new Author();
 		author1.setFirstName("John");
@@ -69,13 +75,12 @@ public class ZBookServiceTest {
 		ZBook zBookFromDB = zBookService.findByIsbn(zBook1.getISBN());
 		
 		LOG.info("Comparing the data in the zBook1 and the data in the zBook in the DB");
-		Assertions.assertThat(zBookFromDB.getISBN()).isEqualTo(zBook1.getISBN());
-		Assertions.assertThat(zBookFromDB.getEdition()).isEqualTo(zBook1.getEdition());
-		Assertions.assertThat(zBookFromDB.getPagesNumber()).isEqualTo(zBook1.getPagesNumber());
-		Assertions.assertThat(zBookFromDB.getTitle()).isEqualTo(zBook1.getTitle());
-		Assertions.assertThat(zBookFromDB.getAuthors().size()).isEqualTo(zBook1.getAuthors().size());
-		
-		LOG.info("Checking that only 2 authors were created in the DB");
+		Assertions.assertThat(zBookFromDB).isEqualToIgnoringGivenFields(zBook1, "authors");
+		List<Author> authors = zBook1.getAuthors();
+		List<Author> authorsFromDb = zBookFromDB.getAuthors();
+		for (int i=0; i<authors.size(); i++) {
+			Assertions.assertThat(authorsFromDb.get(i)).isEqualToComparingFieldByField(authors.get(i));
+		}
 		
 	}
 	
