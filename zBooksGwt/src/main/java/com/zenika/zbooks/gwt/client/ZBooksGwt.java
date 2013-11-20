@@ -1,5 +1,7 @@
 package com.zenika.zbooks.gwt.client;
 
+import java.util.List;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -15,7 +17,7 @@ public class ZBooksGwt implements EntryPoint {
 
 	private final FlexTable zBooksTable= new FlexTable();
 	private final DockPanel mainPanel = new DockPanel();
-	private ZBookGetterServiceAsync zBookGetter = GWT.create(ZBookGetterService.class);
+	private ZBookRpcServiceAsync zBookGetter = GWT.create(ZBookRpcService.class);
 		
 	/**
 	 * This is the entry point method.
@@ -27,7 +29,7 @@ public class ZBooksGwt implements EntryPoint {
 		
 		RootPanel.get().add(mainPanel);
 		
-		AsyncCallback<ZBook> callBack = new AsyncCallback<ZBook>() {
+		AsyncCallback<List<ZBook>> callBack = new AsyncCallback<List<ZBook>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -36,13 +38,13 @@ public class ZBooksGwt implements EntryPoint {
 			}
 
 			@Override
-			public void onSuccess(ZBook result) {
+			public void onSuccess(List<ZBook> result) {
 				// TODO Auto-generated method stub
-				addZBookToList(result);
+				addZBooksToList(result);
 			}
 		};
 		
-		this.zBookGetter.getZBook(42, callBack);
+		this.zBookGetter.getAllZBooks(callBack);
 	}
 
 	private void initializeZBooksTable () {
@@ -50,6 +52,12 @@ public class ZBooksGwt implements EntryPoint {
 		zBooksTable.setText(0, 1, "Title");
 		zBooksTable.setText(0, 2, "Edition");
 		zBooksTable.setText(0, 3, "Number of pages");
+	}
+	
+	private void addZBooksToList(List<ZBook> list) {
+		for(ZBook zBook : list) {
+			this.addZBookToList(zBook);
+		}
 	}
 	
 	private void addZBookToList(ZBook zBook) {

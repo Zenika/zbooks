@@ -18,30 +18,32 @@ public class ZBookServiceImpl implements ZBookService {
 	private ZBookRepository zBookRepository;
 	
 	@Override
-	public ZBook create(ZBook zBook) {
+	public ZBook createOrUpdate(ZBook zBook) {
 		return zBookRepository.save(zBook);
 	}
 
 	@Override
 	public void delete(int isbn) {
-		zBookRepository.delete(isbn);
+		ZBook zBookToDelete = this.findByIsbn(isbn);
+		zBookRepository.delete(zBookToDelete);
 	}
 
 	@Override
 	public List<ZBook> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ZBook update(ZBook zBook) {
-		// TODO Auto-generated method stub
-		return null;
+		return zBookRepository.findAll();
 	}
 
 	@Override
 	public ZBook findByIsbn(int isbn) {
-		return zBookRepository.findOne(isbn);
+		return zBookRepository.findByIsbn(isbn);
+	}
+
+	@Override
+	public void deleteAll() {
+		List<ZBook> zBooksList = zBookRepository.findAll();
+		for (ZBook zBook : zBooksList) {
+			zBookRepository.delete(zBook);
+		}
 	}
 
 }

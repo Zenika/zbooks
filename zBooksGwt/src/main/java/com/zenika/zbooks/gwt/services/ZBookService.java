@@ -6,9 +6,9 @@ import com.zenika.zbooks.gwt.client.entity.ZBook;
 
 public interface ZBookService {
 
-	ZBook create(ZBook zBook);
+	ZBook createOrUpdate(ZBook zBook);
 	void delete(int isbn);
+	void deleteAll();
 	List<ZBook> findAll();
-	ZBook update(ZBook zBook);
 	ZBook findByIsbn(int isbn);
 }

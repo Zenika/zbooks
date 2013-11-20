@@ -1,9 +1,17 @@
 package com.zenika.zbooks.gwt.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 import com.zenika.zbooks.gwt.client.entity.ZBook;
 
-public interface ZBookRepository extends JpaRepository<ZBook, Integer>{
 
+public interface ZBookRepository{
+
+	List<ZBook> findAll();
+	
+	ZBook findByIsbn(int isbn);
+	
+	ZBook save (ZBook zBook);
+	
+	void delete (ZBook zBook);
 }
