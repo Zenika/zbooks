@@ -7,12 +7,14 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.zenika.zbooks.gwt.client.entity.Author;
 import com.zenika.zbooks.gwt.client.entity.ZBook;
 
@@ -22,8 +24,11 @@ import com.zenika.zbooks.gwt.client.entity.ZBook;
 public class ZBooksGwt implements EntryPoint {
 
 	private final FlexTable zBooksTable= new FlexTable();
-	private final DockPanel mainPanel = new DockPanel();
+	private final VerticalPanel libraryPanel = new VerticalPanel();
+	private final HorizontalPanel addZBookPanel = new HorizontalPanel();
 	private final Label label = new Label ("You're on the page to see the library");
+	private final Anchor linkToAddBookPage = new Anchor ();
+	private final Anchor linkToLibraryPage = new Anchor ();
 	private ZBookRpcServiceAsync zBookGetter = GWT.create(ZBookRpcService.class);
 		
 	/**
@@ -31,12 +36,16 @@ public class ZBooksGwt implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		this.initializeZBooksTable();
-
-		Anchor anchor = new Anchor("Test ajout", "#add");
+		this.initializeLibraryPanel();
+		
+		this.initializeAddZBookPanel();
+		this.setRootContent();
+		
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
+				setRootContent();
 				if (event.getValue().contains("add")) {
 					label.setText("You're on the page to add a book : " +event.getValue());
 				} else {
@@ -44,12 +53,44 @@ public class ZBooksGwt implements EntryPoint {
 				}
 			}
 		});
-		mainPanel.add(anchor, DockPanel.NORTH);
+	}
+	
+	private void setRootContent () {
+		RootPanel.get("content").clear();
+		if (Window.Location.getHash().equals("#add")) {
+			RootPanel.get("content").add(addZBookPanel);
+		} else {
+			RootPanel.get("content").add(libraryPanel);
+		}
+	}
+	
+	private void initializeLibraryPanel() {
+		linkToAddBookPage.setHref("#add");
+		linkToAddBookPage.setHTML("Ajouter un livre");
+		linkToAddBookPage.addStyleName("btn");
+		linkToAddBookPage.addStyleName("btn-primary");
 		
-		mainPanel.add(zBooksTable, DockPanel.CENTER);
-		mainPanel.add(label, DockPanel.SOUTH);
-		RootPanel.get().add(mainPanel);
+		libraryPanel.add(zBooksTable);
+		libraryPanel.add(linkToAddBookPage);
+		libraryPanel.add(label);
+	}
+	
+	private void initializeAddZBookPanel () {
+		linkToLibraryPage.setHref("#");
+		linkToLibraryPage.setHTML("Retour à la bibliothèque");
+		linkToLibraryPage.addStyleName("btn");
+		linkToLibraryPage.addStyleName("btn-primary");
 		
+		addZBookPanel.add(linkToLibraryPage);
+		addZBookPanel.add(label);
+	}
+
+	private void initializeZBooksTable () {
+		zBooksTable.setText(0, 0, "ISBN");
+		zBooksTable.setText(0, 1, "Titre");
+		zBooksTable.setText(0, 2, "Edition");
+		zBooksTable.setText(0, 3, "Auteurs");
+		zBooksTable.setText(0, 4, "Nombre de pages");
 		AsyncCallback<List<ZBook>> callBack = new AsyncCallback<List<ZBook>>() {
 
 			@Override
@@ -66,14 +107,6 @@ public class ZBooksGwt implements EntryPoint {
 		};
 		
 		this.zBookGetter.getAllZBooks(callBack);
-	}
-
-	private void initializeZBooksTable () {
-		zBooksTable.setText(0, 0, "ISBN");
-		zBooksTable.setText(0, 1, "Titre");
-		zBooksTable.setText(0, 2, "Edition");
-		zBooksTable.setText(0, 3, "Auteurs");
-		zBooksTable.setText(0, 4, "Nombre de pages");
 	}
 	
 	private void addZBooksToList(List<ZBook> list) {
