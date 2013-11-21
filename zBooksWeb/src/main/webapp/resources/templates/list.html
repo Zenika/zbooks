@@ -4,6 +4,6 @@
         <th>Langue</th>
     </tr>
     <tr ng-repeat="book in bookList">
-        <td class="text-muted"><h6>{{book.isbn}}</h6></td><td><a href="#/{{book.isbn}}">{{book.title}}</a></td><td><img src="./resources/image/{{book.lang}}.png"></td>
+        <td class="text-muted"><h6>{{book.isbn}}</h6></td><td><a href="#/{{book.isbn}}">{{book.title}}</a></td><td><img src="./resources/image/{{book.language|img404safe}}.png"></td>
     </tr>
 </table>

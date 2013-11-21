@@ -10,9 +10,9 @@ public class ZBook {
 	private String edition;
 	private String title;
 	private int pagesNumber;
-	private ArrayList<Author> authors;
+	private String authors;
 	private Date releaseDate;
-	private Language language;
+	private String language;
 	
 	public ZBook () {
 		
@@ -50,11 +50,11 @@ public class ZBook {
 		this.pagesNumber = pagesNumber;
 	}
 
-	public ArrayList<Author> getAuthors() {
+	public String getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(ArrayList<Author> authors) {
+	public void setAuthors(String authors) {
 		this.authors = authors;
 	}
 
@@ -67,10 +67,10 @@ public class ZBook {
 	}
 
 	public String getLanguage() {
-		return language.toString();
+		return language;
 	}
 
-	public void setLanguage(Language language) {
+	public void setLanguage(String language) {
 		this.language = language;
 	}
 

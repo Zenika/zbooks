@@ -1,3 +1,5 @@
 function DetailController ($scope, $routeParams, $http) {
-    $scope.book = {isbn:$routeParams.isbn,title:"Professional NoSQL	John Wiley & Sons Ltd",lang:"EN",cover:"./resources/image/unknown-cover.gif"};
+    $http({method: 'GET', url: '/api/book/'+$routeParams.id, headers:{'Accept' : 'application/json'}}).success(function(data, status, headers, config){
+        $scope.book =data;
+    });
 }

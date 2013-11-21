@@ -1,9 +1,7 @@
 package com.zenika.zbooks.persistence;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import com.zenika.zbooks.entity.Language;
+import com.zenika.zbooks.entity.Author;
+import com.zenika.zbooks.entity.ZBook;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
@@ -13,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.zenika.zbooks.entity.Author;
-import com.zenika.zbooks.entity.ZBook;
+import java.util.ArrayList;
+import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -38,7 +36,7 @@ public class ZBooksMapperTest {
 		zBook.setAuthors(authors);
 		zBook.setEdition("Paperback");
 		zBook.setISBN("1933988134");
-		zBook.setLanguage(Language.EN);
+		zBook.setLanguage("EN");
 		zBook.setPagesNumber(650);
 		zBook.setReleaseDate(new Date());
 		zBook.setTitle("Spring in Action");
