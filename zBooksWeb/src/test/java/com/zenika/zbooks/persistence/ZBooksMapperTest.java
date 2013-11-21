@@ -3,6 +3,7 @@ package com.zenika.zbooks.persistence;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.zenika.zbooks.entity.Language;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
@@ -35,15 +36,14 @@ public class ZBooksMapperTest {
 		authors.add(author);
 		zBook = new ZBook();
 		zBook.setAuthors(authors);
-		zBook.setCollection("SBR");
 		zBook.setEdition("Paperback");
-		zBook.setISBN(1933988134);
-		zBook.setLanguage("EN");
+		zBook.setISBN("1933988134");
+		zBook.setLanguage(Language.EN);
 		zBook.setPagesNumber(650);
 		zBook.setReleaseDate(new Date());
 		zBook.setTitle("Spring in Action");
-		if (zBooksMapper.getBook(zBook.getISBN()) != null) {
-			zBooksMapper.deleteBook(zBook.getISBN());
+		if (zBooksMapper.getBook(zBook.getId()) != null) {
+			zBooksMapper.deleteBook(zBook.getId());
 		}
 		log.debug("Created the zBook : " + zBook);
 	}
@@ -56,8 +56,6 @@ public class ZBooksMapperTest {
 	@Test
 	public void addBookTest() {
 		zBooksMapper.addBook(zBook);
-		System.out.println(zBooksMapper.getBook(zBook.getISBN()));
-		
-		
+		System.out.println(zBooksMapper.getBook(zBook.getId()));
 	}
 }

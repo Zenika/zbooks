@@ -5,28 +5,24 @@ import java.util.Date;
 
 public class ZBook {
 
-	private int ISBN;
+    private int id;
+	private String ISBN;
 	private String edition;
 	private String title;
 	private int pagesNumber;
 	private ArrayList<Author> authors;
 	private Date releaseDate;
 	private Language language;
-	private ZenikaCollection collection;
-//	private boolean ebook = false;
-//	private boolean paper = false;
-//	private Borrower borrower;
-//	private String summary;
 	
 	public ZBook () {
 		
 	}
 
-	public int getISBN() {
+	public String getISBN() {
 		return ISBN;
 	}
 
-	public void setISBN(int iSBN) {
+	public void setISBN(String iSBN) {
 		ISBN = iSBN;
 	}
 
@@ -74,52 +70,15 @@ public class ZBook {
 		return language.toString();
 	}
 
-	public void setLanguage(String language) {
-		this.language = Language.getValueOfToUpperCase(language);
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 
-	public String getCollection() {
-		return collection.toString();
-	}
+    public int getId(){
+        return id;
+    }
 
-	public void setCollection(String collection) {
-		this.collection = ZenikaCollection.getValueOfToUpperCase(collection);
-	}
-
-//	public boolean isEbook() {
-//		return ebook;
-//	}
-//
-//	public void setEbook(boolean ebook) {
-//		this.ebook = ebook;
-//	}
-//
-//	public boolean isPaper() {
-//		return paper;
-//	}
-//
-//	public void setPaper(boolean paper) {
-//		this.paper = paper;
-//	}
-//
-//	public Borrower getBorrower() {
-//		return borrower;
-//	}
-//
-//	public void setBorrower(Borrower borrower) {
-//		this.borrower = borrower;
-//	}
-//
-//	public String getSummary() {
-//		return summary;
-//	}
-//
-//	public void setSummary(String summary) {
-//		this.summary = summary;
-//	}
-	
-	@Override
-	public String toString () {
-		return this.title + " de " + this.authors + " -- ISBN : " + this.ISBN;
-	}
+    public void setId(int id){
+        this.id = id;
+    }
 }

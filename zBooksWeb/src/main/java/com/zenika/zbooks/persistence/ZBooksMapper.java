@@ -11,21 +11,15 @@ public interface ZBooksMapper {
 	
 	void addBook (ZBook book);
 	
-	void deleteBook (int isbn);
+	void deleteBook (int id);
 
-	ZBook getBook (int isbn);
-	
-	List<Author> selectAllAuthorsByBook(int isbn);
-	
-	List<Author> selectAllAuthors ();
-	
-	List<ZBook> getAllBooks ();
-	
-	Author getAuthorById (int id);
-	
-	Author getAuthorByName (@Param("firstName") String firstName, @Param("lastName") String lastName);
-	
+	ZBook getBook (int id);
+
+	List<ZBook> getBooks ();
+
 	void addAuthor(Author author);
-	
-	void addLinkAuthorZBooks(@Param("ISBN") int isbn, @Param("authorId") int id);	
+
+	void addLinkAuthorZBooks(@Param("ISBN") String isbn, @Param("authorId") int id);
+
+    Author getAuthorByName (@Param("firstName") String firstName, @Param("lastName") String lastName);
 }

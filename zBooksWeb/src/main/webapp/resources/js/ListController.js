@@ -1,5 +1,7 @@
 function ListController ($scope, $routeParams, $http) {
-	$scope.message = $http.get("/user/coucou");
+	$scope.message = $http({method: 'GET', url: '/', headers:{ 'Accept' : 'application/json' }}).success(function(data, status, headers, config){
+        $scope.bookList =data;
+    });
     $scope.bookList = [
     {isbn:"047094224X",title:"Professional NoSQL	John Wiley & Sons Ltd",lang:"EN"},
     {isbn:"0596518846",title:"SQL in a Nutshell	O'Reilly",lang:"EN"},
