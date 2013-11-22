@@ -1,2 +1,0 @@
-serviceClass: com.zenika.zbooks.gwt.client.ZBookRpcService
-path: 5BA8A1D0F3796366E90DD80291424E68.gwt.rpc

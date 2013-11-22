@@ -43,6 +43,12 @@
           <artifactId>hibernate-validator</artifactId>
           <version>${hibernate.version}</version>
     </dependency>
+    <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.27</version>
+	</dependency>
+            
     
     <!-- H2DB -->
     <dependency>

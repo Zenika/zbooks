@@ -3,28 +3,33 @@ package com.zenika.zbooks.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zenika.zbooks.gwt.client.ZBookRpcService;
 import com.zenika.zbooks.gwt.client.entity.Author;
 import com.zenika.zbooks.gwt.client.entity.ZBook;
+import com.zenika.zbooks.gwt.client.entity.ZenikaCollection;
 import com.zenika.zbooks.gwt.services.ZBookService;
 
 @Service("zBookRpcService")
 public class ZBookRpcServiceImpl implements ZBookRpcService {
 
+	private static final Logger LOG = Logger.getLogger(ZBookRpcServiceImpl.class);
+	
 	@Autowired
 	private ZBookService zBookService;
 
-
 	@Override
-	public ZBook getZBook(int isbn) {
+	public ZBook getZBook(long isbn) {
+		LOG.info("RPC query : getZBook with the argument " + isbn);
 		return this.zBookService.findByIsbn(isbn);
 	}
 
 	@Override
 	public List<ZBook> getAllZBooks() {
+		LOG.info("RPC query : getAllZBooks");
 		this.fillDB();
 		List<ZBook> zBooksList = this.zBookService.findAll();
 		List<ZBook> zBookListToReturn = new ArrayList<ZBook>();
@@ -82,4 +87,12 @@ public class ZBookRpcServiceImpl implements ZBookRpcService {
 		this.zBookService.createOrUpdate(zBook1);
 		this.zBookService.createOrUpdate(zBook2);
 	}
+
+	@Override
+	public void addZBook(long isbn, ZenikaCollection collection) {
+		LOG.info("Adding a ZBook with the ISBN : " + isbn + " in the collection " + collection);
+		this.zBookService.createOrUpdate(isbn, collection);
+	}
+
+	
 }

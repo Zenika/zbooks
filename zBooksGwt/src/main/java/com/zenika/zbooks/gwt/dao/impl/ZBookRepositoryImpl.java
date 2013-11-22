@@ -23,7 +23,7 @@ public class ZBookRepositoryImpl implements ZBookRepository {
 	}
 
 	@Override
-	public ZBook findByIsbn(int isbn) {
+	public ZBook findByIsbn(long isbn) {
 		return this.em.find(ZBook.class, isbn);
 	}
 

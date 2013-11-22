@@ -25,7 +25,7 @@ public class ZBooksGwt implements EntryPoint {
 
 	private final FlexTable zBooksTable= new FlexTable();
 	private final VerticalPanel libraryPanel = new VerticalPanel();
-	private final HorizontalPanel addZBookPanel = new HorizontalPanel();
+	private final AddZBookPanel addZBookPanel = new AddZBookPanel();
 	private final Label label = new Label ("You're on the page to see the library");
 	private final Anchor linkToAddBookPage = new Anchor ();
 	private final Anchor linkToLibraryPage = new Anchor ();
@@ -37,8 +37,7 @@ public class ZBooksGwt implements EntryPoint {
 	public void onModuleLoad() {
 		this.initializeZBooksTable();
 		this.initializeLibraryPanel();
-		
-		this.initializeAddZBookPanel();
+
 		this.setRootContent();
 		
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -73,16 +72,6 @@ public class ZBooksGwt implements EntryPoint {
 		libraryPanel.add(zBooksTable);
 		libraryPanel.add(linkToAddBookPage);
 		libraryPanel.add(label);
-	}
-	
-	private void initializeAddZBookPanel () {
-		linkToLibraryPage.setHref("#");
-		linkToLibraryPage.setHTML("Retour à la bibliothèque");
-		linkToLibraryPage.addStyleName("btn");
-		linkToLibraryPage.addStyleName("btn-primary");
-		
-		addZBookPanel.add(linkToLibraryPage);
-		addZBookPanel.add(label);
 	}
 
 	private void initializeZBooksTable () {

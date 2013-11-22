@@ -25,7 +25,7 @@ public class ZBook implements Serializable {
 	 * 
 	 */
 	@Id
-	private int ISBN;
+	private long ISBN;
 	
 	private String edition;
 	
@@ -55,7 +55,7 @@ public class ZBook implements Serializable {
 		
 	}
 	
-	public ZBook (int ISBN, String edition, String title, int pagesNumber, List<Author> authors) {
+	public ZBook (long ISBN, String edition, String title, int pagesNumber, List<Author> authors) {
 		this.ISBN = ISBN;
 		this.edition = edition;
 		this.title = title;
@@ -63,11 +63,11 @@ public class ZBook implements Serializable {
 		this.authors = authors;
 	}
 
-	public int getISBN() {
+	public long getISBN() {
 		return ISBN;
 	}
 
-	public void setISBN(int iSBN) {
+	public void setISBN(long iSBN) {
 		ISBN = iSBN;
 	}
 

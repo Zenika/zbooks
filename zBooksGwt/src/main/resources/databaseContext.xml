@@ -5,10 +5,10 @@
        	http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans.xsd">
        
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="org.h2.Driver"/>
-      <property name="url" value="jdbc:h2:~/zBooksGwt"/>
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://localhost:3306/zBooksGwt"/>
       <property name="username" value="root" />
-      <property name="password" value="pwd"/>
+      <property name="password" value="zenika"/>
     </bean>
     	
     <bean class="org.springframework.orm.jpa.JpaTransactionManager"
@@ -23,10 +23,9 @@
         <property name="packagesToScan" value="com.zenika.zbooks.gwt.client.entity"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="generateDdl" value="true" />
+                <property name="generateDdl" value="false" />
                 <property name="showSql" value="true"/>
-                <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect"/>
-                <property name="database" value="H2"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
             </bean>
         </property>
     </bean>

@@ -9,7 +9,7 @@ public interface ZBookRepository{
 
 	List<ZBook> findAll();
 	
-	ZBook findByIsbn(int isbn);
+	ZBook findByIsbn(long isbn);
 	
 	ZBook save (ZBook zBook);
 	
