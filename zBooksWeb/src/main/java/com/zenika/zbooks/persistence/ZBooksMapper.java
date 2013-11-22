@@ -1,11 +1,9 @@
 package com.zenika.zbooks.persistence;
 
-import java.util.List;
-
+import com.zenika.zbooks.entity.ZBook;
 import org.apache.ibatis.annotations.Param;
 
-import com.zenika.zbooks.entity.Author;
-import com.zenika.zbooks.entity.ZBook;
+import java.util.List;
 
 public interface ZBooksMapper {
 	
@@ -17,9 +15,4 @@ public interface ZBooksMapper {
 
 	List<ZBook> getBooks ();
 
-	void addAuthor(Author author);
-
-	void addLinkAuthorZBooks(@Param("ISBN") String isbn, @Param("authorId") int id);
-
-    Author getAuthorByName (@Param("firstName") String firstName, @Param("lastName") String lastName);
 }

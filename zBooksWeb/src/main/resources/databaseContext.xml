@@ -9,7 +9,7 @@
       <property name="username" value="root" />
       <property name="password" value="pwd"/>
     </bean>
-    
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	  <property name="dataSource" ref="dataSource" />
 	  <property name="configLocation" value="classpath:com/zenika/zbooks/mybatis-config.xml"/>
