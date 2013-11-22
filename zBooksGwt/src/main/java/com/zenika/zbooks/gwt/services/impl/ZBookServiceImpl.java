@@ -101,7 +101,10 @@ public class ZBookServiceImpl implements ZBookService {
 			String edition = editionAndReleaseDate.split("; ")[0];
 			//Contains the amount of pages with the form "XXX pages"
 			String physicalDescription = json.getString("physical_description_text");
-			int pagesNumber = Integer.parseInt(physicalDescription.split(" ")[0]);
+			if (physicalDescription.split(" ")[0].matches("[0-9]*")) {
+				int pagesNumber = Integer.parseInt(physicalDescription.split(" ")[0]);
+				zBook.setPagesNumber(pagesNumber);
+			}
 			JSONArray authorsJSON = json.getJSONArray("author_data");
 			List<Author> authors = new ArrayList<Author>();
 			for (int i=0; i<authorsJSON.length(); i++) {
@@ -115,7 +118,6 @@ public class ZBookServiceImpl implements ZBookService {
 			zBook.setAuthors(authors);
 			zBook.setTitle(title);
 			zBook.setEdition(edition);
-			zBook.setPagesNumber(pagesNumber);
 			return this.createOrUpdate(zBook);
 		} catch (JSONException e) {
 			LOG.error("A JSONException happened while filling the data of the ZBook from the JSON : " + e.getMessage());

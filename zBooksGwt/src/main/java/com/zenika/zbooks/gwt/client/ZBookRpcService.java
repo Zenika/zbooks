@@ -14,5 +14,5 @@ public interface ZBookRpcService extends RemoteService {
 	
 	List<ZBook> getAllZBooks ();
 	
-	void addZBook (long isbn, ZenikaCollection collection);
+	ZBook addZBook (long isbn, ZenikaCollection collection);
 }

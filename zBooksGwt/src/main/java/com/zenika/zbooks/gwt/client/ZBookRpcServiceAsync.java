@@ -14,6 +14,6 @@ public interface ZBookRpcServiceAsync {
 	void getAllZBooks(AsyncCallback<List<ZBook>> callback);
 
 	void addZBook(long isbn, ZenikaCollection collection,
-			AsyncCallback<Void> callback);
+			AsyncCallback<ZBook> callback);
 
 }

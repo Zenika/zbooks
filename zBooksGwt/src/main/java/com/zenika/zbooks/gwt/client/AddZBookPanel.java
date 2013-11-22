@@ -11,7 +11,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.zenika.zbooks.gwt.client.entity.ZBook;
 import com.zenika.zbooks.gwt.client.entity.ZenikaCollection;
+import com.zenika.zbooks.gwt.client.events.ZBookAddedEvent;
 
 public class AddZBookPanel extends Composite {
 	
@@ -32,7 +34,7 @@ public class AddZBookPanel extends Composite {
 		String collectionString = collection.getValue(collection.getSelectedIndex());
 		ZenikaCollection collectionEnum = ZenikaCollection.valueOf(collectionString);
 		
-		AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+		AsyncCallback<ZBook> callback = new AsyncCallback<ZBook>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -40,8 +42,8 @@ public class AddZBookPanel extends Composite {
 			}
 
 			@Override
-			public void onSuccess(Void result) {
-				
+			public void onSuccess(ZBook result) {
+				AppUtils.EVENT_BUS.fireEvent(new ZBookAddedEvent(result));
 			}
 		}; 
 		this.zBookGetter.addZBook(Long.parseLong(ISBN.getText()), collectionEnum, callback);

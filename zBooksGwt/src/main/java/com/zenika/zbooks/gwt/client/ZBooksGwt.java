@@ -11,12 +11,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.zenika.zbooks.gwt.client.entity.Author;
 import com.zenika.zbooks.gwt.client.entity.ZBook;
+import com.zenika.zbooks.gwt.client.events.ZBookAddedEvent;
+import com.zenika.zbooks.gwt.client.events.ZBookAddedEventHandler;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -28,7 +29,6 @@ public class ZBooksGwt implements EntryPoint {
 	private final AddZBookPanel addZBookPanel = new AddZBookPanel();
 	private final Label label = new Label ("You're on the page to see the library");
 	private final Anchor linkToAddBookPage = new Anchor ();
-	private final Anchor linkToLibraryPage = new Anchor ();
 	private ZBookRpcServiceAsync zBookGetter = GWT.create(ZBookRpcService.class);
 		
 	/**
@@ -50,6 +50,15 @@ public class ZBooksGwt implements EntryPoint {
 				} else {
 					label.setText("You're on the page to see the library" +event.getValue());
 				}
+			}
+		});
+		
+		AppUtils.EVENT_BUS.addHandler(ZBookAddedEvent.TYPE, new ZBookAddedEventHandler() {
+			
+			@Override
+			public void onZBookAdded(ZBookAddedEvent event) {
+				ZBook newZBook = event.getNewZBook();
+				addZBookToList(newZBook);
 			}
 		});
 	}
@@ -84,13 +93,10 @@ public class ZBooksGwt implements EntryPoint {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onSuccess(List<ZBook> result) {
-				// TODO Auto-generated method stub
 				addZBooksToList(result);
 			}
 		};

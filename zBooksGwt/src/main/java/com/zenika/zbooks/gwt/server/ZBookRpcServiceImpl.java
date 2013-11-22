@@ -89,9 +89,9 @@ public class ZBookRpcServiceImpl implements ZBookRpcService {
 	}
 
 	@Override
-	public void addZBook(long isbn, ZenikaCollection collection) {
+	public ZBook addZBook(long isbn, ZenikaCollection collection) {
 		LOG.info("Adding a ZBook with the ISBN : " + isbn + " in the collection " + collection);
-		this.zBookService.createOrUpdate(isbn, collection);
+		return this.makeUnpersistent(this.zBookService.createOrUpdate(isbn, collection));
 	}
 
 	
