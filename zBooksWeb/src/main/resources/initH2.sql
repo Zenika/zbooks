@@ -1,4 +1,6 @@
-CREATE TABLE IF NOT EXISTS `zBooks`
+DROP TABLE IF EXISTS zBooks;
+
+CREATE TABLE zBooks
 (
 id int AUTO_INCREMENT,
 ISBN VARCHAR(100),
@@ -6,7 +8,7 @@ title VARCHAR(150),
 author VARCHAR(150),
 edition VARCHAR(150),
 pagesNumber int(5),
-releaseDate date,
+releaseDate TIMESTAMP,
 language char(2)
 );
 

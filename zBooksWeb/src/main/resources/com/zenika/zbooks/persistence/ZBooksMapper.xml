@@ -19,8 +19,7 @@
  
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
-    	SELECT * FROM zBooks 
-    		WHERE id = #{id}
+    	SELECT * FROM zBooks WHERE id = #{id}
     </select>
     
     <select id="getBooks" resultMap="ZBook" timeout="10">
@@ -35,8 +34,13 @@
 	</insert>
 
 	<delete id="deleteBook" parameterType="int" timeout="10">
-		DELETE FROM zBooks 
-			WHERE id = #{id}
+		DELETE FROM zBooks WHERE id = #{id}
+	</delete>
+
+    <delete id="updateBook" parameterType="ZBook" timeout="10">
+		UPDATE zBooks
+		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language}
+		WHERE id=#{id}
 	</delete>
 
 </mapper>
