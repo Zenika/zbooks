@@ -3,50 +3,55 @@ package com.zenika.zbooks.integration;
 import com.zenika.zbooks.IntegrationTest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
-import static org.junit.Assert.*;
 
+import java.util.concurrent.TimeUnit;
+
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
 @Category(IntegrationTest.class)
-public class RootTest implements IntegrationTest{
+public class FrontTest implements IntegrationTest {
 
-    private static final Log LOG = LogFactory.getLog(RootTest.class);
+    private static final Log LOG = LogFactory.getLog(FrontTest.class);
 
     @Autowired
     private WebApplicationContext wac;
 
-    static WebDriver driver;
+    private static FirefoxDriver driver;
 
-    static String appPath;
+    private static String appPath;
 
     @BeforeClass
     public static void setUpOnce() throws Exception {
-        driver = new HtmlUnitDriver();
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         appPath = "http://localhost:8080/";
+    }
+
+    @Before
+    public void cleanCache() {
+        driver.manage().deleteAllCookies();
     }
 
     @AfterClass
@@ -64,7 +69,21 @@ public class RootTest implements IntegrationTest{
     @Test
     public void getRootAsHTML() throws Exception {
         driver.get(appPath);
-        assertEquals("Zenika Books",driver.getTitle());
+        assertEquals("Zenika Books", driver.getTitle());
+    }
+
+
+    @Test
+    public void getBookErrorAsHTML() throws Exception {
+        driver.get(appPath + "/2");
+        assertEquals(driver.findElement(By.tagName("h1")).getText(), "Etat HTTP 404 -");
+    }
+
+    @Test
+    public void getBookAsHTML() throws Exception {
+        driver.get(appPath + "/#2");
+        waitForAngularRequestsToFinish(driver);
+        assertEquals(driver.findElement(By.tagName("h3")).getText(), "SQL in a Nutshell");
     }
 
 }
