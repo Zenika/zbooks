@@ -4,17 +4,25 @@ import com.zenika.zbooks.IntegrationTest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hamcrest.Matchers;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
+import static org.junit.Assert.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,23 +39,32 @@ public class RootTest implements IntegrationTest{
     @Autowired
     private WebApplicationContext wac;
 
-    private MockMvc mockMvc;
+    static WebDriver driver;
 
-    @Before
-    public void setup() {
-        this.mockMvc = webAppContextSetup(this.wac).build();
+    static String appPath;
+
+    @BeforeClass
+    public static void setUpOnce() throws Exception {
+        driver = new HtmlUnitDriver();
+        appPath = "http://localhost:8080/";
+    }
+
+    @AfterClass
+    public static void tearDownOnce() throws Exception {
+        driver.quit();
     }
 
     @Test
     public void getRootAsAPI() throws Exception {
-        this.mockMvc.perform(get("/").accept(MediaType.APPLICATION_JSON))
+        MockMvc mockMvc = webAppContextSetup(this.wac).build();
+        mockMvc.perform(get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotAcceptable());
     }
 
     @Test
     public void getRootAsHTML() throws Exception {
-        this.mockMvc.perform(get("/").accept(MediaType.TEXT_HTML))
-                .andExpect(status().isOk()).andExpect(content().string(Matchers.containsString("Zenika Books"))).andExpect(content().string(Matchers.containsString("ng-app=\"zBooks\"")));
+        driver.get(appPath);
+        assertEquals("Zenika Books",driver.getTitle());
     }
 
 }

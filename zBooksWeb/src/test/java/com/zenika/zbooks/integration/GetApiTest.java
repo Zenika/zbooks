@@ -32,9 +32,9 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
 @Category(IntegrationTest.class)
-public class ApiTest implements IntegrationTest {
+public class GetApiTest implements IntegrationTest {
 
-    private static final Log LOG = LogFactory.getLog(ApiTest.class);
+    private static final Log LOG = LogFactory.getLog(GetApiTest.class);
 
     @Autowired
     private WebApplicationContext wac;
@@ -50,7 +50,7 @@ public class ApiTest implements IntegrationTest {
         try {
             Connection conn = dataSource.getConnection();
             Statement statement = conn.createStatement();
-            String sql = FileUtils.readFileToString(new File(ApiTest.class.getClassLoader().getResource("initH2.sql").getFile()));
+            String sql = FileUtils.readFileToString(new File(GetApiTest.class.getClassLoader().getResource("initH2.sql").getFile()));
             statement.execute(sql);
             conn.commit();
             conn.close();
