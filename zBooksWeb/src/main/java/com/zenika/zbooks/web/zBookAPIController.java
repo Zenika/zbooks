@@ -38,6 +38,9 @@ public class zBookAPIController {
     @RequestMapping(value = "/book/{id}", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public void updateBook(@RequestBody ZBook book) {
-        zBooksMapper.updateBook(book);
+        if (book.getId() == 0)
+            zBooksMapper.addBook(book);
+        else
+            zBooksMapper.updateBook(book);
     }
 }
