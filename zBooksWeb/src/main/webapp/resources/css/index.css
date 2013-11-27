@@ -1,36 +1,47 @@
-.zenika-red{
+.zenika-red {
     color: #942723;
 }
-.strong{
-    font-weight:bold;
+
+.strong {
+    font-weight: bold;
 }
-.zenika-logo{
- width: 80px;
+
+.zenika-logo {
+    width: 80px;
 }
-.footer{
+
+.footer {
     width: 100px;
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
 
 }
-.v-align-middle{
-    vertical-align:middle;
+
+.v-align-middle {
+    vertical-align: middle;
 }
 
-.img-cover{
+.img-cover {
     max-height: 200px;
     float: left;
     margin-right: 30px;
 }
 
+.img-mini {
+    max-height: 100px;
+    float: left;
+    margin-right: 30px;
+}
+
 dt {
-    width:100px;
+    width: 100px;
     float: left;
     clear: left;
     text-align: right;
     font-weight: bold;
 }
+
 dd {
     margin: 0 0 0 110px;
     padding: 0 0 0.5em 0;

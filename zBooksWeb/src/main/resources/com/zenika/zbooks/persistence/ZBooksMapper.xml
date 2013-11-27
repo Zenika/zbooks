@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="com.zenika.zbooks.persistence.ZBooksMapper">
- 
+
     <!-- Mapping ZBooks -->
     <resultMap type="ZBook" id="ZBook">
         <id column="id" property="id"/>
-        <result  column="ISBN" property="ISBN"  />
-        <result  column="author" property="authors"  />
-        <result  column="edition" property="edition"  />
-        <result  column="title" property="title"  />
-        <result  column="pagesNumber" property="pagesNumber"  />
-        <result  column="releaseDate" property="releaseDate"  />
-        <result  column="language" property="language"  />
+        <result column="ISBN" property="ISBN"/>
+        <result column="author" property="authors"/>
+        <result column="edition" property="edition"/>
+        <result column="title" property="title"/>
+        <result column="pagesNumber" property="pagesNumber"/>
+        <result column="releaseDate" property="releaseDate"/>
+        <result column="language" property="language"/>
+        <result column="cover" property="cover"/>
     </resultMap>
 
     <!-- ************************************************************************************* -->
- 
+
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
     	SELECT * FROM zBooks WHERE id = #{id}
     </select>
-    
+
     <select id="getBooks" resultMap="ZBook" timeout="10">
     	SELECT * FROM zBooks
     </select>
 
-	<insert id="addBook" parameterType="ZBook" timeout="10">
+    <insert id="addBook" parameterType="ZBook" timeout="10">
 		INSERT INTO 
-			zBooks (ISBN, title, author, edition, pagesNumber, releaseDate, language)
+			zBooks (ISBN, title, author, edition, pagesNumber, releaseDate, language, cover)
 		VALUES
-			(#{ISBN}, #{title}, #{authors}, #{edition}, #{pagesNumber}, #{releaseDate}, #{language})
+			(#{ISBN}, #{title}, #{authors}, #{edition}, #{pagesNumber}, #{releaseDate}, #{language}, #{cover})
 	</insert>
 
-	<delete id="deleteBook" parameterType="int" timeout="10">
+    <delete id="deleteBook" parameterType="int" timeout="10">
 		DELETE FROM zBooks WHERE id = #{id}
 	</delete>
 
     <delete id="updateBook" parameterType="ZBook" timeout="10">
 		UPDATE zBooks
-		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language}
+		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language},cover=#{cover}
 		WHERE id=#{id}
 	</delete>
 

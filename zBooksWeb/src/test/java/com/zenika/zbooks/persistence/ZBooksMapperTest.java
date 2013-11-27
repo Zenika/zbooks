@@ -18,14 +18,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
 @Category(UnitTest.class)
-public class ZBooksMapperTest implements UnitTest{
+public class ZBooksMapperTest implements UnitTest {
 
     private static final Log LOG = LogFactory.getLog(ZBooksMapperTest.class);
 
@@ -46,7 +47,7 @@ public class ZBooksMapperTest implements UnitTest{
             conn.close();
             LOG.info("H2 Inited");
         } catch (Exception e) {
-            LOG.error("H2 Init : failed.",e);
+            LOG.error("H2 Init : failed.", e);
             Assert.fail();
         }
     }
@@ -72,9 +73,9 @@ public class ZBooksMapperTest implements UnitTest{
 
     @Test
     public void getBooksTest() {
-       List<ZBook> zBook = zBooksMapper.getBooks();
-       assertEquals(3, zBook.size());
-       assertTrue(checkIdUnicity(zBook));
+        List<ZBook> zBook = zBooksMapper.getBooks();
+        assertEquals(3, zBook.size());
+        assertTrue(checkIdUnicity(zBook));
     }
 
     @Test
@@ -90,7 +91,7 @@ public class ZBooksMapperTest implements UnitTest{
         ZBook zBook = new ZBook();
         zBook.setISBN("ISBN_TEST");
         zBook.setTitle("Professional NoSQL");
-        zBook.setAuthors("auteur1") ;
+        zBook.setAuthors("auteur1");
         zBook.setEdition("edition");
         zBook.setLanguage("EN");
 
@@ -115,8 +116,7 @@ public class ZBooksMapperTest implements UnitTest{
         zBook.setEdition("EDITION_VAL");
         zBook.setLanguage("TS");
         zBook.setPagesNumber(11);
-        Date date = new Date();
-        zBook.setReleaseDate(date);
+        zBook.setReleaseDate("25/10/2013");
         zBook.setTitle("TITLE_VAL");
 
         zBooksMapper.updateBook(zBook);
@@ -126,21 +126,20 @@ public class ZBooksMapperTest implements UnitTest{
         assertEquals("AUTHOR_VAL", zBook.getAuthors());
         assertEquals("EDITION_VAL", zBook.getEdition());
         assertEquals("TS", zBook.getLanguage());
-        assertEquals(11,zBook.getPagesNumber());
+        assertEquals(11, zBook.getPagesNumber());
         assertEquals("TITLE_VAL", zBook.getTitle());
-        assertEquals(date.getTime(), zBook.getReleaseDate().getTime());
+        assertEquals("25/10/2013", zBook.getReleaseDate());
 
     }
 
     private boolean checkIdUnicity(List<ZBook> zBooks) {
-        HashSet monHashSet=new HashSet();
-        for(ZBook zbook : zBooks){
-            if(!monHashSet.add(zbook.getId()))
+        HashSet monHashSet = new HashSet();
+        for (ZBook zbook : zBooks) {
+            if (!monHashSet.add(zbook.getId()))
                 return false;
         }
         return true;
     }
-
 
 
 }

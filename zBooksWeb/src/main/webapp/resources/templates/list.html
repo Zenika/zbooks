@@ -1,9 +1,15 @@
 <table class="table table-striped table-bordered table-hover table-condensed">
-    <tr><th></th>
+    <tr>
+        <th></th>
         <th>Titre</th>
         <th>Langue</th>
     </tr>
     <tr ng-repeat="book in bookList">
-        <td class="text-muted"><h6>{{book.isbn}}</h6></td><td><a href="#/{{book.id}}">{{book.title}}</a></td><td><img src="./resources/image/{{book.language|img404safe}}.png"></td>
+        <td class="text-muted"><h6>{{book.isbn}}</h6></td>
+        <td><a href="#/{{book.id}}">{{book.title}}</a></td>
+        <td><img ng-src="./resources/image/{{book.language|img404safe}}.png"></td>
     </tr>
 </table>
+<button type="button" class="btn btn-default" ng-click="new()">
+    <span class="glyphicon glyphicon-plus"></span> Ajouter un livre
+</button>

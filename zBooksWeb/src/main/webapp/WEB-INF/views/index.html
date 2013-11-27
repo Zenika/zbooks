@@ -7,15 +7,24 @@
     <script src="resources/js/ListController.js"></script>
     <script src="resources/js/index.js"></script>
     <script src="resources/js/DetailController.js"></script>
+    <script src="resources/js/EditController.js"></script>
 
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/index.css">
 
 </head>
-<body>
-<div class="page-header container">
-        <h1 style="float: left;">z<span class="zenika-red strong">B</span>ooks</h1>
+<body ng-controller="rootController">
+<div class="page-header container" style="margin-bottom: 9px;">
+    <h1 style="float: left;cursor:pointer;" ng-click="goHome()">z<span class="zenika-red strong">B</span>ooks</h1></br>
+    <div class="container" ng-hide="isBreadcrumbsEmpty()" style="float: left;">
+        <span ng-repeat="crumb in breadcrumbs()">
+            <span ng-hide="$first"> > </span>
+            <a href="{{crumb.route}}" ng-hide="$last">{{crumb.label}}</a>
+            <span ng-show="$last">{{crumb.label}}</span>
+        </span>
+    </div>
 </div>
+
 
 <div class="container" ng-view="">
 </div>

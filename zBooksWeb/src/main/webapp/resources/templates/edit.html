@@ -1,0 +1,85 @@
+<div>
+    <form role="form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <button type="button" class="btn btn-danger " ng-show="showDelete" style="float:right"
+                            ng-click="confirmDelete()">
+                        Supprimer
+                    </button>
+                    <h3 ng-show="book.id">Modifier "{{book.title}}"</h3>
+
+                    <h3 ng-hide="book.id">Ajouter un nouveau livre</h3>
+                </div>
+            </div>
+            <div class="panel-body" id="bodyPanel">
+                <div class="alert alert-danger" ng-show="isError">
+                    <span class="glyphicon glyphicon-remove" style="cursor: pointer; float:right;"
+                          ng-click="closeErrorMessage()"></span>
+                    <strong>Erreur !</strong> {{errorMessage}}
+                </div>
+                <div class="alert alert-success" ng-show="isSuccessMessage">
+                    <span class="glyphicon glyphicon-remove" style="cursor: pointer; float:right;"
+                          ng-click="closeSuccessMessage()"></span>
+                    <strong>Nickel ! Mise à jour effectuée avec succès.</strong>
+                </div>
+                <div class="alert alert-warning" ng-show="confirmDeleteFlag">
+                    Êtes-vous sur de vouloir suppimer ce livre ?
+                    <button type="button" class="btn btn-danger " ng-click="delete()">
+                        Oui, Supprimer
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="cancelDelete()">
+                        Non
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="isbn">ISBN</label>
+
+                    <div class="input-group">
+                        <input type="text" id="isbn" class="form-control" placeholder="ISBN" ng-model="book.isbn">
+                         <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Importer</button>
+                         </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="title">Titre</label>
+                    <input type="text" class="form-control" id="title" placeholder="Titre" ng-model="book.title">
+                </div>
+                <div class="form-group">
+                    <label for="authors">Auteur</label>
+                    <input type="text" class="form-control" id="authors" placeholder="Auteur" ng-model="book.authors">
+                </div>
+                <div class="form-group">
+                    <label for="language">Langue</label>
+                    <select class="form-control" id="language" placeholder="Langue" ng-model="currentLanguage"
+                            ng-options="language.code for language in languages">
+                        <option value="">-- Définir la langue --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editor">Editeur</label>
+                    <input type="text" class="form-control" id="editor" placeholder="Editeur" ng-model="book.edition">
+
+                </div>
+                <div class="form-group">
+                    <label for="pagesNumber">Nombre de pages</label>
+                    <input type="number" class="form-control" id="pagesNumber" placeholder="Nombre de pages"
+                           ng-model="book.pagesNumber">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-1">
+                            <img class="img-mini" ng-src="{{book.cover|coverFilter}}" style="float: left;">
+                        </div>
+                        <div class="col-xs-10">
+                            <label for="cover">Couverture</label>
+                            <input type="text" class="form-control" id="cover" placeholder="Url" ng-model="book.cover">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn  btn-primary" ng-click="update();">Ok</button>
+            </div>
+        </div>
+    </form>
+</div>

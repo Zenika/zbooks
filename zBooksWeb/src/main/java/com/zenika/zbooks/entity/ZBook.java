@@ -1,83 +1,90 @@
 package com.zenika.zbooks.entity;
 
-import java.util.Date;
-
 public class ZBook {
 
     private int id;
-	private String ISBN;
-	private String edition;
-	private String title;
-	private int pagesNumber;
-	private String authors;
-	private Date releaseDate;
-	private String language;
-	
-	public ZBook () {
-		
-	}
+    private String ISBN;
+    private String edition;
+    private String title;
+    private int pagesNumber;
+    private String authors;
+    private String releaseDate;
+    private String language;
+    private String cover;
 
-	public String getISBN() {
-		return ISBN;
-	}
+    public ZBook() {
 
-	public void setISBN(String iSBN) {
-		ISBN = iSBN;
-	}
+    }
 
-	public String getEdition() {
-		return edition;
-	}
+    public String getISBN() {
+        return ISBN;
+    }
 
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
+    public void setISBN(String iSBN) {
+        ISBN = iSBN;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getEdition() {
+        return edition;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
 
-	public int getPagesNumber() {
-		return pagesNumber;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setPagesNumber(int pagesNumber) {
-		this.pagesNumber = pagesNumber;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getAuthors() {
-		return authors;
-	}
+    public int getPagesNumber() {
+        return pagesNumber;
+    }
 
-	public void setAuthors(String authors) {
-		this.authors = authors;
-	}
+    public void setPagesNumber(int pagesNumber) {
+        this.pagesNumber = pagesNumber;
+    }
 
-	public Date getReleaseDate() {
-		return releaseDate;
-	}
+    public String getAuthors() {
+        return authors;
+    }
 
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    public void setAuthors(String authors) {
+        this.authors = authors;
+    }
 
-	public String getLanguage() {
-		return language;
-	}
+    public String getReleaseDate() {
+        return releaseDate;
+    }
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-    public int getId(){
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 }

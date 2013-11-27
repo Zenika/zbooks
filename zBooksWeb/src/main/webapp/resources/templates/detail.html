@@ -2,11 +2,14 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
+                <button type="button" class="btn btn-default" style="float:right" ng-click="edit()">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
                 <h3>{{book.title}}</h3>
             </div>
         </div>
         <div class="panel-body">
-            <div><img class="img-cover" src="{{book.cover}}"></div>
+            <div><img class="img-cover" ng-src="{{book.cover|coverFilter}}"></div>
             <div style="float: left">
                 <dl>
                     <dt>Titre</dt>
@@ -14,13 +17,13 @@
                     <dt>ISBN</dt>
                     <dd>{{book.isbn}}</dd>
                     <dt>Langues</dt>
-                    <dd><img src="./resources/image/{{book.language|img404safe}}.png"></dd>
+                    <dd><img ng-src="./resources/image/{{book.language|img404safe}}.png"></dd>
                     <dt>Editeur</dt>
-                    <dd>{{book.editor}}></dd>
+                    <dd>{{book.editor}}</dd>
                     <dt>Auteurs</dt>
-                    <dd>{{book.authors}}></dd>
+                    <dd>{{book.authors}}</dd>
                     <dt>Nombre de pages</dt>
-                    <dd>{{book.pagesNumber}}></dd>
+                    <dd>{{book.pagesNumber}}</dd>
                 </dl>
             </div>
         </div>
