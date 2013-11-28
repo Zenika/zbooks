@@ -1,16 +1,22 @@
 function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     $scope.book = new Object();
+
     $scope.couldDelete = false;
     $scope.confirmDeleteFlag = false;
     $scope.showDelete = false;
-    $scope.errorMessage = "Une erreur est survenue.";
-    $scope.isSuccessMessage = false;
-    $scope.isError = false;
+
+    $scope.message = "";
+    $scope.messageType;
+
     $scope.languages = [
         {code:"FR"},
         {code:"EN"}
     ];
 
+    $scope.ERROR_TYPE = "alert-danger";
+    $scope.WARNING_TYPE = "alert-warning";
+    $scope.INFO_TYPE = "alert-info";
+    $scope.SUCCESS_TYPE = "alert-success";
 
     $scope.getLanguage = function (lang) {
         if (lang == "FR" || !lang)
@@ -26,11 +32,12 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $scope.showDelete = false;
     }
 
-    $scope.closeErrorMessage = function () {
-        $scope.isError = false;
+    $scope.closeMessage = function () {
+        $scope.message = "";
     }
-    $scope.closeSuccessMessage = function () {
-        $scope.isSuccessMessage = false;
+
+    $scope.isMessage = function () {
+        return $scope.message && $scope.message.length > 0;
     }
 
     $scope.cancelDelete = function () {
@@ -45,8 +52,8 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
                 $scope.confirmDeleteFlag = false;
             }).
             error(function (data, status, headers, config) {
-                $scope.isError = true;
-                $scope.errorMessage = "Une erreur est survenue lors de la suppression du livre.";
+                $scope.message = "Une erreur est survenue lors de la suppression du livre.";
+                $scope.messageType = $scope.ERROR_TYPE;
                 $scope.confirmDeleteFlag = false;
                 scrollTo("bodyPanel");
             });
@@ -57,12 +64,13 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $http({method:'POST', url:'/api/book/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
         ).
             success(function (data, status, headers, config) {
-                $scope.isSuccessMessage = true;
+                $scope.message = "Nickel, Mise a jour effectuee.";
+                $scope.messageType = $scope.SUCCESS_TYPE;
                 scrollTo("bodyPanel");
             }).
             error(function (data, status, headers, config) {
-                $scope.isError = true;
-                $scope.errorMessage = "Une erreur est survenue lors de la modification du livre.";
+                $scope.message = "Une erreur est survenue lors de la modification du livre.";
+                $scope.messageType = $scope.ERROR_TYPE;
                 scrollTo("bodyPanel");
             });
     }
@@ -87,7 +95,8 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             $scope.getDataCallback(data);
         }).error(function () {
-                $scope.errorMessage = "Une erreur est survenue lors de la récupération des informations du livre.";
+                $scope.message = "Une erreur est survenue lors de la récupération des informations du livre.";
+                $scope.messageType = $scope.ERROR_TYPE;
                 $scope.confirmDeleteFlag = false;
             });
     }
@@ -97,7 +106,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     }
 
     $scope.importCallback = function (data) {
-        if (data.totalItems == 1) {
+        if (data.totalItems >= 1) {
             $scope.book.title = data.items[0].volumeInfo.title;
             $scope.book.authors = data.items[0].volumeInfo.authors[0];
             $scope.book.pagesNumber = data.items[0].volumeInfo.pageCount
@@ -105,7 +114,12 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
             $scope.book.language = data.items[0].volumeInfo.language.toUpperCase();
             $scope.currentLanguage = $scope.getLanguage($scope.book.language);
             $scope.book.releaseDate = data.items[0].volumeInfo.publishedDate;
-            $scope.book.edition = data.items[0].volumeInfo.publisher
+            $scope.book.edition = data.items[0].volumeInfo.publisher;
+            $scope.message = "Les données du livre ont été mise à jour avec les données importées";
+            $scope.messageType = $scope.INFO_TYPE;
+        } else {
+            $scope.message = "Aucun livre ne correspond a cet ISBN chez Google...";
+            $scope.messageType = $scope.WARNING_TYPE;
         }
     }
     $scope.import = function () {
@@ -115,8 +129,8 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $http.jsonp(url).success(function (data) {
             $scope.importCallback(data);
         }).error(function (data) {
-                $scope.isError = true;
-                $scope.errorMessage = "Une erreur est survenue lors de l'import.";
+                $scope.messageType = $scope.ERROR_TYPE;
+                $scope.message = "Une erreur est survenue lors de l'import.";
 
             });
 

@@ -13,15 +13,10 @@
                 </div>
             </div>
             <div class="panel-body" id="bodyPanel">
-                <div class="alert alert-danger" ng-show="isError">
+                <div class="alert" ng-class="messageType" ng-show="isMessage()">
                     <span class="glyphicon glyphicon-remove" style="cursor: pointer; float:right;"
-                          ng-click="closeErrorMessage()"></span>
-                    <strong>Erreur !</strong> {{errorMessage}}
-                </div>
-                <div class="alert alert-success" ng-show="isSuccessMessage">
-                    <span class="glyphicon glyphicon-remove" style="cursor: pointer; float:right;"
-                          ng-click="closeSuccessMessage()"></span>
-                    <strong>Nickel ! Mise à jour effectuée avec succès.</strong>
+                          ng-click="closeMessage()"></span>
+                    {{message}}
                 </div>
                 <div class="alert alert-warning" ng-show="confirmDeleteFlag">
                     Êtes-vous sur de vouloir suppimer ce livre ?
