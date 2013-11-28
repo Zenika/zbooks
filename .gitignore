@@ -4,7 +4,6 @@
 */target/*
 */.settings/*
 *.iml
-
 /.idea
 
 /zBooksWeb/*.db
