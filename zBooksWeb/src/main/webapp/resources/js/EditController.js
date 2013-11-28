@@ -10,7 +10,16 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         {code:"FR"},
         {code:"EN"}
     ];
-    $scope.currentLanguage = $scope.languages[0];
+
+
+    $scope.getLanguage = function (lang) {
+        if (lang == "FR" || !lang)
+            return $scope.languages[0];
+        else
+            return $scope.languages[1];
+    }
+
+    $scope.currentLanguage = $scope.getLanguage();
 
     $scope.confirmDelete = function () {
         $scope.confirmDeleteFlag = true;
@@ -49,6 +58,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         ).
             success(function (data, status, headers, config) {
                 $scope.isSuccessMessage = true;
+                scrollTo("bodyPanel");
             }).
             error(function (data, status, headers, config) {
                 $scope.isError = true;
@@ -60,10 +70,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     $scope.getDataCallback = function (data) {
         $scope.book = data;
 
-        if ($scope.book.language == "FR")
-            $scope.currentLanguage = $scope.languages[0];
-        else
-            $scope.currentLanguage = $scope.languages[1];
+        $scope.currentLanguage = $scope.getLanguage($scope.book.language);
 
         $scope.couldDelete = true;
         $scope.showDelete = true;
@@ -74,6 +81,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
             {label:"Modification", route:"/#/" + $routeParams.id + "/edit"}
         ]);
     }
+
 
     $scope.getData = function () {
         $http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
@@ -94,7 +102,8 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
             $scope.book.authors = data.items[0].volumeInfo.authors[0];
             $scope.book.pagesNumber = data.items[0].volumeInfo.pageCount
             $scope.book.cover = data.items[0].volumeInfo.imageLinks.smallThumbnail
-            $scope.book.language = data.items[0].volumeInfo.language;
+            $scope.book.language = data.items[0].volumeInfo.language.toUpperCase();
+            $scope.currentLanguage = $scope.getLanguage($scope.book.language);
             $scope.book.releaseDate = data.items[0].volumeInfo.publishedDate;
             $scope.book.edition = data.items[0].volumeInfo.publisher
         }
