@@ -84,8 +84,33 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
             });
     }
 
-    $scope.scrollTo = function scrollTo(anchorId) {
+    $scope.scrollTo = function (anchorId) {
         $('html, body').animate({scrollTop:$("#" + anchorId).offset().top}, 500);
+    }
+
+    $scope.importCallback = function (data) {
+        if (data.totalItems == 1) {
+            $scope.book.title = data.items[0].volumeInfo.title;
+            $scope.book.authors = data.items[0].volumeInfo.authors[0];
+            $scope.book.pagesNumber = data.items[0].volumeInfo.pageCount
+            $scope.book.cover = data.items[0].volumeInfo.imageLinks.smallThumbnail
+            $scope.book.language = data.items[0].volumeInfo.language;
+            $scope.book.releaseDate = data.items[0].volumeInfo.publishedDate;
+            $scope.book.edition = data.items[0].volumeInfo.publisher
+        }
+    }
+    $scope.import = function () {
+
+        var url = 'https://www.googleapis.com/books/v1/volumes?callback=JSON_CALLBACK&q=isbn' + $scope.book.isbn;
+
+        $http.jsonp(url).success(function (data) {
+            $scope.importCallback(data);
+        }).error(function (data) {
+                $scope.isError = true;
+                $scope.errorMessage = "Une erreur est survenue lors de l'import.";
+
+            });
+
     }
 
     if ($routeParams.id != "new") {
