@@ -34,15 +34,8 @@
     margin-right: 30px;
 }
 
-dt {
-    width: 100px;
-    float: left;
-    clear: left;
+th {
     text-align: right;
     font-weight: bold;
-}
-
-dd {
-    margin: 0 0 0 110px;
-    padding: 0 0 0.5em 0;
+    padding-right: 10px;
 }

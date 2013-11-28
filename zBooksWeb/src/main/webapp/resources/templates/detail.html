@@ -11,20 +11,32 @@
         <div class="panel-body">
             <div><img class="img-cover" ng-src="{{book.cover|coverFilter}}"></div>
             <div style="float: left">
-                <dl>
-                    <dt>Titre</dt>
-                    <dd>{{book.title}}</dd>
-                    <dt>ISBN</dt>
-                    <dd>{{book.isbn}}</dd>
-                    <dt>Langues</dt>
-                    <dd><img ng-src="./resources/image/{{book.language|img404safe}}.png"></dd>
-                    <dt>Editeur</dt>
-                    <dd>{{book.editor}}</dd>
-                    <dt>Auteurs</dt>
-                    <dd>{{book.authors}}</dd>
-                    <dt>Nombre de pages</dt>
-                    <dd>{{book.pagesNumber}}</dd>
-                </dl>
+                <table>
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{book.title}}</td>
+                    </tr>
+                    <tr>
+                        <th>ISBN</th>
+                        <td>{{book.isbn}}</td>
+                    </tr>
+                    <tr>
+                        <th>Langues</th>
+                        <td><img ng-src="./resources/image/{{book.language|img404safe}}.png"></td>
+                    </tr>
+                    <tr>
+                        <th>Editeur</th>
+                        <td>{{book.edition}}</td>
+                    </tr>
+                    <tr>
+                        <th>Auteurs</th>
+                        <td>{{book.authors}}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre de pages</th>
+                        <td>{{book.pagesNumber}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
