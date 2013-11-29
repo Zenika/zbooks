@@ -19,5 +19,10 @@
         <property name="mapperInterface" value="com.zenika.zbooks.persistence.ZBooksMapper" />
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
+    
+    <bean id="zUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.zenika.zbooks.persistence.ZUserMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
 
 </beans>

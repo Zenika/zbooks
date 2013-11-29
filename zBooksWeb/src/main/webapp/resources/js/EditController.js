@@ -84,7 +84,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $scope.showDelete = true;
 
         Breadcrumbs.setCrumbs([
-            {label:"Liste", route:"/" },
+            {label:"Liste", route:"/list" },
             {label:$scope.book.title, route:"/#/" + $routeParams.id},
             {label:"Modification", route:"/#/" + $routeParams.id + "/edit"}
         ]);
@@ -147,7 +147,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $scope.getData();
     }
     Breadcrumbs.setCrumbs([
-        {label:"Liste", route:"/" },
+        {label:"Liste", route:"/list" },
         {label:"Nouveau Livre", route:"/new/edit" }
     ]);
 }

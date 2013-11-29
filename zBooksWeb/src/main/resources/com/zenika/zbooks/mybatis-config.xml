@@ -6,6 +6,7 @@
 
       <!--  to specify alias explicitly -->
         <typeAlias alias="ZBook" type="com.zenika.zbooks.entity.ZBook"/>
+        <typeAlias alias="ZUser" type="com.zenika.zbooks.entity.ZUser"/>
       <!--  -->
     </typeAliases>
 </configuration>

@@ -24,4 +24,11 @@
 	<!-- resources exclusions from servlet mapping -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="**.html" location="/WEB-INF/views/"/>
+	
+	<mvc:interceptors>
+	    <mvc:interceptor>
+	      <mvc:mapping path="/api/*" />
+	      <bean class="com.zenika.zbooks.web.AuthentificationInterceptor" />
+	    </mvc:interceptor>
+  </mvc:interceptors>
 </beans>

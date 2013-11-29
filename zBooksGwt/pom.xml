@@ -8,7 +8,7 @@
 	<artifactId>zBooksGwt</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>GWT Maven Archetype</name>
+	<name>ZBooks :: GWT</name>
 
 	<properties>
 		<java-version>1.6</java-version>
@@ -87,7 +87,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -145,27 +144,22 @@
 
 
 		<!-- Logger -->
+		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
+			<version>1.2.16</version> </dependency> -->
+
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
 		</dependency>
 
 
 		<!-- Required by JPA -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
-			<classifier>sources</classifier>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
+			<version>1.0.0.GA</version> <scope>compile, test</scope> </dependency> <dependency> 
+			<groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
+			<version>1.0.0.GA</version> <classifier>sources</classifier> <scope>compile, 
+			test</scope> </dependency> -->
 	</dependencies>
 
 	<build>
@@ -198,7 +192,7 @@
 			</plugin>
 
 			<!-- Copy static web files before executing gwt:run -->
-			<plugin>
+<!-- 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
@@ -213,7 +207,7 @@
 				<configuration>
 					<webappDirectory>${webappDirectory}</webappDirectory>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
