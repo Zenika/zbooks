@@ -43,4 +43,10 @@ public class zBookAPIController {
         else
             zBooksMapper.updateBook(book);
     }
+
+    @RequestMapping(value = "/reset219", method = RequestMethod.GET)
+    @ResponseBody
+    public void reset() {
+        zBooksMapper.resetBdd();
+    }
 }

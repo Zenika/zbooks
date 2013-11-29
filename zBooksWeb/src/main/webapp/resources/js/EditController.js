@@ -107,14 +107,21 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
 
     $scope.importCallback = function (data) {
         if (data.totalItems >= 1) {
-            $scope.book.title = data.items[0].volumeInfo.title;
-            $scope.book.authors = data.items[0].volumeInfo.authors[0];
-            $scope.book.pagesNumber = data.items[0].volumeInfo.pageCount
-            $scope.book.cover = data.items[0].volumeInfo.imageLinks.smallThumbnail
-            $scope.book.language = data.items[0].volumeInfo.language.toUpperCase();
-            $scope.currentLanguage = $scope.getLanguage($scope.book.language);
-            $scope.book.releaseDate = data.items[0].volumeInfo.publishedDate;
-            $scope.book.edition = data.items[0].volumeInfo.publisher;
+            var volumeInfo = data.items[0].volumeInfo;
+
+            $scope.book.title = volumeInfo.title;
+            if (volumeInfo.authors)
+                $scope.book.authors = volumeInfo.authors[0];
+            $scope.book.pagesNumber = volumeInfo.pageCount
+            if (volumeInfo.imageLinks)
+                $scope.book.cover = volumeInfo.imageLinks.smallThumbnail
+            if (volumeInfo.language) {
+                $scope.book.language = volumeInfo.language.toUpperCase();
+                $scope.currentLanguage = $scope.getLanguage($scope.book.language);
+            }
+            $scope.book.releaseDate = volumeInfo.publishedDate;
+            $scope.book.edition = volumeInfo.publisher;
+
             $scope.message = "Les données du livre ont été mise à jour avec les données importées";
             $scope.messageType = $scope.INFO_TYPE;
         } else {
@@ -124,7 +131,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     }
     $scope.import = function () {
 
-        var url = 'https://www.googleapis.com/books/v1/volumes?callback=JSON_CALLBACK&q=isbn' + $scope.book.isbn;
+        var url = 'https://www.googleapis.com/books/v1/volumes?callback=JSON_CALLBACK&q=isbn:' + $scope.book.isbn;
 
         $http.jsonp(url).success(function (data) {
             $scope.importCallback(data);
