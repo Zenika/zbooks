@@ -3,6 +3,8 @@ package com.zenika.zbooks.persistence;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -53,10 +55,10 @@ public class ZUserMapperTest implements UnitTest {
     }
     
     @Test
-    public void getZUserTest () {
-    	ZUser user = zUserMapper.getZUser("root", "pwd");
+    public void getZUserTest () throws NoSuchAlgorithmException {
+    	ZUser user = zUserMapper.getZUser("root", hashPasswordInSHA256("pwd"));
     	assertEquals("root", user.getUserName());
-    	assertEquals("pwd", user.getPassword());
+    	assertEquals(hashPasswordInSHA256("pwd"), user.getPassword());
     	assertEquals(1, user.getId());
     	assertEquals(ZPower.ADMIN, user.getZPower());
     }
@@ -73,8 +75,25 @@ public class ZUserMapperTest implements UnitTest {
     }
     
     @Test
-    public void deleteZUserTest () {
+    public void deleteZUserTest () throws NoSuchAlgorithmException {
     	zUserMapper.deleteZUser(1);
-    	assertNull(zUserMapper.getZUser("root", "pwd"));
+    	assertNull(zUserMapper.getZUser("root", hashPasswordInSHA256("pwd")));
+    }
+    
+    private String hashPasswordInSHA256(String password) throws NoSuchAlgorithmException {
+    	
+    	MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(password.getBytes());
+ 
+        byte byteData[] = md.digest();
+
+        StringBuffer hexString = new StringBuffer();
+    	for (int i=0;i<byteData.length;i++) {
+    		String hex=Integer.toHexString(0xff & byteData[i]);
+   	     	if(hex.length()==1) hexString.append('0');
+   	     	hexString.append(hex);
+    	}
+    	
+    	return hexString.toString();
     }
 }

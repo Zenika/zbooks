@@ -225,6 +225,8 @@
                 <version>2.2</version>
                 <configuration>
                 	<path>/</path>
+                	<httpsPort>8443</httpsPort>
+        			<keystorePass>changeit</keystorePass>
                 </configuration>
             </plugin>
         </plugins>
