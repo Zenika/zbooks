@@ -27,5 +27,7 @@ INSERT INTO zBooks (ISBN,title,author,edition,pagesNumber,releaseDate,language) 
 INSERT INTO zBooks (ISBN,title,author,edition,pagesNumber,releaseDate,language,cover) VALUES ('0596518846X','SQL in a Nutshell','auteur2','O''Reilly',11,DATE '2001-10-13','EN','http://media.wiley.com/product_data/coverImage300/4X/04709422/047094224X.jpg');
 INSERT INTO zBooks (ISBN,title,author,edition,pagesNumber,releaseDate,language) VALUES ('2744025828X','Javascript - Les bons éléments','auteur3','Pearson',12,DATE '2002-10-13','FR');
 
-INSERT INTO zUser (userName, password, zPower) VALUES ('root', 'pwd', 0);
-INSERT INTO zUser (userName, password, zPower) VALUES ('user', 'test', 1);
+-- The password is pwd hashed in SHA-256
+INSERT INTO zUser (userName, password, zPower) VALUES ('root', 'a1159e9df3670d549d04524532629f5477ceb7deec9b45e47e8c009506ecb2c8', 0);
+-- The password is test hashed in SHA-256
+INSERT INTO zUser (userName, password, zPower) VALUES ('user', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1);
