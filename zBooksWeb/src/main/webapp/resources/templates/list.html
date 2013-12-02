@@ -10,6 +10,6 @@
         <td><img ng-src="./resources/image/{{book.language|img404safe}}.png"></td>
     </tr>
 </table>
-<button type="button" class="btn btn-default" ng-click="new()">
+<button type="button" class="btn btn-default" ng-click="new()" ng-show="hasSpecialAccess">
     <span class="glyphicon glyphicon-plus"></span> Ajouter un livre
 </button>

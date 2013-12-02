@@ -8,7 +8,7 @@ public class ZUser {
 	private ZPower zPower;
 	
 	public ZUser () {
-		
+		zPower=ZPower.USER;
 	}
 	
 	public int getId() {

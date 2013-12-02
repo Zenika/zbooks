@@ -30,5 +30,10 @@
 	      <mvc:mapping path="/api/*" />
 	      <bean class="com.zenika.zbooks.web.AuthentificationInterceptor" />
 	    </mvc:interceptor>
+	    <mvc:interceptor>
+	      <mvc:mapping path="/api/book/*" />
+	      <mvc:mapping path="/api/reset219" />
+	      <bean class="com.zenika.zbooks.web.SpecialPowerAuthentificationInterceptor" />
+	    </mvc:interceptor>
   </mvc:interceptors>
 </beans>

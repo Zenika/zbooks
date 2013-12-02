@@ -47,8 +47,10 @@ app.factory("authentificationInterceptor", function($q, $location){
 	      // On response failture
 	      responseError: function (rejection) {
 	        // console.log(rejection); // Contains the data about the error.
-	        if (rejection.status === 403){
+	        if (rejection.status === 401){
 	        	$location.path("/");
+	        } else if (rejection.status === 403) {
+	        	$location.path("/list");
 	        }
 	    	  
 	        // Return the promise rejection.

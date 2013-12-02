@@ -1,0 +1,59 @@
+package com.zenika.zbooks.web;
+
+import java.io.IOException;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.services.ZUserService;
+
+@Component
+public class SpecialPowerAuthentificationInterceptor extends
+		HandlerInterceptorAdapter {
+
+	private static final Logger logger = Logger.getLogger(SpecialPowerAuthentificationInterceptor.class);
+	
+	@Autowired
+	private ZUserService zUserService;
+	
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+		if (!request.getMethod().equals("GET") || request.getServletPath().contains("reset219")) {
+			Cookie[] cookies = request.getCookies();
+			String token = null;
+	    	if (cookies != null) {
+		    	
+		    	int i=0;
+		    	while (i<cookies.length && token == null) {
+		    		Cookie cookie = cookies[i];
+		    		if (cookie.getName().equals("token")) {
+		    			token = cookie.getValue();
+		    		}
+		    		i++;
+		    	}
+			
+				if (token != null && !zUserService.isZUserAuthenticated(token)) {
+					logger.info("Someone tried to access your API but didn't give any username");
+				} else if (token != null) {
+					if (zUserService.getZUserAccess(token) == ZPower.ADMIN) {
+						logger.info("An admin is accessing a reserved zone.");
+						return true;
+					} else {
+						logger.info("A user tried to access a forbidden zone");
+					}
+				}
+	    	}
+	    	response.sendError(403, "Vous n'êtes pas authorisé à accéder à cette page.");
+	    	return false;
+		} else {
+			return true;
+		}
+	}
+}

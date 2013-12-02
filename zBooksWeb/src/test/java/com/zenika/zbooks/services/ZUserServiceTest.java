@@ -42,9 +42,9 @@ public class ZUserServiceTest implements UnitTest {
 		String token1 = zUserService.connectZUser(user);
 		
 		Assertions.assertThat(token1).isNotNull();
-		Assertions.assertThat(zUserService.isZUserAuthenticated(user.getUserName(), token1)).isTrue();
+		Assertions.assertThat(zUserService.isZUserAuthenticated(token1)).isTrue();
 		
-		Assertions.assertThat(zUserService.isZUserAuthenticated(user.getUserName(), token1 + "/")).isFalse();
+		Assertions.assertThat(zUserService.isZUserAuthenticated(token1 + "/")).isFalse();
 		
 		ZUser user2 = new ZUser ();
 		user.setUserName("userTest2");

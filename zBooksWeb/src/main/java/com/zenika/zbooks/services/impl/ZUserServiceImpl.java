@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.persistence.UserCacheDAO;
 import com.zenika.zbooks.persistence.ZUserMapper;
@@ -39,16 +40,17 @@ public class ZUserServiceImpl implements ZUserService {
 	}
 
 	@Override
-	public boolean isZUserAuthenticated (String userName, String token) {
-		return userCache.isUserAuthenticated(userName, token);
+	public boolean isZUserAuthenticated (String token) {
+		return userCache.isUserAuthenticated(token);
 	}
 
 	@Override
 	public String connectZUser(ZUser user) {
-		if (isZUserInDb(user)) {
+		ZUser userInDb = zUserMapper.getZUser(user.getUserName(), user.getPassword());
+		if (userInDb != null) {
 			try {
 				String token = this.hashZUser(user);
-				userCache.authenticateNewUser(user.getUserName(), token);
+				userCache.authenticateNewUser(token, userInDb.getZPower());
 				return token;
 			} catch (NoSuchAlgorithmException e) {
 				LOG.error(e.getMessage());
@@ -81,6 +83,11 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public ZUser getZUser(String userName, String password) {
 		return zUserMapper.getZUser(userName, password);
+	}
+	
+	@Override
+	public ZPower getZUserAccess (String token) {
+		return userCache.getUserAccess(token);
 	}
 
 }

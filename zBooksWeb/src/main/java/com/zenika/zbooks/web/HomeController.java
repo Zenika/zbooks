@@ -28,8 +28,6 @@ public class HomeController {
 	public void loggIn (@RequestBody ZUser user, HttpServletResponse response) {
 		String token = zUserService.connectZUser(user);
 		if (token != null) {
-			String userName = user.getUserName();
-			response.addCookie(new Cookie("userName", userName));
 			response.addCookie(new Cookie("token", token));
 		}
 	}

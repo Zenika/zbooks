@@ -1,6 +1,11 @@
 function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     $scope.book = new Object();
 
+    $scope.hasSpecialAccess=false;
+    $http({method:'GET', url:'/api/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+        $scope.hasSpecialAccess = data;
+    });
+    
     $scope.couldDelete = false;
     $scope.confirmDeleteFlag = false;
     $scope.showDelete = false;
@@ -84,7 +89,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $scope.showDelete = true;
 
         Breadcrumbs.setCrumbs([
-            {label:"Liste", route:"/list" },
+            {label:"Liste", route:"/#/list" },
             {label:$scope.book.title, route:"/#/" + $routeParams.id},
             {label:"Modification", route:"/#/" + $routeParams.id + "/edit"}
         ]);

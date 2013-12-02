@@ -24,32 +24,26 @@ public class AuthentificationInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		Cookie[] cookies = request.getCookies();
-		String userName = null, token = null;
+		String token = null;
     	if (cookies != null) {
 	    	
 	    	int i=0;
-	    	while (i<cookies.length && (userName == null || token == null)) {
+	    	while (i<cookies.length && token == null) {
 	    		Cookie cookie = cookies[i];
-	    		if (cookie.getName().equals("userName")) {
-	    			userName = cookie.getValue();
-	    		} else if (cookie.getName().equals("token")) {
+	    		if (cookie.getName().equals("token")) {
 	    			token = cookie.getValue();
 	    		}
 	    		i++;
 	    	}
 		
-			if (!(userName != null && token != null && zUserService.isZUserAuthenticated(userName, token))) {
-				if (userName != null) {
-					logger.info("The user " + userName + " failed to access your API.");
-				} else {
-					logger.info("Someone tried to access your API but didn't give any username");
-				}
-			} else {
-				logger.info("The user " + userName + " is accessing your API.");
+			if (token != null && !zUserService.isZUserAuthenticated(token)) {
+				logger.info("Someone tried to access your API but didn't give any username");
+			} else if (token != null) {
+				logger.info("A user is accessing your API.");
 				return true;
 			}
     	}
-    	response.sendError(403, "Vous n'êtes pas authorisé à accéder à cette page.");
+    	response.sendError(401, "Vous devez vous authentifier pour accéder à cette page.");
 		
 		
 		return false;
