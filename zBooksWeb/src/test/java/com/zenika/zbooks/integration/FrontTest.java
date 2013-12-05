@@ -3,6 +3,7 @@ package com.zenika.zbooks.integration;
 import com.zenika.zbooks.IntegrationTest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -76,7 +78,7 @@ public class FrontTest implements IntegrationTest {
     @Test
     public void getBookErrorAsHTML() throws Exception {
         driver.get(appPath + "/2");
-        assertEquals(driver.findElement(By.tagName("h1")).getText(), "Etat HTTP 404 -");
+        assertThat(driver.findElement(By.tagName("h1")).getText(), Matchers.containsString("404"));
     }
 
     @Test
