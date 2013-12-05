@@ -57,7 +57,7 @@ public class ZUserMapperTest implements UnitTest {
     @Test
     public void getZUserTest () throws NoSuchAlgorithmException {
     	ZUser user = zUserMapper.getZUser("root@zenika.com", hashPasswordInSHA256("pwd"));
-    	assertEquals("root", user.getEmail());
+    	assertEquals("root@zenika.com", user.getEmail());
     	assertEquals(hashPasswordInSHA256("pwd"), user.getPassword());
     	assertEquals(1, user.getId());
     	assertEquals(ZPower.ADMIN, user.getZPower());

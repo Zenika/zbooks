@@ -1,4 +1,4 @@
-function LoginController ($scope, $location, $cookieStore, $http) {
+function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
 	$scope.user = new Object();
 	
 	$scope.message = "";
@@ -7,7 +7,7 @@ function LoginController ($scope, $location, $cookieStore, $http) {
     $scope.closeMessage = function () {
         $scope.message = "";
     }
-
+    
     $scope.isMessage = function () {
         return $scope.message && $scope.message.length > 0;
     }
@@ -23,4 +23,6 @@ function LoginController ($scope, $location, $cookieStore, $http) {
                 $scope.messageType = $scope.ERROR_TYPE;
             });
 	}
+	
+    Breadcrumbs.setCrumbs([]);
 }
