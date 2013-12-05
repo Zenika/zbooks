@@ -1,10 +1,12 @@
 package com.zenika.zbooks.integration;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.assertj.core.api.Assertions.*;
 
 import java.io.File;
 import java.sql.Connection;
@@ -32,6 +34,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.zenika.zbooks.IntegrationTest;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.persistence.UserCacheDAO;
+import com.zenika.zbooks.persistence.ZBooksMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -45,10 +48,10 @@ public class GetApiTest implements IntegrationTest {
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
+
+    @Autowired
+    private ZBooksMapper zBooksMapper;
     
-    private String jsonUser = "{email:root@zenika.com, password:a1159e9df3670d549d04524532629f5477ceb7deec9b45e47e8c009506ecb2c8}";
-
-
     @Autowired
     private DriverManagerDataSource dataSource;
 
@@ -68,6 +71,7 @@ public class GetApiTest implements IntegrationTest {
         }
         this.mockMvc = webAppContextSetup(this.wac).build();
         UserCacheDAO.getInstance().authenticateNewUser("tokenTest", ZPower.USER);
+        UserCacheDAO.getInstance().authenticateNewUser("tokenRoot", ZPower.ADMIN);
     }
 
     @Test
@@ -87,5 +91,24 @@ public class GetApiTest implements IntegrationTest {
     public void getBook() throws Exception {
         this.mockMvc.perform(get("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andExpect(jsonPath("$.[authors]").value("auteur2"));
+    }
+    
+    @Test
+    public void testGetBookWithoutAuthFail () throws Exception {
+    	this.mockMvc.perform(get("/api/book/2").accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().is(401));
+    }
+    
+    @Test
+    public void testDeleteBookWithoutAdminPowerFail () throws Exception {
+    	this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
+        .andExpect(status().is(403));
+    }
+    
+    @Test
+    public void testDeleteBookWithAdminPowerSucceed () throws Exception {
+    	this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
+        .andExpect(status().isOk());
+    	assertThat(zBooksMapper.getBook(2)).isNull();
     }
 }
