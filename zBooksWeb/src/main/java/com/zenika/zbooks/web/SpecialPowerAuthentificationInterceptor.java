@@ -13,6 +13,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.services.ZUserService;
+import com.zenika.zbooks.utils.ZBooksUtils;
 
 @Component
 public class SpecialPowerAuthentificationInterceptor extends
@@ -27,19 +28,9 @@ public class SpecialPowerAuthentificationInterceptor extends
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		if (!request.getMethod().equals("GET") || request.getServletPath().contains("reset219")) {
 			Cookie[] cookies = request.getCookies();
-			String token = null;
-	    	if (cookies != null) {
-		    	
-		    	int i=0;
-		    	while (i<cookies.length && token == null) {
-		    		Cookie cookie = cookies[i];
-		    		if (cookie.getName().equals("token")) {
-		    			token = cookie.getValue();
-		    		}
-		    		i++;
-		    	}
-			
-				if (token != null && !zUserService.isZUserAuthenticated(token)) {
+			if (cookies != null) {
+				String token = ZBooksUtils.getCookieValue(cookies, ZBooksUtils.COOKIE_TOKEN_KEY);
+	    		if (token != null && !zUserService.isZUserAuthenticated(token)) {
 					logger.info("Someone tried to access your API but didn't give any username");
 				} else if (token != null) {
 					if (zUserService.getZUserAccess(token) == ZPower.ADMIN) {

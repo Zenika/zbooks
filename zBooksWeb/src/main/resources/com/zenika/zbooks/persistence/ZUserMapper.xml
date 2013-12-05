@@ -5,16 +5,16 @@
 
 	<resultMap type="ZUser" id="ZUser">
 		<id column="id" property="id"/>
-		<result column="userName" property="userName"/>
+		<result column="email" property="email"/>
 		<result column="password" property="password"/>
 		<result column="zPower" property="zPower" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
 	</resultMap>
 
 	<insert id="addZUser" parameterType="ZUser" timeout="10">
 		INSERT INTO 
-			zUser (userName, password) 
+			zUser (email, password) 
 		VALUES
-			(#{userName}, #{password})
+			(#{email}, #{password})
 	</insert>
 	
 	<delete id="deleteZUser" parameterType="int" timeout="10">
@@ -22,6 +22,10 @@
 	</delete>
 	
 	<select id="getZUser" parameterType="map" resultMap="ZUser" timeout="10">
-		SELECT * FROM zUser WHERE (userName=#{userName} AND password=#{password}) LIMIT 1
+		SELECT * FROM zUser WHERE (email=#{email} AND password=#{password}) LIMIT 1
+	</select>
+	
+	<select id="getZUserWithEmail" parameterType="string" resultMap="ZUser" timeout="10">
+		SELECT * FROM zUser WHERE email=#{email} LIMIT 1
 	</select>
 </mapper>

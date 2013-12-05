@@ -56,8 +56,8 @@ public class ZUserMapperTest implements UnitTest {
     
     @Test
     public void getZUserTest () throws NoSuchAlgorithmException {
-    	ZUser user = zUserMapper.getZUser("root", hashPasswordInSHA256("pwd"));
-    	assertEquals("root", user.getUserName());
+    	ZUser user = zUserMapper.getZUser("root@zenika.com", hashPasswordInSHA256("pwd"));
+    	assertEquals("root", user.getEmail());
     	assertEquals(hashPasswordInSHA256("pwd"), user.getPassword());
     	assertEquals(1, user.getId());
     	assertEquals(ZPower.ADMIN, user.getZPower());
@@ -66,12 +66,12 @@ public class ZUserMapperTest implements UnitTest {
     @Test
     public void addZUserTest () {
     	ZUser user = new ZUser();
-    	user.setUserName("userTest");
+    	user.setEmail("userTest@zenika.com");
     	user.setPassword("pwdTest");
     	user.setZPower(ZPower.USER);
     	zUserMapper.addZUser(user);
     	
-    	assertNotNull(zUserMapper.getZUser(user.getUserName(), user.getPassword()));
+    	assertNotNull(zUserMapper.getZUser(user.getEmail(), user.getPassword()));
     }
     
     @Test

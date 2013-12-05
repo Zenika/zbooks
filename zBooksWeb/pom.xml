@@ -66,6 +66,15 @@
             <scope>test</scope>
         </dependency>
 
+		<!-- OpenID -->
+		<dependency>
+			<groupId>org.expressme</groupId>
+			<artifactId>JOpenId</artifactId>
+			<version>1.08</version>
+		</dependency>
+            
+		            
+
         <!-- Logger -->
         <dependency>
 			<groupId>log4j</groupId>
@@ -227,6 +236,9 @@
                 	<path>/</path>
                 	<httpsPort>8443</httpsPort>
         			<keystorePass>changeit</keystorePass>
+        			<connectorHttpProtocol></connectorHttpProtocol>
+        			<!-- you NEED to define the URI encoding for JOpenId to work -->
+        			<uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
         </plugins>

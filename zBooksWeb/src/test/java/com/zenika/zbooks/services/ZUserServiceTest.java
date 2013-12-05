@@ -37,7 +37,7 @@ public class ZUserServiceTest implements UnitTest {
 		when(zUserMapperMock.getZUser(any(String.class), any(String.class))).thenReturn(new ZUser ());
 		
 		ZUser user = new ZUser();
-		user.setUserName("userTest");
+		user.setEmail("userTest@test.fr");
 		user.setPassword("pwd");
 		String token1 = zUserService.connectZUser(user);
 		
@@ -47,8 +47,8 @@ public class ZUserServiceTest implements UnitTest {
 		Assertions.assertThat(zUserService.isZUserAuthenticated(token1 + "/")).isFalse();
 		
 		ZUser user2 = new ZUser ();
-		user.setUserName("userTest2");
-		user.setPassword("pwd");
+		user2.setEmail("userTest2@test.fr");
+		user2.setPassword("pwd");
 		String token2 = zUserService.connectZUser(user2);
 		
 		Assertions.assertThat(token2).isNotEqualTo(token1);

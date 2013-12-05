@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.zenika.zbooks.services.ZUserService;
+import com.zenika.zbooks.utils.ZBooksUtils;
 
 @Component
 public class AuthentificationInterceptor extends HandlerInterceptorAdapter {
@@ -24,18 +25,10 @@ public class AuthentificationInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		Cookie[] cookies = request.getCookies();
-		String token = null;
     	if (cookies != null) {
 	    	
-	    	int i=0;
-	    	while (i<cookies.length && token == null) {
-	    		Cookie cookie = cookies[i];
-	    		if (cookie.getName().equals("token")) {
-	    			token = cookie.getValue();
-	    		}
-	    		i++;
-	    	}
-		
+    		String token = ZBooksUtils.getCookieValue(cookies, ZBooksUtils.COOKIE_TOKEN_KEY);
+	    			
 			if (token != null && !zUserService.isZUserAuthenticated(token)) {
 				logger.info("Someone tried to access your API but didn't give any username");
 			} else if (token != null) {
