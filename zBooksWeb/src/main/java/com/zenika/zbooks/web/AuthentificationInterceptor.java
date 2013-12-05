@@ -30,7 +30,7 @@ public class AuthentificationInterceptor extends HandlerInterceptorAdapter {
     		String token = ZBooksUtils.getCookieValue(cookies, ZBooksUtils.COOKIE_TOKEN_KEY);
 	    			
 			if (token != null && !zUserService.isZUserAuthenticated(token)) {
-				logger.info("Someone tried to access your API but didn't give any username");
+				logger.info("Someone tried to access your API but the token " + token + " isn't registered.");
 			} else if (token != null) {
 				logger.info("A user is accessing your API.");
 				return true;

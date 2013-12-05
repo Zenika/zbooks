@@ -2,8 +2,8 @@ package com.zenika.zbooks.services;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.*;
 
-import org.fest.assertions.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -41,17 +41,17 @@ public class ZUserServiceTest implements UnitTest {
 		user.setPassword("pwd");
 		String token1 = zUserService.connectZUser(user);
 		
-		Assertions.assertThat(token1).isNotNull();
-		Assertions.assertThat(zUserService.isZUserAuthenticated(token1)).isTrue();
+		assertThat(token1).isNotNull();
+		assertThat(zUserService.isZUserAuthenticated(token1)).isTrue();
 		
-		Assertions.assertThat(zUserService.isZUserAuthenticated(token1 + "/")).isFalse();
+		assertThat(zUserService.isZUserAuthenticated(token1 + "/")).isFalse();
 		
 		ZUser user2 = new ZUser ();
 		user2.setEmail("userTest2@test.fr");
 		user2.setPassword("pwd");
 		String token2 = zUserService.connectZUser(user2);
 		
-		Assertions.assertThat(token2).isNotEqualTo(token1);
+		assertThat(token2).isNotEqualTo(token1);
 	}
 
 }

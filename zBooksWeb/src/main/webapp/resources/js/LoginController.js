@@ -13,7 +13,7 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
     }
 	
 	$scope.logIn = function () {
-		$http({method:'POST', url:'/login', data:{userName: $scope.user.userName, password: sha256_digest($scope.user.password)}, headers:{'Content-Type':'application/json'}}
+		$http({method:'POST', url:'/login', data:{email: $scope.user.email, password: sha256_digest($scope.user.password)}, headers:{'Content-Type':'application/json'}}
         ).
             success(function (data, status, headers, config) {
             	$location.path("/list");
