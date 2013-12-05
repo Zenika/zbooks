@@ -1,11 +1,11 @@
 function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     $scope.book = new Object();
 
-    $scope.hasSpecialAccess=false;
+    $scope.hasSpecialAccess = false;
     $http({method:'GET', url:'/api/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
-    
+
     $scope.couldDelete = false;
     $scope.confirmDeleteFlag = false;
     $scope.showDelete = false;
@@ -69,9 +69,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $http({method:'POST', url:'/api/book/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
         ).
             success(function (data, status, headers, config) {
-                $scope.message = "Nickel, Mise a jour effectuee.";
-                $scope.messageType = $scope.SUCCESS_TYPE;
-                scrollTo("bodyPanel");
+                $location.path("/" + data.id);
             }).
             error(function (data, status, headers, config) {
                 $scope.message = "Une erreur est survenue lors de la modification du livre.";
@@ -134,6 +132,10 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
             $scope.messageType = $scope.WARNING_TYPE;
         }
     }
+    $scope.cleanISBN = function () {
+        if ($scope.book.isbn)
+            $scope.book.isbn = $scope.book.isbn.replace(/\W/g, '');
+    }
     $scope.import = function () {
 
         var url = 'https://www.googleapis.com/books/v1/volumes?callback=JSON_CALLBACK&q=isbn:' + $scope.book.isbn;
@@ -152,7 +154,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $scope.getData();
     }
     Breadcrumbs.setCrumbs([
-        {label:"Liste", route:"/list" },
-        {label:"Nouveau Livre", route:"/new/edit" }
+        {label:"Liste", route:"#/list" },
+        {label:"Nouveau Livre", route:"#/new/edit" }
     ]);
 }

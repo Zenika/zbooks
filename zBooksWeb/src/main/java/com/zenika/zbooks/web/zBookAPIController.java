@@ -1,21 +1,15 @@
 package com.zenika.zbooks.web;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.services.ZUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping(value = "/api/*")
 @Controller
@@ -47,22 +41,18 @@ public class zBookAPIController {
 
     @RequestMapping(value = "/book/{id}", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public void updateBook(@RequestBody ZBook book) {
+    public ZBook updateBook(@RequestBody ZBook book) {
         if (book.getId() == 0)
             zBooksMapper.addBook(book);
         else
             zBooksMapper.updateBook(book);
+
+        return book;
     }
 
-    @RequestMapping(value = "/reset219", method = RequestMethod.GET)
+    @RequestMapping(value = "/hasSpecialAccess", method = RequestMethod.GET)
     @ResponseBody
-    public void reset() {
-        zBooksMapper.resetBdd();
-    }
-    
-    @RequestMapping(value="/hasSpecialAccess", method = RequestMethod.GET)
-    @ResponseBody
-    public boolean hasSpecialAccess (@CookieValue("token") String token) {
-    	return (zUserService.getZUserAccess(token) == ZPower.ADMIN);
+    public boolean hasSpecialAccess(@CookieValue("token") String token) {
+        return (zUserService.getZUserAccess(token) == ZPower.ADMIN);
     }
 }

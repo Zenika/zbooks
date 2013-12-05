@@ -10,7 +10,7 @@ edition VARCHAR(150),
 pagesNumber int(5),
 releaseDate VARCHAR(100),
 language char(2),
-cover VARCHAR(200)
+cover VARCHAR(400)
 );
 
 DROP TABLE IF EXISTS zUser;
