@@ -9,10 +9,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 import java.util.concurrent.TimeUnit;
 
-
-
-
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.AfterClass;
@@ -22,7 +18,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,11 +27,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.thoughtworks.selenium.Selenium;
 import com.zenika.zbooks.IntegrationTest;
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.persistence.UserCacheDAO;
-import com.zenika.zbooks.utils.ZBooksUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

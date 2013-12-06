@@ -1,12 +1,12 @@
 package com.zenika.zbooks.integration;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-import static org.assertj.core.api.Assertions.*;
 
 import java.io.File;
 import java.sql.Connection;
@@ -33,7 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.zenika.zbooks.IntegrationTest;
 import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.persistence.UserCacheDAO;
+import com.zenika.zbooks.persistence.ServerCache;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,6 +54,9 @@ public class GetApiTest implements IntegrationTest {
     
     @Autowired
     private DriverManagerDataSource dataSource;
+    
+    @Autowired
+    private ServerCache serverCache;
 
     @Before
     public void initializeData() throws Exception {
@@ -70,8 +73,8 @@ public class GetApiTest implements IntegrationTest {
             Assert.fail();
         }
         this.mockMvc = webAppContextSetup(this.wac).build();
-        UserCacheDAO.getInstance().authenticateNewUser("tokenTest", ZPower.USER);
-        UserCacheDAO.getInstance().authenticateNewUser("tokenRoot", ZPower.ADMIN);
+        serverCache.authenticateNewUser("tokenTest", ZPower.USER);
+        serverCache.authenticateNewUser("tokenRoot", ZPower.ADMIN);
     }
 
     @Test
