@@ -23,14 +23,12 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @Category(IntegrationTest.class)
 public class GetApiTest implements IntegrationTest {
 
@@ -56,7 +54,7 @@ public class GetApiTest implements IntegrationTest {
             conn.close();
             LOG.info("H2 Inited");
         } catch (Exception e) {
-            LOG.error("H2 Init : failed.",e);
+            LOG.error("H2 Init : failed.", e);
             Assert.fail();
         }
         this.mockMvc = webAppContextSetup(this.wac).build();

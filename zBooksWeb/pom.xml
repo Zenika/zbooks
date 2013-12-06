@@ -157,7 +157,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.3.174</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -191,6 +190,7 @@
                     <includes>
                         <include>**/*.class</include>
                     </includes>
+                    <argLine>-Dspring.profiles.active=dev</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -224,6 +224,7 @@
                 <configuration>
                     <forkMode>always</forkMode>
                     <groups>com.zenika.zbooks.UnitTest</groups>
+                    <argLine>-Dspring.profiles.active=dev</argLine>
                 </configuration>
             </plugin>
             <plugin>

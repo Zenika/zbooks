@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @Category(IntegrationTest.class)
 public class FrontTest implements IntegrationTest {
 

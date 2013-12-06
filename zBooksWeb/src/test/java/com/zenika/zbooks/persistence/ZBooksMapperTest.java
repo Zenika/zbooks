@@ -1,16 +1,7 @@
 package com.zenika.zbooks.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.HashSet;
-import java.util.List;
-
+import com.zenika.zbooks.UnitTest;
+import com.zenika.zbooks.entity.ZBook;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,11 +15,16 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.zenika.zbooks.UnitTest;
-import com.zenika.zbooks.entity.ZBook;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @Category(UnitTest.class)
 public class ZBooksMapperTest implements UnitTest {
 
