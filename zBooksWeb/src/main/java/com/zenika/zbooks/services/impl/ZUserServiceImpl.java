@@ -45,8 +45,13 @@ public class ZUserServiceImpl implements ZUserService {
 	private static final String ENDPOINT_ALIAS_KEY = "Alias";
 	private static final String RETURN_TO_KEY = "ReturnTo";
 	private static final long ONE_HOUR = 3600000L;
+	private String serverUrl;
 	
 	
+	public void setServerUrl(String serverUrl) {
+		this.serverUrl = serverUrl;
+	}
+
 	@Override
 	public void addZUser(ZUser user) {
 		zUserMapper.addZUser(user);
@@ -125,8 +130,8 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public String connectUserWithGoogle(String returnToUrl,
 			HttpServletRequest request, HttpServletResponse response) {
-		openIdManager.setReturnTo(returnToUrl);
-		openIdManager.setRealm("http://localhost:8080/");
+		openIdManager.setReturnTo(serverUrl + returnToUrl);
+		openIdManager.setRealm(serverUrl);
 		
 		Endpoint googleEndpoint = openIdManager.lookupEndpoint("Google");
 		Association googleAssociation = openIdManager.lookupAssociation(googleEndpoint);
@@ -167,7 +172,7 @@ public class ZUserServiceImpl implements ZUserService {
 			LOG.error(e.getMessage());
 		}
 		if (rawMacKeyString != null && returnToUrl != null && alias != null) {
-			openIdManager.setReturnTo(returnToUrl);
+			openIdManager.setReturnTo(serverUrl + returnToUrl);
 			try {
 				Authentication authentication = openIdManager.getAuthentication(request, Base64.decode(rawMacKeyString), alias);
 				String token = hashStrings(authentication.getEmail(), authentication.getFullname(), rawMacKeyString);

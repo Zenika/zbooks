@@ -10,7 +10,7 @@ public class ZBooksUtils {
     private static final Logger LOG = Logger.getLogger(ZBooksUtils.class);
 
     public final static String COOKIE_TOKEN_KEY = "token";
-
+    
     public static String getCookieValue(Cookie[] cookies, String cookieKey) {
         String cookieValue = null;
         if (cookies != null) {

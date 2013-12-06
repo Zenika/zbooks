@@ -23,10 +23,16 @@ public class HomeController {
 	@Autowired
 	private ZUserService zUserService;
 	
+	private String serverUrl;
+	
+	public void setServerUrl (String serverUrl) {
+		this.serverUrl = serverUrl;
+	}
+	
 	@RequestMapping(value="/", produces = MediaType.TEXT_HTML_VALUE)
 	public String index(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if (!request.isSecure()) {
-			response.sendRedirect("https://localhost:8443/");
+			response.sendRedirect(serverUrl);
 		}
         return "index.html";
 	}
@@ -45,7 +51,7 @@ public class HomeController {
     	if (token != null && zUserService.isZUserAuthenticated(token)) {
     		response.sendRedirect("/#/list");
     	} else {
-	    	String googleRequestURL = zUserService.connectUserWithGoogle("http://localhost:8080/identifiedWithGoogle", request, response);
+	    	String googleRequestURL = zUserService.connectUserWithGoogle("identifiedWithGoogle", request, response);
 	    	response.sendRedirect(googleRequestURL);
     	}
     }
@@ -55,7 +61,7 @@ public class HomeController {
     	String token = zUserService.checkAuthentification(request);
     	if (token != null) {
     		response.addCookie(new Cookie(ZBooksUtils.COOKIE_TOKEN_KEY, token));
-    		response.sendRedirect("https://localhost:8443/#/list");
+    		response.sendRedirect(serverUrl+"#/list");
     	} else {
     		response.sendRedirect("/");
     	}

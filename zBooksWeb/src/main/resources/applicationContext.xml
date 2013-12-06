@@ -43,4 +43,28 @@
 	<task:executor id="myExecutor" pool-size="4"/>
 	<task:scheduler id="myScheduler"/>
 
+	<beans profile="dev,test">
+		<bean name="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	        <property name="locations">
+	            <value>classpath:applicationDev.properties</value>
+	        </property>
+	    </bean>
+	</beans>
+	
+	<beans profile="!dev">
+		<bean name="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	        <property name="locations">
+	            <value>classpath:applicationIntegration.properties</value>
+	        </property>
+	    </bean>
+	</beans>
+
+	<beans>
+		<bean id="zUserService" class="com.zenika.zbooks.services.impl.ZUserServiceImpl">
+			<property name="serverUrl" value="${URL}" />
+		</bean>
+		<bean id="homeController" class="com.zenika.zbooks.web.HomeController">
+			<property name="serverUrl" value="${URL.SSL}" />
+		</bean>
+	</beans>
 </beans>
