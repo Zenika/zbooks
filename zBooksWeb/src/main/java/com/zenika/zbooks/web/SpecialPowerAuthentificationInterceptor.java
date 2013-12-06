@@ -26,7 +26,7 @@ public class SpecialPowerAuthentificationInterceptor extends
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-		if (!request.getMethod().equals("GET") || request.getServletPath().contains("reset219")) {
+		if (!request.getMethod().equals("GET")) {
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
 				String token = ZBooksUtils.getCookieValue(cookies, ZBooksUtils.COOKIE_TOKEN_KEY);

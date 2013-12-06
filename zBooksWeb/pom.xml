@@ -30,17 +30,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>1.5.0</version>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>1.5.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -66,14 +61,13 @@
             <scope>test</scope>
         </dependency>
 
-		<!-- OpenID -->
-		<dependency>
-			<groupId>org.expressme</groupId>
-			<artifactId>JOpenId</artifactId>
-			<version>1.08</version>
-		</dependency>
-            
-		            
+        <!-- OpenID -->
+        <dependency>
+            <groupId>org.expressme</groupId>
+            <artifactId>JOpenId</artifactId>
+            <version>1.08</version>
+        </dependency>
+
 
         <!-- Logger -->
         <dependency>
@@ -172,7 +166,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
         </dependency>
-
+        <!-- others -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -199,7 +198,7 @@
                     <includes>
                         <include>**/*.class</include>
                     </includes>
-                    <argLine>-Dspring.profiles.active=dev</argLine>
+                    <argLine>-Dspring.profiles.active=test</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -231,9 +230,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin-version}</version>
                 <configuration>
-                    <forkMode>always</forkMode>
+                    <reuseForks>true</reuseForks>
                     <groups>com.zenika.zbooks.UnitTest</groups>
-                    <argLine>-Dspring.profiles.active=dev</argLine>
+                    <argLine>-Dspring.profiles.active=test</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -252,9 +251,9 @@
                     <path>/</path>
                     <httpsPort>8443</httpsPort>
                     <keystorePass>changeit</keystorePass>
-        			<connectorHttpProtocol></connectorHttpProtocol>
-        			<!-- you NEED to define the URI encoding for JOpenId to work -->
-        			<uriEncoding>UTF-8</uriEncoding>
+                    <connectorHttpProtocol></connectorHttpProtocol>
+                    <!-- you NEED to define the URI encoding for JOpenId to work -->
+                    <uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
         </plugins>

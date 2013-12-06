@@ -1,9 +1,11 @@
 package com.zenika.zbooks.integration;
 
 import com.zenika.zbooks.IntegrationTest;
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.persistence.UserCacheDAO;
+import com.zenika.zbooks.persistence.ZBooksMapper;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,29 +20,34 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.Cookie;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:testDatabaseContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @Category(IntegrationTest.class)
 public class GetApiTest implements IntegrationTest {
 
-    private static final Log LOG = LogFactory.getLog(GetApiTest.class);
+    private static final Logger LOG = Logger.getLogger(GetApiTest.class);
+
+    private String jsonUser = "{email:root@zenika.com, password:a1159e9df3670d549d04524532629f5477ceb7deec9b45e47e8c009506ecb2c8}";
 
     @Autowired
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
 
+    @Autowired
+    private ZBooksMapper zBooksMapper;
 
     @Autowired
     private DriverManagerDataSource dataSource;
@@ -56,28 +63,31 @@ public class GetApiTest implements IntegrationTest {
             conn.close();
             LOG.info("H2 Inited");
         } catch (Exception e) {
-            LOG.error("H2 Init : failed.",e);
+            LOG.error("H2 Init : failed.", e);
             Assert.fail();
         }
         this.mockMvc = webAppContextSetup(this.wac).build();
-    }
-
-    @Test
-    public void getListAsHTML() throws Exception {
-        this.mockMvc.perform(get("/api").accept(MediaType.TEXT_HTML))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void getList() throws Exception {
-        this.mockMvc.perform(get("/api/book").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andExpect(jsonPath("$.[0][id]").value(1)).andExpect(jsonPath("$.[2][edition]").value("Pearson"));
+        UserCacheDAO.getInstance().authenticateNewUser("tokenTest", ZPower.USER);
+        UserCacheDAO.getInstance().authenticateNewUser("tokenRoot", ZPower.ADMIN);
     }
 
 
     @Test
-    public void getBook() throws Exception {
+    public void testGetBookWithoutAuthFail() throws Exception {
         this.mockMvc.perform(get("/api/book/2").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andExpect(jsonPath("$.[authors]").value("auteur2"));
+                .andExpect(status().is(401));
+    }
+
+    @Test
+    public void testDeleteBookWithoutAdminPowerFail() throws Exception {
+        this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
+                .andExpect(status().is(403));
+    }
+
+    @Test
+    public void testDeleteBookWithAdminPowerSucceed() throws Exception {
+        this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
+                .andExpect(status().isOk());
+        assertThat(zBooksMapper.getBook(2)).isNull();
     }
 }
