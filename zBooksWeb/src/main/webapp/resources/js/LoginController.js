@@ -1,4 +1,4 @@
-function LoginController ($scope, $location, $cookieStore, $http) {
+function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
 	$scope.user = new Object();
 	
 	$scope.message = "";
@@ -7,13 +7,13 @@ function LoginController ($scope, $location, $cookieStore, $http) {
     $scope.closeMessage = function () {
         $scope.message = "";
     }
-
+    
     $scope.isMessage = function () {
         return $scope.message && $scope.message.length > 0;
     }
 	
 	$scope.logIn = function () {
-		$http({method:'POST', url:'/login', data:{userName: $scope.user.userName, password: sha256_digest($scope.user.password)}, headers:{'Content-Type':'application/json'}}
+		$http({method:'POST', url:'/login', data:{email: $scope.user.email, password: sha256_digest($scope.user.password)}, headers:{'Content-Type':'application/json'}}
         ).
             success(function (data, status, headers, config) {
             	$location.path("/list");
@@ -23,4 +23,6 @@ function LoginController ($scope, $location, $cookieStore, $http) {
                 $scope.messageType = $scope.ERROR_TYPE;
             });
 	}
+	
+    Breadcrumbs.setCrumbs([]);
 }

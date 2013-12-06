@@ -1,10 +1,13 @@
 package com.zenika.zbooks.services;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
 
 public interface ZUserService {
-
+	
 	void addZUser (ZUser user);
 	
 	boolean isZUserInDb (ZUser user);
@@ -18,4 +21,8 @@ public interface ZUserService {
 	ZUser getZUser (String userName, String password);
 	
 	ZPower getZUserAccess (String token);
+	
+	String connectUserWithGoogle (String returnToUrl, HttpServletRequest request, HttpServletResponse response);
+	
+	String checkAuthentification (HttpServletRequest request);
 }

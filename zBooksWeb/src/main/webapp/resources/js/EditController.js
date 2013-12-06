@@ -53,7 +53,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
     $scope.delete = function () {
         $http({method:'DELETE', url:'/api/book/' + $routeParams.id}).
             success(function (data, status, headers, config) {
-                $location.path("/");
+                $location.path("/list");
                 $scope.confirmDeleteFlag = false;
             }).
             error(function (data, status, headers, config) {
@@ -154,7 +154,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $scope.getData();
     }
     Breadcrumbs.setCrumbs([
-        {label:"Liste", route:"#/list" },
-        {label:"Nouveau Livre", route:"#/new/edit" }
+        {label:"Liste", route:"/#/list" },
+        {label:"Nouveau Livre", route:"/#/new/edit" }
     ]);
 }

@@ -30,9 +30,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert-core</artifactId>
-            <version>2.0M10</version>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>1.5.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -65,6 +65,15 @@
             <version>0.9.1</version>
             <scope>test</scope>
         </dependency>
+
+		<!-- OpenID -->
+		<dependency>
+			<groupId>org.expressme</groupId>
+			<artifactId>JOpenId</artifactId>
+			<version>1.08</version>
+		</dependency>
+            
+		            
 
         <!-- Logger -->
         <dependency>
@@ -243,6 +252,9 @@
                     <path>/</path>
                     <httpsPort>8443</httpsPort>
                     <keystorePass>changeit</keystorePass>
+        			<connectorHttpProtocol></connectorHttpProtocol>
+        			<!-- you NEED to define the URI encoding for JOpenId to work -->
+        			<uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
         </plugins>
