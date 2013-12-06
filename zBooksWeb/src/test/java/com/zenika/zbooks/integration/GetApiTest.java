@@ -1,9 +1,17 @@
 package com.zenika.zbooks.integration;
 
-import com.zenika.zbooks.IntegrationTest;
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.persistence.UserCacheDAO;
-import com.zenika.zbooks.persistence.ZBooksMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -20,16 +28,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.http.Cookie;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.Statement;
+import com.zenika.zbooks.IntegrationTest;
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.persistence.ServerCache;
+import com.zenika.zbooks.persistence.ZBooksMapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -51,6 +54,9 @@ public class GetApiTest implements IntegrationTest {
 
     @Autowired
     private DriverManagerDataSource dataSource;
+    
+    @Autowired
+    private ServerCache serverCache;
 
     @Before
     public void initializeData() {
@@ -67,8 +73,8 @@ public class GetApiTest implements IntegrationTest {
             Assert.fail();
         }
         this.mockMvc = webAppContextSetup(this.wac).build();
-        UserCacheDAO.getInstance().authenticateNewUser("tokenTest", ZPower.USER);
-        UserCacheDAO.getInstance().authenticateNewUser("tokenRoot", ZPower.ADMIN);
+        serverCache.authenticateNewUser("tokenTest", ZPower.USER);
+        serverCache.authenticateNewUser("tokenRoot", ZPower.ADMIN);
     }
 
 

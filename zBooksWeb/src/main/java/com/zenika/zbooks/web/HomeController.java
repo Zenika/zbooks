@@ -24,7 +24,10 @@ public class HomeController {
 	private ZUserService zUserService;
 	
 	@RequestMapping(value="/", produces = MediaType.TEXT_HTML_VALUE)
-	public String index() {
+	public String index(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (!request.isSecure()) {
+			response.sendRedirect("https://localhost:8443/");
+		}
         return "index.html";
 	}
 

@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
-import com.zenika.zbooks.persistence.UserCacheDAO;
+import com.zenika.zbooks.persistence.ServerCache;
 import com.zenika.zbooks.persistence.ZUserMapper;
 import com.zenika.zbooks.services.ZUserService;
 
@@ -35,13 +36,16 @@ public class ZUserServiceImpl implements ZUserService {
 	
 	private static final Logger LOG = Logger.getLogger(ZUserServiceImpl.class);
 	
-	private UserCacheDAO userCache = UserCacheDAO.getInstance();
+	@Autowired
+	private ServerCache serverCache;
 	
 	private OpenIdManager openIdManager = new OpenIdManager();
 	
 	private static final String RAW_MAC_COOKIE_KEY = "RawMacKey";
 	private static final String ENDPOINT_ALIAS_KEY = "Alias";
 	private static final String RETURN_TO_KEY = "ReturnTo";
+	private static final long ONE_HOUR = 3600000L;
+	
 	
 	@Override
 	public void addZUser(ZUser user) {
@@ -61,7 +65,7 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Override
 	public boolean isZUserAuthenticated (String token) {
-		return userCache.isUserAuthenticated(token);
+		return serverCache.isUserAuthenticated(token);
 	}
 
 	@Override
@@ -70,7 +74,7 @@ public class ZUserServiceImpl implements ZUserService {
 		if (userInDb != null) {
 			try {
 				String token = this.hashZUser(user);
-				userCache.authenticateNewUser(token, userInDb.getZPower());
+				serverCache.authenticateNewUser(token, userInDb.getZPower());
 				return token;
 			} catch (NoSuchAlgorithmException e) {
 				LOG.error(e.getMessage());
@@ -115,7 +119,7 @@ public class ZUserServiceImpl implements ZUserService {
 	
 	@Override
 	public ZPower getZUserAccess (String token) {
-		return userCache.getUserAccess(token);
+		return serverCache.getUserAccess(token);
 	}
 
 	@Override
@@ -141,6 +145,9 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Override
 	public String checkAuthentification(HttpServletRequest request) {
+		if (!checkNonce(request.getParameter("openid.response_nonce"))) {
+			return null;
+		}
 		Cookie[] cookies = request.getCookies();
 		String rawMacKeyString = null, returnToUrl = null, alias = null;
 		int i=0;
@@ -164,7 +171,7 @@ public class ZUserServiceImpl implements ZUserService {
 			try {
 				Authentication authentication = openIdManager.getAuthentication(request, Base64.decode(rawMacKeyString), alias);
 				String token = hashStrings(authentication.getEmail(), authentication.getFullname(), rawMacKeyString);
-				userCache.authenticateNewUser(token, getZPowerFromEmail(authentication.getEmail()));
+				serverCache.authenticateNewUser(token, getZPowerFromEmail(authentication.getEmail()));
 				LOG.info("The user " + authentication.getEmail() + " just logged in on the website.");
 				return token;
 			}catch (NoSuchAlgorithmException e) {
@@ -188,5 +195,39 @@ public class ZUserServiceImpl implements ZUserService {
 		}
 		return zUser.getZPower();
 	}
+	
+	private boolean checkNonce(String nonce) {
+        // check response_nonce to prevent replay-attack:
+        if (nonce==null || nonce.length()<20) {
+            LOG.info("The nonce is null or too short.");
+        	return false;
+        }
+        long nonceTime = getNonceTime(nonce);
+        long diff = System.currentTimeMillis() - nonceTime;
+        if (diff < 0)
+            diff = (-diff);
+        if (diff > ONE_HOUR) {
+            LOG.info("The nonce was more than hour ago.");
+            return false;
+        } 
+        if (serverCache.isNonceAlreadyStored(nonce)) {
+            LOG.info("The nonce is already registered in the db.");
+            return false;
+        }
+        serverCache.storeNonceInCache(nonce);
+        return true;
+    }
+	
+	private long getNonceTime(String nonce) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                    .parse(nonce.substring(0, 19) + "+0000")
+                    .getTime();
+        }
+        catch (java.text.ParseException e) {
+			LOG.error(e.getMessage());
+			return 0;
+		}
+    }
 
 }

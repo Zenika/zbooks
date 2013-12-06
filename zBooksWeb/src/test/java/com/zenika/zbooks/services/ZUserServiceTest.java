@@ -15,6 +15,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.zenika.zbooks.UnitTest;
 import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.persistence.ServerCache;
 import com.zenika.zbooks.persistence.ZUserMapper;
 import com.zenika.zbooks.services.impl.ZUserServiceImpl;
 
@@ -24,12 +25,15 @@ import com.zenika.zbooks.services.impl.ZUserServiceImpl;
 public class ZUserServiceTest implements UnitTest {
 
 	private ZUserMapper zUserMapperMock;
+	private ServerCache serverCacheMock;
 	private ZUserServiceImpl zUserService = new ZUserServiceImpl();
 	
 	@Before
 	public void setUp() throws Exception {
 		zUserMapperMock = Mockito.mock(ZUserMapper.class);
+		serverCacheMock = Mockito.mock(ServerCache.class);
 		ReflectionTestUtils.setField(zUserService, "zUserMapper", zUserMapperMock);
+		ReflectionTestUtils.setField(zUserService, "serverCache", serverCacheMock);
 	}
 
 	@Test
@@ -42,9 +46,6 @@ public class ZUserServiceTest implements UnitTest {
 		String token1 = zUserService.connectZUser(user);
 		
 		assertThat(token1).isNotNull();
-		assertThat(zUserService.isZUserAuthenticated(token1)).isTrue();
-		
-		assertThat(zUserService.isZUserAuthenticated(token1 + "/")).isFalse();
 		
 		ZUser user2 = new ZUser ();
 		user2.setEmail("userTest2@test.fr");

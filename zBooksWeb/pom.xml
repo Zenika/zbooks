@@ -254,6 +254,9 @@
                     <connectorHttpProtocol></connectorHttpProtocol>
                     <!-- you NEED to define the URI encoding for JOpenId to work -->
                     <uriEncoding>UTF-8</uriEncoding>
+                  	<systemProperties>
+                  		<spring.profiles.active>dev</spring.profiles.active>
+                  	</systemProperties>
                 </configuration>
             </plugin>
         </plugins>
