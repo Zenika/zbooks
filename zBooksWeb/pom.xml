@@ -198,6 +198,9 @@
                     <includes>
                         <include>**/*.class</include>
                     </includes>
+                   <excludes>
+                   		<exclude>**/FrontTest.class</exclude>
+                   </excludes>
                     <argLine>-Dspring.profiles.active=test</argLine>
                 </configuration>
                 <executions>
