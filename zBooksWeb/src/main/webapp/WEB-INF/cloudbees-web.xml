@@ -3,7 +3,7 @@
 	<!-- Application ID (formatted CB_ACCOUNT/APPNAME) -->
 	<appid>mmouterde/zBooks</appid>
 
-	<resource name="java:comp/env/jdbc/zbooksDB" auth="Container"
+	<resource name="jdbc/zBooks" auth="Container"
 		type="javax.sql.DataSource">
 		<param name="username" value="zbooksUser" />
 		<param name="password" value="zbooksPwd" />
