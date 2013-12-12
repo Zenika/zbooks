@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cloudbees-web-app xmlns="http://www.cloudbees.com/xml/webapp/1">
+	<!-- Application ID (formatted CB_ACCOUNT/APPNAME) -->
+	<appid>mmouterde/zBooks</appid>
+
+	<resource name="java:comp/env/jdbc/zbooksDB" auth="Container"
+		type="javax.sql.DataSource">
+		<param name="username" value="zbooksUser" />
+		<param name="password" value="zbooksPwd" />
+		<param name="url"
+			value="jdbc:mysql://ec2-23-21-211-172.compute-1.amazonaws.com:3306/zbooks" />
+	</resource>
+
+</cloudbees-web-app>
