@@ -1,7 +1,13 @@
 package com.zenika.zbooks.persistence;
 
-import com.zenika.zbooks.UnitTest;
-import com.zenika.zbooks.entity.ZBook;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashSet;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -10,10 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.HashSet;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import com.zenika.zbooks.UnitTest;
+import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZCollection;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -35,6 +40,7 @@ public class ZBooksMapperTest extends AbstractDBTest implements UnitTest {
         assertEquals("auteur1", zBook.getAuthors());
         assertEquals("John Wiley & Sons Ltd", zBook.getEdition());
         assertEquals("EN", zBook.getLanguage());
+        assertEquals(ZCollection.NANTES, zBook.getZCollection());
 
         assertEquals("047094224X", zBook.getISBN());
         zBook = zBooksMapper.getBook(2);
@@ -68,6 +74,7 @@ public class ZBooksMapperTest extends AbstractDBTest implements UnitTest {
         zBook.setAuthors("auteur1");
         zBook.setEdition("edition");
         zBook.setLanguage("EN");
+        zBook.setZCollection(ZCollection.SBR);
 
         assertEquals(3, zBooksMapper.getBooks().size());
         zBooksMapper.addBook(zBook);

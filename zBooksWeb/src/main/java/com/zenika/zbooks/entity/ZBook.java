@@ -11,6 +11,8 @@ public class ZBook {
     private String releaseDate;
     private String language;
     private String cover;
+    private ZCollection zCollection;
+    private int idBorrower = 0;
 
     public ZBook() {
 
@@ -87,4 +89,24 @@ public class ZBook {
     public void setCover(String cover) {
         this.cover = cover;
     }
+
+	public ZCollection getZCollection() {
+		return zCollection;
+	}
+
+	public void setZCollection(ZCollection collection) {
+		this.zCollection = collection;
+	}
+
+	public boolean isBorrowed() {
+		return idBorrower!=0;
+	}
+
+	public int getIdBorrower() {
+		return idBorrower;
+	}
+
+	public void setIdBorrower(int idBorrower) {
+		this.idBorrower = idBorrower;
+	}
 }

@@ -9,4 +9,8 @@
         <typeAlias alias="ZUser" type="com.zenika.zbooks.entity.ZUser"/>
       <!--  -->
     </typeAliases>
+    <mappers>
+    	<mapper resource="com/zenika/zbooks/persistence/ZBooksMapper.xml"/>
+    	<mapper resource="com/zenika/zbooks/persistence/ZUserMapper.xml"/>
+    </mappers>
 </configuration>

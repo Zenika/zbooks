@@ -5,7 +5,7 @@
 
     <!-- Mapping ZBooks -->
     <resultMap type="ZBook" id="ZBook">
-        <id column="id" property="id"/>
+        <id column="book_id" property="id"/>
         <result column="ISBN" property="ISBN"/>
         <result column="author" property="authors"/>
         <result column="edition" property="edition"/>
@@ -14,13 +14,15 @@
         <result column="releaseDate" property="releaseDate"/>
         <result column="language" property="language"/>
         <result column="cover" property="cover"/>
+        <result column="zCollection" property="zCollection" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+        <result column="idBorrower" property="idBorrower"/>
     </resultMap>
 
     <!-- ************************************************************************************* -->
 
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
-    	SELECT * FROM zBooks WHERE id = #{id}
+    	SELECT * FROM zBooks WHERE book_id = #{id}
     </select>
 
     <select id="getBooks" resultMap="ZBook" timeout="10">
@@ -29,7 +31,7 @@
 
     <insert id="addBook" parameterType="ZBook" timeout="10">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() as id
+            SELECT LAST_INSERT_ID() as book_id
         </selectKey>
         INSERT INTO
         zBooks (ISBN, title, author, edition, pagesNumber, releaseDate, language, cover)
@@ -38,13 +40,12 @@
     </insert>
 
     <delete id="deleteBook" parameterType="int" timeout="10">
-		DELETE FROM zBooks WHERE id = #{id}
+		DELETE FROM zBooks WHERE book_id = #{id}
 	</delete>
 
-    <delete id="updateBook" parameterType="ZBook" timeout="10">
+    <update id="updateBook" parameterType="ZBook" timeout="10">
 		UPDATE zBooks
 		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language},cover=#{cover}
-		WHERE id=#{id}
-	</delete>
-
+		WHERE book_id=#{id}
+	</update>
 </mapper>

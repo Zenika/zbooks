@@ -3,11 +3,15 @@
         <th></th>
         <th>Titre</th>
         <th>Langue</th>
+        <th>Collection</th>
+        <th>Actuellement présent</th>
     </tr>
     <tr ng-repeat="book in bookList">
         <td class="text-muted"><h6>{{book.isbn}}</h6></td>
         <td><a href="#/{{book.id}}">{{book.title}}</a></td>
         <td><img ng-src="./resources/image/{{book.language|img404safe}}.png"></td>
+        <td>{{book.zcollection}}</td>
+        <td></td>
     </tr>
 </table>
 <button type="button" class="btn btn-default" ng-click="new()" ng-show="hasSpecialAccess">

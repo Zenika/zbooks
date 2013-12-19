@@ -8,13 +8,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.persistence.ServerCache;
 
 @Service
 @Scope("singleton")
 public class ServerCacheImpl implements ServerCache {
 
-	private Map<String, ZPower> usersAuthenticated;
+	private Map<String, ZUser> usersAuthenticated;
 	private Map<String, Long> nonceCache;
 	private final long ONE_HOUR = 3600000L;
 	
@@ -35,14 +36,14 @@ public class ServerCacheImpl implements ServerCache {
 	}
 	
 	@Override
-	public void authenticateNewUser (String token, ZPower power) {
-		usersAuthenticated.put(token, power);
+	public void authenticateNewUser (String token, ZUser zUser) {
+		usersAuthenticated.put(token, zUser);
 	}
 	
 	@Override
 	public ZPower getUserAccess (String token) {
 		if (usersAuthenticated.containsKey(token)) {
-			return usersAuthenticated.get(token);
+			return usersAuthenticated.get(token).getZPower();
 		} else {
 			return ZPower.USER;
 		}
@@ -61,5 +62,10 @@ public class ServerCacheImpl implements ServerCache {
 	@Override
 	public void storeNonceInCache(String nonce) {
 		nonceCache.put(nonce, System.currentTimeMillis());
+	}
+
+	@Override
+	public ZUser getZUser(String token) {
+		return usersAuthenticated.get(token);
 	}
 }

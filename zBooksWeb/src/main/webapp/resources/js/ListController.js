@@ -23,6 +23,6 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs) {
     $scope.new = function () {
         $location.path("/new/edit");
     }
-
+    
     Breadcrumbs.setCrumbs([]);
 }

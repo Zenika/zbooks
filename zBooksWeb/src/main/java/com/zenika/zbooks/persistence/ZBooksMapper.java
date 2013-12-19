@@ -4,6 +4,8 @@ import com.zenika.zbooks.entity.ZBook;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface ZBooksMapper {
 
     List<ZBook> getBooks();
@@ -15,5 +17,4 @@ public interface ZBooksMapper {
     void deleteBook(int id);
 
     void updateBook(ZBook book);
-
 }

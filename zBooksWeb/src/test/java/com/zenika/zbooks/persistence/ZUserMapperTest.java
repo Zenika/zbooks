@@ -1,9 +1,12 @@
 package com.zenika.zbooks.persistence;
 
-import com.zenika.zbooks.UnitTest;
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.entity.ZUser;
-import com.zenika.zbooks.utils.ZBooksBddTool;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,10 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import static org.junit.Assert.*;
+import com.zenika.zbooks.UnitTest;
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.utils.ZBooksBddTool;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -48,6 +51,8 @@ public class ZUserMapperTest extends AbstractDBTest implements UnitTest {
         assertEquals(hashPasswordInSHA256("pwd"), user.getPassword());
         assertEquals(1, user.getId());
         assertEquals(ZPower.ADMIN, user.getZPower());
+        assertEquals("047094224X", user.getBorrowedBooks().get(0).getISBN());
+        assertEquals(2, user.getBorrowedBooks().size());
     }
 
     @Test

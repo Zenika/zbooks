@@ -14,4 +14,8 @@ public interface ZUserMapper {
             @Param("password") String password);
 
     ZUser getZUserWithEmail(String email);
+    
+    void borrowOrReturnBook (
+    		@Param("book_id") int book_id,
+            @Param("idBorrower") int idBorrower);
 }

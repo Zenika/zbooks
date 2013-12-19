@@ -1,15 +1,22 @@
 package com.zenika.zbooks.web;
 
-import com.zenika.zbooks.entity.ZBook;
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.persistence.ZBooksMapper;
-import com.zenika.zbooks.services.ZUserService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.persistence.ZBooksMapper;
+import com.zenika.zbooks.services.ZUserService;
 
 @RequestMapping(value = "/api/*")
 @Controller
@@ -54,5 +61,19 @@ public class zBookAPIController {
     @ResponseBody
     public boolean hasSpecialAccess(@CookieValue("token") String token) {
         return (zUserService.getZUserAccess(token) == ZPower.ADMIN);
+    }
+    
+    @RequestMapping(value="/borrow/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean borrowBook(@PathVariable int id, @CookieValue("token") String token) {
+    	ZBook zBook = zBooksMapper.getBook(id);
+    	ZUser user = zUserService.getAuthenticatedZUser(token);
+    	return zUserService.borrowBook(user, zBook);
+    }
+    
+    @RequestMapping(value="/return/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean returnBook(@PathVariable int id) {
+    	return zUserService.returnBook(id);
     }
 }

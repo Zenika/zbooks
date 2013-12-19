@@ -22,9 +22,11 @@ import org.expressme.openid.OpenIdManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.persistence.ServerCache;
+import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.persistence.ZUserMapper;
 import com.zenika.zbooks.services.ZUserService;
 
@@ -33,6 +35,9 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Autowired
 	private ZUserMapper zUserMapper;
+	
+	@Autowired
+	private ZBooksMapper zBooksMapper;
 	
 	private static final Logger LOG = Logger.getLogger(ZUserServiceImpl.class);
 	
@@ -79,7 +84,8 @@ public class ZUserServiceImpl implements ZUserService {
 		if (userInDb != null) {
 			try {
 				String token = this.hashZUser(user);
-				serverCache.authenticateNewUser(token, userInDb.getZPower());
+				userInDb.setPassword(null);
+				serverCache.authenticateNewUser(token, userInDb);
 				return token;
 			} catch (NoSuchAlgorithmException e) {
 				LOG.error(e.getMessage());
@@ -176,7 +182,7 @@ public class ZUserServiceImpl implements ZUserService {
 			try {
 				Authentication authentication = openIdManager.getAuthentication(request, Base64.decode(rawMacKeyString), alias);
 				String token = hashStrings(authentication.getEmail(), authentication.getFullname(), rawMacKeyString);
-				serverCache.authenticateNewUser(token, getZPowerFromEmail(authentication.getEmail()));
+				serverCache.authenticateNewUser(token, getZUserFromEmail(authentication.getEmail()));
 				LOG.info("The user " + authentication.getEmail() + " just logged in on the website.");
 				return token;
 			}catch (NoSuchAlgorithmException e) {
@@ -189,7 +195,7 @@ public class ZUserServiceImpl implements ZUserService {
 		return null;
 	}
 
-	private ZPower getZPowerFromEmail(String email) {
+	private ZUser getZUserFromEmail(String email) {
 		ZUser zUser = zUserMapper.getZUserWithEmail(email);
 		if (zUser == null) {
 			zUser = new ZUser();
@@ -197,8 +203,9 @@ public class ZUserServiceImpl implements ZUserService {
 			zUser.setZPower(ZPower.USER);
 			zUser.setPassword(UUID.randomUUID().toString());
 			zUserMapper.addZUser(zUser);
+			zUser.setPassword(null);
 		}
-		return zUser.getZPower();
+		return zUser;
 	}
 	
 	private boolean checkNonce(String nonce) {
@@ -234,5 +241,33 @@ public class ZUserServiceImpl implements ZUserService {
 			return 0;
 		}
     }
+
+	@Override
+	public ZUser getAuthenticatedZUser(String token) {
+		return serverCache.getZUser(token);
+	}
+
+	@Override
+	public boolean borrowBook(ZUser zUser, ZBook zBook) {
+		if (zBook != null && zUser != null && !zBook.isBorrowed()) {
+			zUser.borrowBook(zBook);
+			zBook.setIdBorrower(zUser.getId());
+			zUserMapper.borrowOrReturnBook(zUser.getId(), zBook.getId());
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean returnBook(int book_id) {
+		ZBook zBook = zBooksMapper.getBook(book_id);
+		if (zBook != null && zBook.isBorrowed()) {
+			zBook.setIdBorrower(0);
+			zUserMapper.borrowOrReturnBook(book_id, 0);
+			return true;
+		}
+		return false;
+	}
 
 }

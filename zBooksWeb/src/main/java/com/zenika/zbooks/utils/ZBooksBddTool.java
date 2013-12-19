@@ -29,6 +29,7 @@ public class ZBooksBddTool {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        appContext.close();
     }
 
     public static void initializeData(DataSource dataSource) throws SQLException, IOException {

@@ -1,6 +1,7 @@
 package com.zenika.zbooks.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,9 +30,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.zenika.zbooks.IntegrationTest;
-import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.persistence.ServerCache;
 import com.zenika.zbooks.persistence.ZBooksMapper;
+import com.zenika.zbooks.persistence.ZUserMapper;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,8 +45,6 @@ public class GetApiTest implements IntegrationTest {
 
     private static final Logger LOG = Logger.getLogger(GetApiTest.class);
 
-    private String jsonUser = "{email:root@zenika.com, password:a1159e9df3670d549d04524532629f5477ceb7deec9b45e47e8c009506ecb2c8}";
-
     @Autowired
     private WebApplicationContext wac;
 
@@ -51,6 +52,9 @@ public class GetApiTest implements IntegrationTest {
 
     @Autowired
     private ZBooksMapper zBooksMapper;
+    
+    @Autowired
+    private ZUserMapper zUserMapper;
 
     @Autowired
     private DriverManagerDataSource dataSource;
@@ -73,8 +77,10 @@ public class GetApiTest implements IntegrationTest {
             Assert.fail();
         }
         this.mockMvc = webAppContextSetup(this.wac).build();
-        serverCache.authenticateNewUser("tokenTest", ZPower.USER);
-        serverCache.authenticateNewUser("tokenRoot", ZPower.ADMIN);
+        ZUser zUserTest = zUserMapper.getZUserWithEmail("user@zenika.com");
+        ZUser zUserRoot = zUserMapper.getZUserWithEmail("root@zenika.com");
+        serverCache.authenticateNewUser("tokenTest", zUserTest);
+        serverCache.authenticateNewUser("tokenRoot", zUserRoot);
     }
 
 
@@ -95,5 +101,19 @@ public class GetApiTest implements IntegrationTest {
         this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
                 .andExpect(status().isOk());
         assertThat(zBooksMapper.getBook(2)).isNull();
+    }
+    
+    @Test
+    public void testBorrowBook () throws Exception {
+    	this.mockMvc.perform(get("/api/return/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
+        .andExpect(status().isOk());
+    	this.mockMvc.perform(get("/api/borrow/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
+        .andExpect(status().isOk());
+    	ZUser zUserTest = zUserMapper.getZUserWithEmail("user@zenika.com");
+    	ZBook zBook = zBooksMapper.getBook(2);
+    	assertEquals(1, zUserTest.getBorrowedBooks().size());
+    	assertEquals(zBook.getISBN(), zUserTest.getBorrowedBooks().get(0).getISBN());
+    	assertTrue(zBook.isBorrowed());
+    	assertEquals(zUserTest.getId(), zBook.getIdBorrower());
     }
 }
