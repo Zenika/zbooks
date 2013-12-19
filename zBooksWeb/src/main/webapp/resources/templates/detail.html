@@ -9,6 +9,11 @@
             </div>
         </div>
         <div class="panel-body">
+        	<div class="alert" ng-class="messageType" ng-show="isMessage()">
+                <span class="glyphicon glyphicon-remove" style="cursor: pointer; float:right;"
+                      ng-click="closeMessage()"></span>
+                {{message}}
+            </div>
             <div><img class="img-cover" ng-src="{{book.cover|coverFilter}}"></div>
             <div style="float: left">
                 <table>
@@ -35,6 +40,17 @@
                     <tr>
                         <th>Nombre de pages</th>
                         <td>{{book.pagesNumber}}</td>
+                    </tr>
+                    <tr>
+                    	<th></th>
+                    	<td>
+                    		<button type="button" class="btn btn-default" ng-click="borrow()" ng-hide="book.borrowed">
+                    			Emprunter
+							</button>
+							<button type="button" class="btn btn-default" ng-click="return()" ng-show="book.borrowed">
+                    			Rendre le livre
+							</button>
+						</td>
                     </tr>
                 </table>
             </div>

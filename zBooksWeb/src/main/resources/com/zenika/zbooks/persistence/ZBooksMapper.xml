@@ -15,7 +15,7 @@
         <result column="language" property="language"/>
         <result column="cover" property="cover"/>
         <result column="zCollection" property="zCollection" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
-        <result column="idBorrower" property="idBorrower"/>
+    	<result column="idBorrower" property="borrowed"/>
     </resultMap>
 
     <!-- ************************************************************************************* -->

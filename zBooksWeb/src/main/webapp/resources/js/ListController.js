@@ -24,5 +24,15 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs) {
         $location.path("/new/edit");
     }
     
+
+    
+    $scope.isBorrowed = function(id) {
+    	 $http({method:'GET', url:'/api/isBorrowed/'+id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    			return data;
+    	    });
+    }
+    
+    $scope.isBorrowed(2);
+    
     Breadcrumbs.setCrumbs([]);
 }

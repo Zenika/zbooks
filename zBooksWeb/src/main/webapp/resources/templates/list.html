@@ -11,7 +11,11 @@
         <td><a href="#/{{book.id}}">{{book.title}}</a></td>
         <td><img ng-src="./resources/image/{{book.language|img404safe}}.png"></td>
         <td>{{book.zcollection}}</td>
-        <td></td>
+        <td>
+        	<div class="checkboox" ng-hide="book.borrowed">
+        		<input type="checkbox" checked disabled/>	
+        	</div>
+        </td>
     </tr>
 </table>
 <button type="button" class="btn btn-default" ng-click="new()" ng-show="hasSpecialAccess">

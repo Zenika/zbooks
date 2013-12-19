@@ -63,7 +63,13 @@ public class zBookAPIController {
         return (zUserService.getZUserAccess(token) == ZPower.ADMIN);
     }
     
-    @RequestMapping(value="/borrow/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/isBorrowed/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean isBorrowed(@PathVariable int id) {
+        return (zBooksMapper.getBook(id).isBorrowed());
+    }
+    
+    @RequestMapping(value="/borrow/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public boolean borrowBook(@PathVariable int id, @CookieValue("token") String token) {
     	ZBook zBook = zBooksMapper.getBook(id);
@@ -71,7 +77,7 @@ public class zBookAPIController {
     	return zUserService.borrowBook(user, zBook);
     }
     
-    @RequestMapping(value="/return/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/return/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public boolean returnBook(@PathVariable int id) {
     	return zUserService.returnBook(id);

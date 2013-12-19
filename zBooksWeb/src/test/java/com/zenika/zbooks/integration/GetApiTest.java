@@ -1,9 +1,12 @@
 package com.zenika.zbooks.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -105,15 +108,17 @@ public class GetApiTest implements IntegrationTest {
     
     @Test
     public void testBorrowBook () throws Exception {
-    	this.mockMvc.perform(get("/api/return/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
+    	this.mockMvc.perform(put("/api/return/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
         .andExpect(status().isOk());
-    	this.mockMvc.perform(get("/api/borrow/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
+    	ZUser zUserRoot = zUserMapper.getZUserWithEmail("root@zenika.com");
+    	assertEquals(1, zUserRoot.getBorrowedBooks().size());
+    	assertNotEquals(2, zUserRoot.getBorrowedBooks().get(0));
+    	this.mockMvc.perform(put("/api/borrow/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
         .andExpect(status().isOk());
     	ZUser zUserTest = zUserMapper.getZUserWithEmail("user@zenika.com");
     	ZBook zBook = zBooksMapper.getBook(2);
     	assertEquals(1, zUserTest.getBorrowedBooks().size());
     	assertEquals(zBook.getISBN(), zUserTest.getBorrowedBooks().get(0).getISBN());
     	assertTrue(zBook.isBorrowed());
-    	assertEquals(zUserTest.getId(), zBook.getIdBorrower());
     }
 }
