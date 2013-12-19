@@ -1,23 +1,28 @@
 Outil de gestion de la bibliothèque Zenika
 
-Itération 1 : 
+Itération 1 : FAIT
 - [Feature] : Tableau
     Un tableau simple avec ISBN, Titre, Langue
 - [Feature] : Fiche
     Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur, collection, papier et/ou ebook, date de sortie)
 - [Tech] Maven, Spring, AngulasJS, MyBatis, H2, REST
 
+Itération 2 : FAIT sauf Emprunts en cours
+- [Tech] : OAuth2 - FAIT
+- [Tech] : Cloud - FAIT
+- [Tech] MySQL - FAIT pour CloudBees
+- [Feature] Import ISBN - FAIT
+- [Feature] Intégrer les Emprunts (un status + date) - Statut FAIT sur la branche BorrowBook
+- [Feature.Fiche] : détail++ (illustration, année) - FAIT
+
+
 Backlog : 
-- [Feature] Import ISBN
-- [Tech] MySQL
+
+
 - [Feature.Tableau] : Filtre
 - [Feature.Tableau] : détail++
-- [Feature.Fiche] : détail++ (illustration, année)
 - [Feature] Livre du mois (proposition, votes)
-- [Feature] Intégrer les Emprunts (un status + date)
 - [Tech] : NoSQL (couchbase ou MongoDB)
-- [Tech] : OAuth2
-- [Tech] : Cloud
 - [Feature] : notif mail
 - [Feature] : feed back (revue de lecture, commentaires)
 - [Tech]: RESTfull (HATEOAS, la doc et tout le toutim)
@@ -26,5 +31,3 @@ Backlog :
 - [Feature.emprunt] : Un bouton "j'attend ce livre STP"
 - [Feature.emprunt] : Un bouton "je l'ai lu !"
 - [Feature] : Ajout d'un livre simplement en scannant le code barre avec un tel Android.
-
-
