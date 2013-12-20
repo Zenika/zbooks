@@ -15,6 +15,11 @@ public interface ZUserMapper {
 
     ZUser getZUserWithEmail(String email);
     
+    /**
+     * Method to update the DB to borrow or return a zBook. Set the idBorrower to 0 if you wish to return it.
+     * @param book_id
+     * @param idBorrower
+     */
     void borrowOrReturnBook (
     		@Param("book_id") int book_id,
             @Param("idBorrower") int idBorrower);

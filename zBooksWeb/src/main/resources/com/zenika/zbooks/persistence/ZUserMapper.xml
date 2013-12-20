@@ -32,7 +32,12 @@
 	</select>
 
     <select id="getZUserWithEmail" parameterType="string" resultMap="ZUser" timeout="10">
-		SELECT * FROM zUser as u LEFT OUTER JOIN zBooks as z ON z.idBorrower=u.user_id WHERE u.email=#{email}
+		SELECT
+		 	user_id,userName,email,zPower,  
+		 	book_id,ISBN,author,edition,title,pagesNumber,releaseDate,language,cover,zCollection,idBorrower 
+		 FROM zUser as u 
+		 	LEFT OUTER JOIN zBooks as z ON z.idBorrower=u.user_id 
+		 WHERE u.email=#{email}
 	</select>
 	
 	<update id="borrowOrReturnBook" parameterType="map" timeout="10">

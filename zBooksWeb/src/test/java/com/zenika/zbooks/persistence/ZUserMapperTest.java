@@ -1,8 +1,6 @@
 package com.zenika.zbooks.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -53,6 +51,37 @@ public class ZUserMapperTest extends AbstractDBTest implements UnitTest {
         assertEquals(ZPower.ADMIN, user.getZPower());
         assertEquals("047094224X", user.getBorrowedBooks().get(0).getISBN());
         assertEquals(2, user.getBorrowedBooks().size());
+    }
+    
+    @Test
+    public void getZUserWithEmailTest() {
+    	ZUser user = zUserMapper.getZUserWithEmail("root@zenika.com");
+    	assertEquals("root@zenika.com", user.getEmail());
+        assertNull(user.getPassword());
+        assertEquals(1, user.getId());
+        assertEquals(ZPower.ADMIN, user.getZPower());
+        assertEquals("047094224X", user.getBorrowedBooks().get(0).getISBN());
+        assertEquals(2, user.getBorrowedBooks().size());
+    }
+    
+    @Test
+    public void borrowOrReturnBookTest() {
+    	//Test the data
+    	ZUser user = zUserMapper.getZUserWithEmail("root@zenika.com");
+    	assertEquals(2, user.getBorrowedBooks().size());
+    	assertEquals(2, user.getBorrowedBooks().get(1).getId());
+    	
+    	//Test the return
+    	zUserMapper.borrowOrReturnBook(2, 0);
+    	user = zUserMapper.getZUserWithEmail("root@zenika.com");
+    	assertEquals(1, user.getBorrowedBooks().size());
+    	assertNotEquals(2, user.getBorrowedBooks().get(0).getId());
+    	
+    	//Test the borrow
+    	zUserMapper.borrowOrReturnBook(2, user.getId());
+    	user = zUserMapper.getZUserWithEmail("root@zenika.com");
+    	assertEquals(2, user.getBorrowedBooks().size());
+    	assertEquals(2, user.getBorrowedBooks().get(1).getId());
     }
 
     @Test
