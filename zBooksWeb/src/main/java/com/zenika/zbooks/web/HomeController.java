@@ -24,6 +24,11 @@ public class HomeController {
 	private ZUserService zUserService;
 	
 	private String serverUrl;
+	private boolean isSecureWorking = true;
+	
+	public void setIsSecureWorking (boolean isSecureWorking) {
+		this.isSecureWorking = isSecureWorking;
+	}
 	
 	public void setServerUrl (String serverUrl) {
 		this.serverUrl = serverUrl;
@@ -31,7 +36,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/", produces = MediaType.TEXT_HTML_VALUE)
 	public String index(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (!request.isSecure()) {
+		if (isSecureWorking && !request.isSecure()) {
 			response.sendRedirect(serverUrl);
 		}
         return "index.html";

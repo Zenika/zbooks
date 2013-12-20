@@ -65,6 +65,7 @@
 		</bean>
 		<bean id="homeController" class="com.zenika.zbooks.web.HomeController">
 			<property name="serverUrl" value="${URL.SSL}" />
+			<property name="isSecureWorking" value="${isSecureWorking}" />
 		</bean>
 	</beans>
 </beans>
