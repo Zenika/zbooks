@@ -276,4 +276,11 @@ public class ZUserServiceImpl implements ZUserService {
 		return false;
 	}
 
+	@Override
+	public void disconnectZUser(String token) {
+		if (token != null && serverCache.isUserAuthenticated(token)) {
+			serverCache.disconnectZUser(token);
+		}
+	}
+
 }

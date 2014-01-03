@@ -1,4 +1,4 @@
-function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
+function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, Authenticated) {
 	$scope.user = new Object();
 	
 	$scope.message = "";
@@ -19,6 +19,7 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
 	
     $http({method:'GET', url:'/authenticated', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         if (data.toLowerCase()==="true") {
+        	Authenticated.setAuthenticated(true);
         	$location.path("/list");
         }
     });
@@ -28,6 +29,7 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
         ).
             success(function (data, status, headers, config) {
             	if (data.toLowerCase()==="true") {
+                	Authenticated.setAuthenticated(true);
                 	$location.path("/list");
                 } else {
                 	$scope.message = "Votre identifiant/mot de passe est faux. Veuillez réessayer.";
@@ -41,4 +43,5 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs) {
 	}
 	
     Breadcrumbs.setCrumbs([]);
+    Authenticated.setAuthenticated(false);
 }

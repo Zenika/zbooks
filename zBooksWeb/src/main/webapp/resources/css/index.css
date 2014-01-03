@@ -39,3 +39,8 @@ th {
     font-weight: bold;
     padding-right: 10px;
 }
+
+.userBar {
+	background-color:#9797ab;
+	height: 5px;
+}

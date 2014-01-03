@@ -68,4 +68,9 @@ public class ServerCacheImpl implements ServerCache {
 	public ZUser getZUser(String token) {
 		return usersAuthenticated.get(token);
 	}
+
+	@Override
+	public void disconnectZUser(String token) {
+		usersAuthenticated.remove(token);
+	}
 }

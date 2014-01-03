@@ -11,4 +11,5 @@ public interface ServerCache {
 	boolean isUserAuthenticated (String token);
 	boolean isNonceAlreadyStored(String nonce);
 	void storeNonceInCache(String nonce);
+	void disconnectZUser (String token);
 }

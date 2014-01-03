@@ -41,6 +41,11 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<resource-ref>
 		<res-ref-name>java:comp/env/jdbc/zbooksDB</res-ref-name>

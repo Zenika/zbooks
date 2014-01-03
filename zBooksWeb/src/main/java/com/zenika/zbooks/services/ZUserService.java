@@ -32,4 +32,6 @@ public interface ZUserService {
 	boolean borrowBook (ZUser zUser, ZBook zBook);
 	
 	boolean returnBook (int book_id);
+	
+	void disconnectZUser (String token);
 }

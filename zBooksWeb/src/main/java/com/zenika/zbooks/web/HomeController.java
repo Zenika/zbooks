@@ -86,4 +86,8 @@ public class HomeController {
     	return zUserService.isZUserAuthenticated(token);
     }
 	
+    @RequestMapping(value="/disconnect", method=RequestMethod.PUT)
+    public void disconnectZUser (@CookieValue(value=ZBooksUtils.COOKIE_TOKEN_KEY, required=false) String token) {
+    	zUserService.disconnectZUser(token);
+    }
 }
