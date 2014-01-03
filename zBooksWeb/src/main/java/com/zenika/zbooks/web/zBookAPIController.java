@@ -17,6 +17,7 @@ import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.services.ZUserService;
+import com.zenika.zbooks.utils.ZBooksUtils;
 
 @RequestMapping(value = "/api/*")
 @Controller
@@ -59,7 +60,7 @@ public class zBookAPIController {
 
     @RequestMapping(value = "/hasSpecialAccess", method = RequestMethod.GET)
     @ResponseBody
-    public boolean hasSpecialAccess(@CookieValue("token") String token) {
+    public boolean hasSpecialAccess(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
         return (zUserService.getZUserAccess(token) == ZPower.ADMIN);
     }
     
@@ -71,7 +72,7 @@ public class zBookAPIController {
     
     @RequestMapping(value="/borrow/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public boolean borrowBook(@PathVariable int id, @CookieValue("token") String token) {
+    public boolean borrowBook(@PathVariable int id, @CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
     	ZBook zBook = zBooksMapper.getBook(id);
     	ZUser user = zUserService.getAuthenticatedZUser(token);
     	return zUserService.borrowBook(user, zBook);

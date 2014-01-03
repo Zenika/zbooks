@@ -53,6 +53,13 @@ public class ZUserServiceTest implements UnitTest {
 		String token2 = zUserService.connectZUser(user2);
 		
 		assertThat(token2).isNotEqualTo(token1);
+		
+		user2 = new ZUser ();
+		user2.setEmail("userTest@test.fr");
+		user2.setPassword("pwd");
+		token2 = zUserService.connectZUser(user2);
+		
+		assertThat(token2).isNotEqualTo(token1);
 	}
 
 }

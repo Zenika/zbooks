@@ -6,12 +6,15 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.services.ZUserService;
@@ -23,6 +26,7 @@ public class HomeController {
 	@Autowired
 	private ZUserService zUserService;
 	
+	private static final Logger logger = Logger.getLogger(HomeController.class);
 	private String serverUrl;
 	private boolean isSecureWorking = true;
 	
@@ -43,11 +47,14 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
-	public void loggIn (@RequestBody ZUser user, HttpServletResponse response) {
+	@ResponseBody
+	public boolean logIn (@RequestBody ZUser user, HttpServletResponse response) {
 		String token = zUserService.connectZUser(user);
 		if (token != null) {
 			response.addCookie(new Cookie(ZBooksUtils.COOKIE_TOKEN_KEY, token));
+			return true;
 		}
+		return false;
 	}
 	
     @RequestMapping(value="/logInWithGoogle")
@@ -70,6 +77,13 @@ public class HomeController {
     	} else {
     		response.sendRedirect("/");
     	}
+    }
+    
+    @RequestMapping(value="/authenticated")
+    @ResponseBody
+    public boolean isAuthenticated (@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
+    	logger.debug("The zUser tried to see if he was connected. Response was : " + zUserService.isZUserAuthenticated(token));
+    	return zUserService.isZUserAuthenticated(token);
     }
 	
 }

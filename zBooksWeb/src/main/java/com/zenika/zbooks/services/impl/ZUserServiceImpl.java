@@ -5,7 +5,9 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -99,7 +101,11 @@ public class ZUserServiceImpl implements ZUserService {
 		String email = user.getEmail();
 		String password = user.getPassword();
 		
-		return hashStrings(email, password);
+		//Using the date to be sure it'll never be the same token
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSSS");
+		String date = dateFormat.format(new Date());
+		
+		return hashStrings(email, password, date);
 	}
 	
 	private String hashStrings (String... strings) throws NoSuchAlgorithmException {
