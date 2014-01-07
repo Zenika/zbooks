@@ -12,7 +12,7 @@ Itération 2 : FAIT sauf Emprunts en cours
 - [Tech] : Cloud - FAIT
 - [Tech] MySQL - FAIT pour CloudBees
 - [Feature] Import ISBN - FAIT
-- [Feature] Intégrer les Emprunts (un status + date) - Statut FAIT sur la branche BorrowBook
+- [Feature] Intégrer les Emprunts - FAIT (il manque le nom de la personne l'ayant emprunté)
 - [Feature.Fiche] : détail++ (illustration, année) - FAIT
 
 
