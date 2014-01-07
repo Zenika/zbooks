@@ -18,9 +18,9 @@
 	<script type="text/javascript" charset="UTF-8"
 		src="resources/js/LoginController.js"></script>
 	
-	
-	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/index.css">
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+	
 
 </head>
 <body ng-controller="rootController">
@@ -41,6 +41,7 @@
 	<div class="container" ng-show="isZUserConnected()">
 		<div class="row">
 			<div class="col-md-12 navbar navbar-default navbar-right userBar">
+				<p class="navbar-text navbar-left">Bienvenue {{firstname()}}</p>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" ng-click="disconnectZUser()">Déconnexion</a></li>
 				</ul>

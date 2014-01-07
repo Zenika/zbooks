@@ -1,4 +1,4 @@
-function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
+function EditController($scope, $routeParams, $http, $location, Breadcrumbs, User) {
     $scope.book = new Object();
 
     $scope.hasSpecialAccess = false;
@@ -157,4 +157,9 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs) {
         {label:"Liste", route:"/#/list" },
         {label:"Nouveau Livre", route:"/#/new/edit" }
     ]);
+    if (!User.firstName()) {
+   	 $http({method:'GET', url:'/api/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+			User.setFirstName(data);
+	    });
+   }
 }

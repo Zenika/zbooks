@@ -34,4 +34,6 @@ public interface ZUserService {
 	boolean returnBook (int book_id);
 	
 	void disconnectZUser (String token);
+	
+	String getUserFirstName (String token);
 }

@@ -40,7 +40,6 @@ th {
     padding-right: 10px;
 }
 
-.userBar {
-	background-color:#9797ab;
-	height: 5px;
+.navbar-text {
+	color:black;
 }

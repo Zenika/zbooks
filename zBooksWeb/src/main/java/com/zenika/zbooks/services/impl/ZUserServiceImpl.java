@@ -53,6 +53,7 @@ public class ZUserServiceImpl implements ZUserService {
 	private static final String RETURN_TO_KEY = "ReturnTo";
 	private static final long ONE_HOUR = 3600000L;
 	private String serverUrl;
+	public static final String ZNK_EMAIL_PATTERN = ".*@zenika.com";
 	
 	
 	public void setServerUrl(String serverUrl) {
@@ -187,10 +188,12 @@ public class ZUserServiceImpl implements ZUserService {
 			openIdManager.setReturnTo(serverUrl + returnToUrl);
 			try {
 				Authentication authentication = openIdManager.getAuthentication(request, Base64.decode(rawMacKeyString), alias);
-				String token = hashStrings(authentication.getEmail(), authentication.getFullname(), rawMacKeyString);
-				serverCache.authenticateNewUser(token, getZUserFromEmail(authentication.getEmail()));
-				LOG.info("The user " + authentication.getEmail() + " just logged in on the website.");
-				return token;
+				if (authentication.getEmail().matches(ZNK_EMAIL_PATTERN)) {
+					String token = hashStrings(authentication.getEmail(), authentication.getFullname(), rawMacKeyString);
+					serverCache.authenticateNewUser(token, getZUserFromEmail(authentication.getEmail()));
+					LOG.info("The user " + authentication.getEmail() + " just logged in on the website.");
+					return token;
+				}
 			}catch (NoSuchAlgorithmException e) {
 				LOG.error(e.getMessage());
 			}catch (OpenIdException e) {
@@ -281,6 +284,13 @@ public class ZUserServiceImpl implements ZUserService {
 		if (token != null && serverCache.isUserAuthenticated(token)) {
 			serverCache.disconnectZUser(token);
 		}
+	}
+
+	@Override
+	public String getUserFirstName(String token) {
+		ZUser zUser = serverCache.getZUser(token);
+		String[] names = zUser.getEmail().split("[.]");
+		return names[0];
 	}
 
 }

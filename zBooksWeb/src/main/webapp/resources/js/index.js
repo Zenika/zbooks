@@ -41,6 +41,33 @@ app.factory("Breadcrumbs", function () {
     };
 });
 
+app.factory("Breadcrumbs", function () {
+    var crumbs = new Array();
+    return {
+        crumbs:function () {
+            return crumbs;
+        },
+        setCrumbs:function (newCrum) {
+            crumbs = newCrum;
+        },
+        isEmpty:function () {
+            return crumbs.length == 0;
+        }
+    };
+});
+
+app.factory("User", function () {
+    var firstName = "";
+    return {
+        firstName:function () {
+            return firstName;
+        },
+        setFirstName:function (newFirstName) {
+        	firstName = newFirstName;
+        }
+    };
+});
+
 app.factory("Authenticated", function () {
     var isAuthenticated = true;
     return {
@@ -75,7 +102,7 @@ app.config(function($httpProvider) {
 	$httpProvider.interceptors.push("authentificationInterceptor");
 });
 
-function rootController($scope, $location, $http, Breadcrumbs, Authenticated) {
+function rootController($scope, $location, $http, Breadcrumbs, Authenticated, User) {
     $scope.goHome = function () {
         $location.path("/");
     };
@@ -95,5 +122,8 @@ function rootController($scope, $location, $http, Breadcrumbs, Authenticated) {
     $scope.disconnectZUser = function () {
     	 $http({method:'PUT', url:'/disconnect', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
     	    });
+    }
+    $scope.firstname = function () {
+    	return User.firstName();
     }
 }

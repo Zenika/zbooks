@@ -1,4 +1,4 @@
-function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, Authenticated) {
+function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, Authenticated, User) {
 	$scope.user = new Object();
 	
 	$scope.message = "";
@@ -44,4 +44,7 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, A
 	
     Breadcrumbs.setCrumbs([]);
     Authenticated.setAuthenticated(false);
+    if (User.firstName()) {
+    	User.setFirstName("");
+   }
 }

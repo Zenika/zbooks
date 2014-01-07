@@ -83,4 +83,10 @@ public class zBookAPIController {
     public boolean returnBook(@PathVariable int id) {
     	return zUserService.returnBook(id);
     }
+    
+    @RequestMapping(value="/getFirstName", method=RequestMethod.GET)
+    @ResponseBody
+    public String getFirstName(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
+    	return zUserService.getUserFirstName(token);
+    }
 }
