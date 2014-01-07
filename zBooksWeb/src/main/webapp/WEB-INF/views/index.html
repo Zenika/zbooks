@@ -40,11 +40,10 @@
 	</div>
 	<div class="container" ng-show="isZUserConnected()">
 		<div class="row">
-			<div class="col-md-12 navbar navbar-default navbar-right userBar">
+			<div class="col-md-12 navbar navbar-zenika navbar-inner navbar-right">
+				<p class="navbar-text navbar-left"><img src="./resources/image/zenika-logo-blanc-alpha-mini.png"></p>
 				<p class="navbar-text navbar-left">Bienvenue {{firstname()}}</p>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#" ng-click="disconnectZUser()">Déconnexion</a></li>
-				</ul>
+				<p class="navbar-text navbar-right"><a style="color:white;" href="#" ng-click="disconnectZUser()">Déconnexion</a></p>
 			</div>
 		</div>
 	</div>
