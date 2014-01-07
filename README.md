@@ -1,5 +1,9 @@
 Outil de gestion de la bibliothèque Zenika
 
+zBooksGwt : POC pour apprentissage GWT + Spring + Hibernate
+
+zBooksWeb : disponible en intégration continue à l'adresse http://zbook.mmouterde.cloudbees.net/#/
+
 Itération 1 : FAIT
 - [Feature] : Tableau
     Un tableau simple avec ISBN, Titre, Langue
@@ -7,13 +11,14 @@ Itération 1 : FAIT
     Une fiche détail (ISBN, titre, langue, editeur, nbPage, auteur, collection, papier et/ou ebook, date de sortie)
 - [Tech] Maven, Spring, AngulasJS, MyBatis, H2, REST
 
-Itération 2 : FAIT sauf Emprunts en cours
+Itération 2 : FAIT
 - [Tech] : OAuth2 - FAIT
 - [Tech] : Cloud - FAIT
 - [Tech] MySQL - FAIT pour CloudBees
 - [Feature] Import ISBN - FAIT
-- [Feature] Intégrer les Emprunts - FAIT (il manque le nom de la personne l'ayant emprunté)
+- [Feature] Intégrer les Emprunts - FAIT
 - [Feature.Fiche] : détail++ (illustration, année) - FAIT
+
 
 
 Backlog : 
