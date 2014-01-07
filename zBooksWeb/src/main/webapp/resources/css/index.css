@@ -23,7 +23,7 @@
 }
 
 .img-cover {
-    max-height: 200px;
+    height: 250px;
     float: left;
     margin-right: 30px;
 }
@@ -52,4 +52,8 @@ th {
 
 .navbar-text {
 	color:white;
+}
+
+.spaced-table>tbody>tr>th, .spaced-table>tbody>tr>td {
+	padding-top: 9px;
 }

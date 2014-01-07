@@ -41,21 +41,6 @@ app.factory("Breadcrumbs", function () {
     };
 });
 
-app.factory("Breadcrumbs", function () {
-    var crumbs = new Array();
-    return {
-        crumbs:function () {
-            return crumbs;
-        },
-        setCrumbs:function (newCrum) {
-            crumbs = newCrum;
-        },
-        isEmpty:function () {
-            return crumbs.length == 0;
-        }
-    };
-});
-
 app.factory("User", function () {
     var firstName = "";
     return {
