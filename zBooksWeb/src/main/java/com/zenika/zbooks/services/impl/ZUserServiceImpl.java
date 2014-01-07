@@ -270,12 +270,14 @@ public class ZUserServiceImpl implements ZUserService {
 	}
 
 	@Override
-	public boolean returnBook(int book_id) {
-		ZBook zBook = zBooksMapper.getBook(book_id);
-		if (zBook != null && !zBook.getBorrowerName().equals("")) {
-			zBook.setBorrowerName("");
-			zUserMapper.borrowOrReturnBook(book_id, 0);
-			return true;
+	public boolean returnBook(String token, int book_id) {
+		if (canReturnBook(token, book_id)) {
+			ZBook zBook = zBooksMapper.getBook(book_id);
+			if (zBook != null && !zBook.getBorrowerName().equals("")) {
+				zBook.setBorrowerName("");
+				zUserMapper.borrowOrReturnBook(book_id, 0);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -292,6 +294,23 @@ public class ZUserServiceImpl implements ZUserService {
 		ZUser zUser = serverCache.getZUser(token);
 		String[] names = zUser.getUserName().split(" ");
 		return names[0];
+	}
+
+	@Override
+	public boolean canReturnBook(String token, int idZBook) {
+		boolean hasBorrowed = false;
+		ZUser user = serverCache.getZUser(token);
+		if (user.getZPower() == ZPower.ADMIN) {
+			hasBorrowed = true;
+		} else {
+			for (ZBook zBook : user.getBorrowedBooks()) {
+				if (zBook.getId() == idZBook) {
+					hasBorrowed = true;
+					break;
+				}
+			}
+		}
+		return hasBorrowed;
 	}
 
 }

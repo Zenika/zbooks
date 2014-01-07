@@ -81,6 +81,7 @@ public class ZBooksMapperTest extends AbstractDBTest implements UnitTest {
         zBooksMapper.addBook(zBook);
         assertNotNull(zBooksMapper.getBook(4));
         assertEquals(4, zBooksMapper.getBooks().size());
+        assertEquals(ZCollection.SBR, zBooksMapper.getBook(4).getZCollection());
     }
 
     @Test

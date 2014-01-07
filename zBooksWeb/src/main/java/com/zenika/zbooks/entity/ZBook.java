@@ -15,7 +15,6 @@ public class ZBook {
     private String borrowerName="";
 
     public ZBook() {
-
     }
 
     public String getISBN() {

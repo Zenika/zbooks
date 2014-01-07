@@ -1,5 +1,6 @@
 function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, User) {
     $scope.hasSpecialAccess = false;
+    $scope.canBeReturned = false;
     
     $scope.ERROR_TYPE = "alert-danger";
     $scope.WARNING_TYPE = "alert-warning";
@@ -7,9 +8,16 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     $scope.SUCCESS_TYPE = "alert-success";
     $scope.messageType;
     
+    $scope.canReturnBook = function () {
+    	$http({method:'GET', url:'/api/canReturnBook/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+	 		  $scope.canBeReturned = data;
+	 	}); 	   
+    }
+    
     $scope.refreshBook = function () {
 		$http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 	        $scope.book = data;
+	        $scope.canReturnBook();
 	
 	        Breadcrumbs.setCrumbs([
 	            {label:"Liste", route:"/#/list" },
@@ -42,7 +50,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
             	
         });
     }
-    $scope.refreshBook();
+    
     $scope.return = function () {
     	$http({method:'PUT', url:'/api/return/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             if (data) {
@@ -64,6 +72,9 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     $scope.closeMessage = function () {
         $scope.message = "";
     }
+    
+    $scope.refreshBook();
+    
     if (!User.firstName()) {
    	 $http({method:'GET', url:'/api/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 			User.setFirstName(data);

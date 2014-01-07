@@ -31,9 +31,11 @@ public interface ZUserService {
 	
 	boolean borrowBook (ZUser zUser, ZBook zBook);
 	
-	boolean returnBook (int book_id);
+	boolean returnBook (String token, int book_id);
 	
 	void disconnectZUser (String token);
 	
 	String getUserFirstName (String token);
+
+	boolean canReturnBook(String token, int idZBook);
 }

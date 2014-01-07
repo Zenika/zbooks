@@ -43,9 +43,9 @@
             SELECT LAST_INSERT_ID() as book_id
         </selectKey>
         INSERT INTO
-        zBooks (ISBN, title, author, edition, pagesNumber, releaseDate, language, cover)
+        zBooks (ISBN, title, author, edition, pagesNumber, releaseDate, language, cover, zCollection)
         VALUES
-        (#{ISBN}, #{title}, #{authors}, #{edition}, #{pagesNumber}, #{releaseDate}, #{language}, #{cover})
+        (#{ISBN}, #{title}, #{authors}, #{edition}, #{pagesNumber}, #{releaseDate}, #{language}, #{cover}, #{zCollection.ordinal})
     </insert>
 
     <delete id="deleteBook" parameterType="int" timeout="10">
@@ -54,7 +54,7 @@
 
     <update id="updateBook" parameterType="ZBook" timeout="10">
 		UPDATE zBooks
-		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language},cover=#{cover}
+		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language},cover=#{cover},zCollection=#{zCollection.ordinal}
 		WHERE book_id=#{id}
 	</update>
 </mapper>

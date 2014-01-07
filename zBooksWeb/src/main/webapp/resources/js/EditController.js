@@ -17,6 +17,12 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         {code:"FR"},
         {code:"EN"}
     ];
+    
+    $scope.collections = [
+        {code:"SBR", value:"Sébastien Brousse"},
+        {code:"NANTES", value:"Nantes"},
+        {code:"RENNES", value:"Rennes"}
+    ];
 
     $scope.ERROR_TYPE = "alert-danger";
     $scope.WARNING_TYPE = "alert-warning";
@@ -31,6 +37,17 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     }
 
     $scope.currentLanguage = $scope.getLanguage();
+    
+    $scope.getCollection = function (coll) {
+        if (coll === "RENNES" || !coll)
+            return $scope.collections[2];
+        else if (coll === "NANTES")
+            return $scope.collections[1];
+        else
+        	return $scope.collections[0];
+    }
+    
+    $scope.currentCollection = $scope.getCollection();
 
     $scope.confirmDelete = function () {
         $scope.confirmDeleteFlag = true;
@@ -66,6 +83,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
 
     $scope.update = function () {
         $scope.book.language = $scope.currentLanguage.code;
+        $scope.book.zcollection=$scope.currentCollection.code;
         $http({method:'POST', url:'/api/book/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
         ).
             success(function (data, status, headers, config) {

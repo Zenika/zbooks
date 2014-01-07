@@ -80,13 +80,19 @@ public class zBookAPIController {
     
     @RequestMapping(value="/return/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public boolean returnBook(@PathVariable int id) {
-    	return zUserService.returnBook(id);
+    public boolean returnBook(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token, @PathVariable int id) {
+    	return zUserService.returnBook(token, id);
     }
     
     @RequestMapping(value="/getFirstName", method=RequestMethod.GET)
     @ResponseBody
     public String getFirstName(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
     	return zUserService.getUserFirstName(token);
+    }
+    
+    @RequestMapping(value="/canReturnBook/{id}", method=RequestMethod.GET)
+    @ResponseBody
+    public boolean canReturnBook(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token, @PathVariable int id) {
+    	return zUserService.canReturnBook(token, id);
     }
 }
