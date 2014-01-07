@@ -12,7 +12,7 @@ public class ZBook {
     private String language;
     private String cover;
     private ZCollection zCollection;
-    private boolean borrowed = false;
+    private String borrowerName="";
 
     public ZBook() {
 
@@ -98,11 +98,11 @@ public class ZBook {
 		this.zCollection = collection;
 	}
 
-	public boolean isBorrowed() {
-		return this.borrowed;
+	public String getBorrowerName() {
+		return this.borrowerName;
 	}
 
-	public void setBorrowed(boolean borrowed) {
-		this.borrowed = borrowed;
+	public void setBorrowerName(String borrowerName) {
+		this.borrowerName = borrowerName;
 	}
 }

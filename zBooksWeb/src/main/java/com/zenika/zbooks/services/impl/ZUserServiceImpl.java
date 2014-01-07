@@ -190,7 +190,7 @@ public class ZUserServiceImpl implements ZUserService {
 				Authentication authentication = openIdManager.getAuthentication(request, Base64.decode(rawMacKeyString), alias);
 				if (authentication.getEmail().matches(ZNK_EMAIL_PATTERN)) {
 					String token = hashStrings(authentication.getEmail(), authentication.getFullname(), rawMacKeyString);
-					serverCache.authenticateNewUser(token, getZUserFromEmail(authentication.getEmail()));
+					serverCache.authenticateNewUser(token, getZUserFromEmail(authentication));
 					LOG.info("The user " + authentication.getEmail() + " just logged in on the website.");
 					return token;
 				}
@@ -204,11 +204,12 @@ public class ZUserServiceImpl implements ZUserService {
 		return null;
 	}
 
-	private ZUser getZUserFromEmail(String email) {
-		ZUser zUser = zUserMapper.getZUserWithEmail(email);
+	private ZUser getZUserFromEmail(Authentication authentication) {
+		ZUser zUser = zUserMapper.getZUserWithEmail(authentication.getEmail());
 		if (zUser == null) {
 			zUser = new ZUser();
-			zUser.setEmail(email);
+			zUser.setEmail(authentication.getEmail());
+			zUser.setUserName(authentication.getFullname());
 			zUser.setZPower(ZPower.USER);
 			zUser.setPassword(UUID.randomUUID().toString());
 			zUserMapper.addZUser(zUser);
@@ -258,9 +259,9 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Override
 	public boolean borrowBook(ZUser zUser, ZBook zBook) {
-		if (zBook != null && zUser != null && !zBook.isBorrowed()) {
+		if (zBook != null && zUser != null && zBook.getBorrowerName().equals("")) {
 			zUser.borrowBook(zBook);
-			zBook.setBorrowed(true);
+			zBook.setBorrowerName(zUser.getUserName());;
 			zUserMapper.borrowOrReturnBook(zBook.getId(), zUser.getId());
 			return true;
 		} else {
@@ -271,8 +272,8 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public boolean returnBook(int book_id) {
 		ZBook zBook = zBooksMapper.getBook(book_id);
-		if (zBook != null && zBook.isBorrowed()) {
-			zBook.setBorrowed(false);
+		if (zBook != null && !zBook.getBorrowerName().equals("")) {
+			zBook.setBorrowerName("");
 			zUserMapper.borrowOrReturnBook(book_id, 0);
 			return true;
 		}
@@ -289,7 +290,7 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public String getUserFirstName(String token) {
 		ZUser zUser = serverCache.getZUser(token);
-		String[] names = zUser.getEmail().split("[.]");
+		String[] names = zUser.getUserName().split(" ");
 		return names[0];
 	}
 

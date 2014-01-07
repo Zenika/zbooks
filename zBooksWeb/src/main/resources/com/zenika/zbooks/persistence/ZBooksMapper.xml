@@ -15,18 +15,27 @@
         <result column="language" property="language"/>
         <result column="cover" property="cover"/>
         <result column="zCollection" property="zCollection" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
-    	<result column="idBorrower" property="borrowed"/>
+    	<result column="idBorrower" property="borrowerName"/>
     </resultMap>
 
     <!-- ************************************************************************************* -->
 
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
-    	SELECT * FROM zBooks WHERE book_id = #{id}
+    	SELECT 
+    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection, u.userName as idBorrower
+    		FROM zBooks as z
+    			LEFT OUTER JOIN zUser as u
+    				ON u.user_id = z.idBorrower
+    	WHERE book_id = #{id}
     </select>
 
     <select id="getBooks" resultMap="ZBook" timeout="10">
-    	SELECT * FROM zBooks
+    	SELECT 
+    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection, u.userName as idBorrower
+    		FROM zBooks as z
+    			LEFT OUTER JOIN zUser as u
+    				ON u.user_id = z.idBorrower
     </select>
 
     <insert id="addBook" parameterType="ZBook" timeout="10">

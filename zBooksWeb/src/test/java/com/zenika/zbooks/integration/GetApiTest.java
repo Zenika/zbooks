@@ -119,6 +119,6 @@ public class GetApiTest implements IntegrationTest {
     	ZBook zBook = zBooksMapper.getBook(2);
     	assertEquals(1, zUserTest.getBorrowedBooks().size());
     	assertEquals(zBook.getISBN(), zUserTest.getBorrowedBooks().get(0).getISBN());
-    	assertTrue(zBook.isBorrowed());
+    	assertTrue(zBook.getBorrowerName().equals(zUserTest.getUserName()));
     }
 }

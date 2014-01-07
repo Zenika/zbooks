@@ -64,10 +64,10 @@ public class zBookAPIController {
         return (zUserService.getZUserAccess(token) == ZPower.ADMIN);
     }
     
-    @RequestMapping(value = "/isBorrowed/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getBorrower/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public boolean isBorrowed(@PathVariable int id) {
-        return (zBooksMapper.getBook(id).isBorrowed());
+    public String getBorrower(@PathVariable int id) {
+        return (zBooksMapper.getBook(id).getBorrowerName());
     }
     
     @RequestMapping(value="/borrow/{id}", method = RequestMethod.PUT)

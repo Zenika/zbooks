@@ -41,13 +41,17 @@
                         <th>Nombre de pages</th>
                         <td>{{book.pagesNumber}}</td>
                     </tr>
+                    <tr ng-show="book.borrowerName">
+                    	<th>Emprunteur</th>
+                    	<td>{{book.borrowerName}}</td>
+                    </tr>
                     <tr>
                     	<th></th>
                     	<td>
-                    		<button type="button" class="btn btn-default" ng-click="borrow()" ng-hide="book.borrowed">
+                    		<button type="button" class="btn btn-default" ng-click="borrow()" ng-hide="book.borrowerName">
                     			Emprunter
 							</button>
-							<button type="button" class="btn btn-default" ng-click="return()" ng-show="book.borrowed">
+							<button type="button" class="btn btn-default" ng-click="return()" ng-show="book.borrowerName">
                     			Rendre le livre
 							</button>
 						</td>

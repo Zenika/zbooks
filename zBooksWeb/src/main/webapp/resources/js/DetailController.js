@@ -7,14 +7,16 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     $scope.SUCCESS_TYPE = "alert-success";
     $scope.messageType;
     
-	$http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
-        $scope.book = data;
-
-        Breadcrumbs.setCrumbs([
-            {label:"Liste", route:"/#/list" },
-            {label:$scope.book.title, route:"/#/" + $routeParams.id}
-        ]);
-    });
+    $scope.refreshBook = function () {
+		$http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+	        $scope.book = data;
+	
+	        Breadcrumbs.setCrumbs([
+	            {label:"Liste", route:"/#/list" },
+	            {label:$scope.book.title, route:"/#/" + $routeParams.id}
+	        ]);
+	    });
+    }
     $scope.edit = function () {
         $location.path("/" + $routeParams.id + "/edit");
     }
@@ -32,7 +34,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
             if (data) {
 	    		$scope.message = "Vous avez emprunté ce livre. Bonne lecture !";
 	            $scope.messageType = $scope.SUCCESS_TYPE;
-	            $scope.book.borrowed=true;
+	            $scope.refreshBook();
             } else {
             	$scope.message = "Vous n'avez pas pu emprunter le livre.";
             	$scope.messageType = $scope.WARNING_TYPE;
@@ -40,13 +42,13 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
             	
         });
     }
-    
+    $scope.refreshBook();
     $scope.return = function () {
     	$http({method:'PUT', url:'/api/return/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             if (data) {
             	$scope.message = "Merci de l'avoir rendu !";
             	$scope.messageType = $scope.SUCCESS_TYPE;
-                $scope.book.borrowed=false;
+            	$scope.refreshBook();
             } else {
             	$scope.message = "Vous n'avez pas pu rendre le livre.";
             	$scope.messageType = $scope.WARNING_TYPE;

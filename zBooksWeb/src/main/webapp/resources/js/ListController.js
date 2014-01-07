@@ -24,21 +24,11 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         $location.path("/new/edit");
     }
     
-
-    
-    $scope.isBorrowed = function(id) {
-    	 $http({method:'GET', url:'/api/isBorrowed/'+id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
-    			return data;
-    	    });
-    }
-    
     if (!User.firstName()) {
     	 $http({method:'GET', url:'/api/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
  			User.setFirstName(data);
  	    });
     }
-    
-    $scope.isBorrowed(2);
     
     Breadcrumbs.setCrumbs([]);
 }
