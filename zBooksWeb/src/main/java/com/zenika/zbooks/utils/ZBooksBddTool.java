@@ -25,9 +25,9 @@ public class ZBooksBddTool {
         try {
             initializeData(dataSource);
         } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         appContext.close();
     }
