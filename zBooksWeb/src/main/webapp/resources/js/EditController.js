@@ -84,16 +84,31 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     $scope.update = function () {
         $scope.book.language = $scope.currentLanguage.code;
         $scope.book.zcollection=$scope.currentCollection.code;
-        $http({method:'POST', url:'/api/book/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
-        ).
-            success(function (data, status, headers, config) {
-                $location.path("/" + data.id);
-            }).
-            error(function (data, status, headers, config) {
-                $scope.message = "Une erreur est survenue lors de la modification du livre.";
-                $scope.messageType = $scope.ERROR_TYPE;
-                scrollTo("bodyPanel");
-            });
+
+        if ($scope.book.id) {
+            $http({method:'PUT', url:'/api/book/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
+            ).
+                success(function (data, status, headers, config) {
+                    $location.path("/" + data.id);
+                }).
+                error(function (data, status, headers, config) {
+                    $scope.message = "Une erreur est survenue lors de la modification du livre.";
+                    $scope.messageType = $scope.ERROR_TYPE;
+                    scrollTo("bodyPanel");
+                });
+        } else {
+            $http({method:'POST', url:'/api/book', data:$scope.book, headers:{'Content-Type':'application/json'}}
+            ).
+                success(function (data, status, headers, config) {
+                    $location.path("/list");
+                }).
+                error(function (data, status, headers, config) {
+                    $scope.message = "Une erreur est survenue lors de la création du livre.";
+                    $scope.messageType = $scope.ERROR_TYPE;
+                    scrollTo("bodyPanel");
+                });
+
+        }
     }
 
     $scope.getDataCallback = function (data) {

@@ -1,23 +1,21 @@
 package com.zenika.zbooks.web;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RequestMapping(value = "/api/*")
 @Controller
@@ -46,16 +44,26 @@ public class zBookAPIController {
         zBooksMapper.deleteBook(id);
     }
 
+    @RequestMapping(value = "/book", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity createBook(@RequestBody ZBook book, UriComponentsBuilder builder) {
+        if (book == null) {
+            throw new RuntimeException();
+        }
 
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseBody
-    public ZBook updateBook(@RequestBody ZBook book) {
-        if (book.getId() == 0)
-            zBooksMapper.addBook(book);
-        else
-            zBooksMapper.updateBook(book);
 
-        return book;
+
+
+        zBooksMapper.addBook(book);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/book/{id}").buildAndExpand(book.getId()).toUri());
+        return new ResponseEntity(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void updateBook(@RequestBody ZBook book) {
+        zBooksMapper.updateBook(book);
     }
 
     @RequestMapping(value = "/hasSpecialAccess", method = RequestMethod.GET)
