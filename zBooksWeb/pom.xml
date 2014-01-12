@@ -92,6 +92,7 @@
         <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
         <maven-war-plugin.version>2.4</maven-war-plugin.version>
         <buildnumber-maven-plugin.version>1.1</buildnumber-maven-plugin.version>
+        <guava.version>15.0</guava.version>
     </properties>
 
     <dependencies>
@@ -246,6 +247,11 @@
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
     </dependencies>
 
 
@@ -366,6 +372,7 @@
                     <charset>UTF-8</charset>
                     <path>/</path>
                     <httpsPort>8443</httpsPort>
+                    <keystoreFile>/home/sebastien/outils/jdk1.7.0_45/jre/lib/security/cacerts</keystoreFile>
                     <keystorePass>changeit</keystorePass>
                     <connectorHttpProtocol />
                     <!-- you NEED to define the URI encoding for JOpenId to work -->
