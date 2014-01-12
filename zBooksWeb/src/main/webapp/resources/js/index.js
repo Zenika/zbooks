@@ -42,7 +42,7 @@ app.factory("Breadcrumbs", function () {
     };
 });
 
-app.factory("User", function () {
+app.service("User", function () {
     var firstName = "";
     var uri = "";
     return {
@@ -56,7 +56,7 @@ app.factory("User", function () {
             return uri;
         },
         setUri: function (newUri) {
-            uri = uri;
+            uri = newUri;
         }
     };
 });

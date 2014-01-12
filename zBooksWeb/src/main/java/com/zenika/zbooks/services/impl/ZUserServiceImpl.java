@@ -306,4 +306,9 @@ public class ZUserServiceImpl implements ZUserService {
 		return hasBorrowed;
 	}
 
+    @Override
+    public ZUser getUser(int id) {
+        return zUserMapper.getUserWithProfile(id);
+    }
+
 }

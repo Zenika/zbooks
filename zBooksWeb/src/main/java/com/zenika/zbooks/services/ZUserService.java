@@ -1,11 +1,11 @@
 package com.zenika.zbooks.services;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface ZUserService {
 	
@@ -38,4 +38,6 @@ public interface ZUserService {
 	String getUserFirstName (String token);
 
 	boolean canReturnBook(String token, int idZBook);
+
+    ZUser getUser(int id);
 }

@@ -1,5 +1,6 @@
 package com.zenika.zbooks.web.controllers;
 
+import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.services.ZUserService;
@@ -34,5 +35,11 @@ public class UserController {
     @ResponseBody
     public boolean canReturnBook(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token, @PathVariable int id) {
     	return zUserService.canReturnBook(token, id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ZBook getBook(@PathVariable int id) {
+        return zUserService.getUser(id);
     }
 }

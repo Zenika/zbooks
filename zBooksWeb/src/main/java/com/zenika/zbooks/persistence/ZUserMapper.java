@@ -23,4 +23,6 @@ public interface ZUserMapper {
     void borrowOrReturnBook (
     		@Param("book_id") int book_id,
             @Param("idBorrower") int idBorrower);
+
+    ZUser getUserWithProfile(@Param("user_id") int id);
 }
