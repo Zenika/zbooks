@@ -40,4 +40,8 @@ public interface ZUserService {
 	boolean canReturnBook(String token, int idZBook);
 
     ZUser getUser(int id);
+
+    ZUser authenticateZUser(ZUser user);
+
+    String createToken(ZUser user);
 }

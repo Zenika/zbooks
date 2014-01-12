@@ -1,8 +1,7 @@
 package com.zenika.zbooks.web.controllers;
 
-import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.persistence.ZBooksMapper;
+import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-    @Autowired
-    private ZBooksMapper zBooksMapper;
     @Autowired
     private ZUserService zUserService;
 
@@ -39,7 +36,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ZBook getBook(@PathVariable int id) {
+    public ZUser getBook(@PathVariable int id) {
         return zUserService.getUser(id);
     }
 }

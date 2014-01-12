@@ -49,17 +49,20 @@ public class HomeController {
 	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity logIn (@RequestBody ZUser user, HttpServletResponse response, UriComponentsBuilder builder) {
-		String token = zUserService.connectZUser(user);
-		if (token != null) {
-			response.addCookie(new Cookie(ZBooksUtils.COOKIE_TOKEN_KEY, token));
+        ZUser authenticatedUser = zUserService.authenticateZUser(user);
+        if (authenticatedUser != null) {
+            String token = zUserService.createToken(authenticatedUser);
+            if (token != null) {
+                response.addCookie(new Cookie(ZBooksUtils.COOKIE_TOKEN_KEY, token));
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(builder.path("/api/users/{id}").buildAndExpand(user.getId()).toUri());
+                HttpHeaders headers = new HttpHeaders();
+                headers.setLocation(builder.path("/api/users/{id}").buildAndExpand(authenticatedUser.getId()).toUri());
 
-            ResponseEntity responseEntity = new ResponseEntity(true, headers, HttpStatus.OK);
-            return responseEntity;
-		}
-		return new ResponseEntity(false, HttpStatus.OK);
+                return new ResponseEntity<Boolean>(true, headers, HttpStatus.OK);
+            }
+        }
+
+		return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 	}
 	
     @RequestMapping(value="/logInWithGoogle")

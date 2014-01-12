@@ -5,7 +5,7 @@
                 <button type="button" class="btn btn-default" style="float:right" ng-click="edit()" ng-show="hasSpecialAccess">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
-                <h3>{{book.title}}</h3>
+                <h3>{{user.userName}}</h3>
             </div>
         </div>
         <div class="panel-body">
@@ -14,16 +14,23 @@
                       ng-click="closeMessage()"></span>
                 {{message}}
             </div>
-            <div><img class="img-cover" ng-src="{{coverFilter}}"></div>
             <div style="position:left;">
                 <table class="spaced-table">
                     <tr>
-                        <th>Nom</th>
-                        <td>{{profile.title}}</td>
+                        <th>Email</th>
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Rôle</th>
+                        <td>{{user.zPower}}</td>
                     </tr>
                     <tr>
                         <th>Intéressé par</th>
-                        <td><span class="label label-default" ng-repeat="interest in profile.interests">{{interrest}}</span></td>
+                        <td><span class="label label-default" ng-repeat="interest in user.profile.interests">{{interest}}</span></td>
+                    </tr>
+                    <tr>
+                        <th>Livres en cours d'emprunt</th>
+                        <td><span class="label label-default" ng-repeat="borrowedBook in user.borrowedBooks">{{borrowedBook.title}}</span></td>
                     </tr>
                 </table>
             </div>

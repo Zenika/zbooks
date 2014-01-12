@@ -74,7 +74,26 @@ public class ZUserServiceImpl implements ZUserService {
 		return serverCache.isUserAuthenticated(token);
 	}
 
+    @Override
+    public ZUser authenticateZUser(ZUser user) {
+        return zUserMapper.getZUser(user.getEmail(), user.getPassword());
+    }
+
+    @Override
+    public String createToken(ZUser user) {
+            try {
+                String token = this.hashZUser(user);
+                user.setPassword(null);
+                serverCache.authenticateNewUser(token, user);
+                return token;
+            } catch (NoSuchAlgorithmException e) {
+                LOG.error(e.getMessage());
+                return null;
+            }
+    }
+
 	@Override
+    @Deprecated
 	public String connectZUser(ZUser user) {
 		ZUser userInDb = zUserMapper.getZUser(user.getEmail(), user.getPassword());
 		if (userInDb != null) {
