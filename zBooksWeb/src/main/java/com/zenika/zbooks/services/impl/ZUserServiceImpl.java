@@ -1,5 +1,20 @@
 package com.zenika.zbooks.services.impl;
 
+import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.persistence.ServerCache;
+import com.zenika.zbooks.persistence.ZBooksMapper;
+import com.zenika.zbooks.persistence.ZUserMapper;
+import com.zenika.zbooks.services.ZUserService;
+import org.apache.log4j.Logger;
+import org.expressme.openid.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -9,28 +24,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-import org.expressme.openid.Association;
-import org.expressme.openid.Authentication;
-import org.expressme.openid.Base64;
-import org.expressme.openid.Endpoint;
-import org.expressme.openid.OpenIdException;
-import org.expressme.openid.OpenIdManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.zenika.zbooks.entity.ZBook;
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.entity.ZUser;
-import com.zenika.zbooks.persistence.ServerCache;
-import com.zenika.zbooks.persistence.ZBooksMapper;
-import com.zenika.zbooks.persistence.ZUserMapper;
-import com.zenika.zbooks.services.ZUserService;
 
 @Service
 public class ZUserServiceImpl implements ZUserService {
@@ -259,9 +252,9 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Override
 	public boolean borrowBook(ZUser zUser, ZBook zBook) {
-		if (zBook != null && zUser != null && zBook.getBorrowerName().equals("")) {
+		if (zBook != null && zUser != null && zBook.getBorrowerName().isEmpty()) {
 			zUser.borrowBook(zBook);
-			zBook.setBorrowerName(zUser.getUserName());;
+			zBook.setBorrowerName(zUser.getUserName());
 			zUserMapper.borrowOrReturnBook(zBook.getId(), zUser.getId());
 			return true;
 		} else {

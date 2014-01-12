@@ -2,12 +2,12 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs, Use
 	$scope.hasSpecialAccess = false;
 	
 	if ($routeParams.id != "new") {
-        $http({method:'GET', url:'/api/book', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+        $http({method:'GET', url:'/api/books', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             $scope.bookList = data;
         });
     }
 
-    $http({method:'GET', url:'/api/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    $http({method:'GET', url:'/api/old/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
     
@@ -16,7 +16,7 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     }
     
     if (!User.firstName()) {
-    	 $http({method:'GET', url:'/api/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    	 $http({method:'GET', url:'/api/old/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
  			User.setFirstName(data);
  	    });
     }

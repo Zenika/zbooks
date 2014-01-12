@@ -9,13 +9,13 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     $scope.messageType;
     
     $scope.canReturnBook = function () {
-    	$http({method:'GET', url:'/api/canReturnBook/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    	$http({method:'GET', url:'/api/old/canReturnBook/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 	 		  $scope.canBeReturned = data;
 	 	}); 	   
     }
     
     $scope.refreshBook = function () {
-		$http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+		$http({method:'GET', url:'/api/books/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 	        $scope.book = data;
 	        $scope.canReturnBook();
 	
@@ -33,12 +33,12 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
         {label:"Liste", route:"/#/list" }
     ]);
 
-    $http({method:'GET', url:'/api/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    $http({method:'GET', url:'/api/old/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
     
     $scope.borrow = function () {
-    	$http({method:'PUT', url:'/api/borrow/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    	$http({method:'PUT', url:'/api/books/'+$routeParams.id+'/borrow', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             if (data) {
 	    		$scope.message = "Vous avez emprunté ce livre. Bonne lecture !";
 	            $scope.messageType = $scope.SUCCESS_TYPE;
@@ -52,7 +52,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     }
     
     $scope.return = function () {
-    	$http({method:'PUT', url:'/api/return/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    	$http({method:'PUT', url:'/api/old/return/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             if (data) {
             	$scope.message = "Merci de l'avoir rendu !";
             	$scope.messageType = $scope.SUCCESS_TYPE;
@@ -76,7 +76,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     $scope.refreshBook();
     
     if (!User.firstName()) {
-   	 $http({method:'GET', url:'/api/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+   	 $http({method:'GET', url:'/api/old/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 			User.setFirstName(data);
 	    });
    }

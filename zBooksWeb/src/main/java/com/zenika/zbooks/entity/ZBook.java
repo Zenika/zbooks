@@ -1,5 +1,7 @@
 package com.zenika.zbooks.entity;
 
+import com.google.common.base.Objects;
+
 public class ZBook {
 
     private int id;
@@ -113,5 +115,22 @@ public class ZBook {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("id", id)
+                .add("ISBN", ISBN)
+                .add("edition", edition)
+                .add("title", title)
+                .add("pagesNumber", pagesNumber)
+                .add("authors", authors)
+                .add("releaseDate", releaseDate)
+                .add("language", language)
+                .add("cover", cover)
+                .add("zCollection", zCollection)
+                .add("borrowerName", borrowerName)
+                .toString();
     }
 }

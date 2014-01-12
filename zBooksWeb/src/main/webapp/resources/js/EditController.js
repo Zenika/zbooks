@@ -2,7 +2,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     $scope.book = new Object();
 
     $scope.hasSpecialAccess = false;
-    $http({method:'GET', url:'/api/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    $http({method:'GET', url:'/api/old/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
 
@@ -68,7 +68,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     }
 
     $scope.delete = function () {
-        $http({method:'DELETE', url:'/api/book/' + $routeParams.id}).
+        $http({method:'DELETE', url:'/api/books/' + $routeParams.id}).
             success(function (data, status, headers, config) {
                 $location.path("/list");
                 $scope.confirmDeleteFlag = false;
@@ -86,7 +86,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         $scope.book.zcollection=$scope.currentCollection.code;
 
         if ($scope.book.id) {
-            $http({method:'PUT', url:'/api/book/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
+            $http({method:'PUT', url:'/api/books/' + $routeParams.id, data:$scope.book, headers:{'Content-Type':'application/json'}}
             ).
                 success(function (data, status, headers, config) {
                     $location.path("/" + data.id);
@@ -97,7 +97,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
                     scrollTo("bodyPanel");
                 });
         } else {
-            $http({method:'POST', url:'/api/book', data:$scope.book, headers:{'Content-Type':'application/json'}}
+            $http({method:'POST', url:'/api/books', data:$scope.book, headers:{'Content-Type':'application/json'}}
             ).
                 success(function (data, status, headers, config) {
                     $location.path("/list");
@@ -128,7 +128,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
 
 
     $scope.getData = function () {
-        $http({method:'GET', url:'/api/book/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+        $http({method:'GET', url:'/api/books/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             $scope.getDataCallback(data);
         }).error(function () {
                 $scope.message = "Une erreur est survenue lors de la récupération des informations du livre.";
@@ -191,7 +191,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         {label:"Nouveau Livre", route:"/#/new/edit" }
     ]);
     if (!User.firstName()) {
-   	 $http({method:'GET', url:'/api/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+   	 $http({method:'GET', url:'/api/old/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 			User.setFirstName(data);
 	    });
    }
