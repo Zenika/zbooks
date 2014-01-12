@@ -45,4 +45,15 @@
 		SET idBorrower=#{idBorrower}
 		WHERE book_id=#{book_id}
 	</update>
+
+    <select id="getUserWithProfile" parameterType="map" resultMap="ZUser" timeout="10">
+		SELECT
+			*
+		FROM zUser as u
+			LEFT OUTER JOIN zBooks as z
+				ON z.idBorrower=u.user_id
+		    LEFT OUTER JOIN zUserProfile as up
+				ON up.idUser=u.user_id
+		WHERE u.user_id=#{user_id}
+	</select>
 </mapper>
