@@ -11,6 +11,7 @@ public class ZUser {
     private String password;
     private ZPower zPower;
     private List<ZBook> borrowedBooks;
+    private ZUserProfile profile;
 
     public ZUser() {
         zPower = ZPower.USER;
@@ -77,4 +78,11 @@ public class ZUser {
 		}
 	}
 
+    public ZUserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ZUserProfile profile) {
+        this.profile = profile;
+    }
 }

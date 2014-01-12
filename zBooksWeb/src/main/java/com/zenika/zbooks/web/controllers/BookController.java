@@ -57,7 +57,7 @@ public class BookController {
         zBooksMapper.addBook(book);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/books/{id}").buildAndExpand(book.getId()).toUri());
+        headers.setLocation(builder.path("/api/books/{id}").buildAndExpand(book.getId()).toUri());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 

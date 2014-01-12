@@ -31,7 +31,7 @@ public class AuthentificationInterceptor extends HandlerInterceptorAdapter {
 			if (token != null && !zUserService.isZUserAuthenticated(token)) {
                 LOGGER.info("Someone tried to access your API but the token {} isn't registered.", token);
 			} else if (token != null) {
-                LOGGER.info("A user is accessing your API.");
+                LOGGER.info("A user is accessing your API : {}", request.getRequestURI());
 				return true;
 			}
     	}

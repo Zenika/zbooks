@@ -30,6 +30,7 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, A
             success(function (data, status, headers, config) {
             	if (data.toLowerCase()==="true") {
                 	Authenticated.setAuthenticated(true);
+                    User.setUri(headers('Location'));
                 	$location.path("/list");
                 } else {
                 	$scope.message = "Votre identifiant/mot de passe est faux. Veuillez réessayer.";

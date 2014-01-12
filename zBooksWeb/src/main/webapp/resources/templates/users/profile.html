@@ -1,0 +1,32 @@
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <button type="button" class="btn btn-default" style="float:right" ng-click="edit()" ng-show="hasSpecialAccess">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <h3>{{book.title}}</h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="alert" ng-class="messageType" ng-show="isMessage()">
+                <span class="glyphicon glyphicon-remove" style="cursor: pointer; float:right;"
+                      ng-click="closeMessage()"></span>
+                {{message}}
+            </div>
+            <div><img class="img-cover" ng-src="{{coverFilter}}"></div>
+            <div style="position:left;">
+                <table class="spaced-table">
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{profile.title}}</td>
+                    </tr>
+                    <tr>
+                        <th>Intéressé par</th>
+                        <td><span class="label label-default" ng-repeat="interest in profile.interests">{{interrest}}</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

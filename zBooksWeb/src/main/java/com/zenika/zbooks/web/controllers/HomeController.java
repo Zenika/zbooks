@@ -6,9 +6,13 @@ import com.zenika.zbooks.utils.ZBooksUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +48,18 @@ public class HomeController {
 
 	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public boolean logIn (@RequestBody ZUser user, HttpServletResponse response) {
+	public ResponseEntity logIn (@RequestBody ZUser user, HttpServletResponse response, UriComponentsBuilder builder) {
 		String token = zUserService.connectZUser(user);
 		if (token != null) {
 			response.addCookie(new Cookie(ZBooksUtils.COOKIE_TOKEN_KEY, token));
-			return true;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(builder.path("/api/users/{id}").buildAndExpand(user.getId()).toUri());
+
+            ResponseEntity responseEntity = new ResponseEntity(true, headers, HttpStatus.OK);
+            return responseEntity;
 		}
-		return false;
+		return new ResponseEntity(false, HttpStatus.OK);
 	}
 	
     @RequestMapping(value="/logInWithGoogle")

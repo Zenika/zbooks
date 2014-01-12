@@ -7,17 +7,13 @@
 	<script type="text/javascript" src="resources/js/angular-route.min.js"></script>
 	<script type="text/javascript" src="resources/js/angular-cookies.min.js"></script>
 	<script type="text/javascript" src="resources/js/sha256.js"></script>
-	<script type="text/javascript" charset="UTF-8"
-		src="resources/js/ListController.js"></script>
-	<script type="text/javascript" charset="UTF-8"
-		src="resources/js/index.js"></script>
-	<script type="text/javascript" charset="UTF-8"
-		src="resources/js/DetailController.js"></script>
-	<script type="text/javascript" charset="UTF-8"
-		src="resources/js/EditController.js"></script>
-	<script type="text/javascript" charset="UTF-8"
-		src="resources/js/LoginController.js"></script>
-	
+	<script type="text/javascript" charset="UTF-8" src="resources/js/ListController.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="resources/js/index.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="resources/js/DetailController.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="resources/js/EditController.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="resources/js/LoginController.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="resources/js/users/UserController.js"></script>
+
 	<link rel="stylesheet" href="resources/css/index.css">
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="icon" type="image/vnd.microsoft.icon" href="resources/image/favicon.ico">
@@ -43,8 +39,9 @@
 			<div class="col-md-12 navbar navbar-zenika navbar-inner navbar-right">
 				<p class="navbar-text navbar-left"><img src="./resources/image/zenika-logo-blanc-alpha-mini.png"></p>
 				<p class="navbar-text navbar-left">Bienvenue {{firstname()}}</p>
-				<p class="navbar-text navbar-right"><a style="color:white;" href="#" ng-click="disconnectZUser()">Déconnexion</a></p>
-			</div>
+				<p class="navbar-text navbar-right"><a style="color:white;" href="#" ng-click="disconnectZUser()"><span class="glyphicon glyphicon-log-out" title="logout"></span></a></p>
+                <p class="navbar-text navbar-right"><a style="color:white;" href="#" ng-click="myProfile()"><span class="glyphicon glyphicon-user"></span></a></p>
+            </div>
 		</div>
 	</div>
 

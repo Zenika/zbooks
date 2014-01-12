@@ -4,6 +4,7 @@ var app = angular.module("zBooks", ['ngRoute', 'ngCookies']).
         $routeProvider.when('/list', {templateUrl:'resources/templates/list.html', controller:ListController});
         $routeProvider.when('/:id/edit', {templateUrl:'resources/templates/edit.html', controller:EditController});
         $routeProvider.when('/:id', {templateUrl:'resources/templates/detail.html', controller:DetailController});
+        $routeProvider.when('/user/profile', {templateUrl:'resources/templates/users/profile.html', controller:UserController});
     });
 
 app.filter('img404safe', function () {
@@ -43,12 +44,19 @@ app.factory("Breadcrumbs", function () {
 
 app.factory("User", function () {
     var firstName = "";
+    var uri = "";
     return {
         firstName:function () {
             return firstName;
         },
         setFirstName:function (newFirstName) {
         	firstName = newFirstName;
+        },
+        uri:function () {
+            return uri;
+        },
+        setUri: function (newUri) {
+            uri = uri;
         }
     };
 });
@@ -108,6 +116,11 @@ function rootController($scope, $location, $http, Breadcrumbs, Authenticated, Us
     	 $http({method:'PUT', url:'/disconnect', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
     	    });
     }
+
+    $scope.myProfile = function () {
+        $location.path("/user/profile");
+    }
+
     $scope.firstname = function () {
     	return User.firstName();
     }
