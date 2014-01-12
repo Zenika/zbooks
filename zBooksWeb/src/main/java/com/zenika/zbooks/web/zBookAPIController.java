@@ -3,6 +3,7 @@ package com.zenika.zbooks.web;
 import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZPower;
 import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.exceptions.InvalidResourceException;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
@@ -46,12 +47,9 @@ public class zBookAPIController {
 
     @RequestMapping(value = "/book", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity createBook(@RequestBody ZBook book, UriComponentsBuilder builder) {
-        if (book == null) {
-            throw new RuntimeException();
+        if (book == null || !book.isValid()) {
+            throw new InvalidResourceException(); // TODO add error description
         }
-
-
-
 
         zBooksMapper.addBook(book);
 
@@ -63,6 +61,10 @@ public class zBookAPIController {
     @RequestMapping(value = "/book/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateBook(@RequestBody ZBook book) {
+        if (book == null || !book.isValid()) {
+            throw new InvalidResourceException(); // TODO add error description
+        }
+
         zBooksMapper.updateBook(book);
     }
 

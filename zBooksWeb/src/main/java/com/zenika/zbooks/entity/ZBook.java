@@ -104,4 +104,14 @@ public class ZBook {
 	public void setBorrowerName(String borrowerName) {
 		this.borrowerName = borrowerName;
 	}
+
+    public boolean isValid() {
+        if (ISBN == null || ISBN.isEmpty()) {
+            return false;
+        }
+        if (title == null || title.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }
