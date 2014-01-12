@@ -33,7 +33,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
         {label:"Liste", route:"/#/list" }
     ]);
 
-    $http({method:'GET', url:'/api/old/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    $http({method:'GET', url:'/api/users/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
     
@@ -52,7 +52,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     }
     
     $scope.return = function () {
-    	$http({method:'PUT', url:'/api/old/return/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    	$http({method:'PUT', url:'/api/books/'+$routeParams.id+'/return', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             if (data) {
             	$scope.message = "Merci de l'avoir rendu !";
             	$scope.messageType = $scope.SUCCESS_TYPE;

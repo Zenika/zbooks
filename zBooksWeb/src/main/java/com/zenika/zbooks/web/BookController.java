@@ -81,4 +81,10 @@ public class BookController {
         return b;
     }
 
+    @RequestMapping(value="/{id}/return", method = RequestMethod.PUT)
+    @ResponseBody
+    public boolean returnBook(@PathVariable int id, @CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
+        return zUserService.returnBook(token, id);
+    }
+
 }

@@ -7,7 +7,7 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         });
     }
 
-    $http({method:'GET', url:'/api/old/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    $http({method:'GET', url:'/api/users/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
     

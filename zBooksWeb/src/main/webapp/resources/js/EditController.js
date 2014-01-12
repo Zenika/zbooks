@@ -2,7 +2,7 @@ function EditController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     $scope.book = new Object();
 
     $scope.hasSpecialAccess = false;
-    $http({method:'GET', url:'/api/old/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    $http({method:'GET', url:'/api/users/hasSpecialAccess', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
         $scope.hasSpecialAccess = data;
     });
 
