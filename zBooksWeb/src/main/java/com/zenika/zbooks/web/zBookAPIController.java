@@ -40,7 +40,7 @@ public class zBookAPIController {
     }
 
     @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable int id) {
         zBooksMapper.deleteBook(id);
     }
