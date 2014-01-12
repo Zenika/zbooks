@@ -31,11 +31,11 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/api/**"/>
-            <bean class="com.zenika.zbooks.web.AuthentificationInterceptor"/>
+            <bean class="com.zenika.zbooks.web.interceptors.AuthentificationInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/api/books/**"/>
-            <bean class="com.zenika.zbooks.web.SpecialPowerAuthentificationInterceptor"/>
+            <bean class="com.zenika.zbooks.web.interceptors.SpecialPowerAuthentificationInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -63,7 +63,7 @@
 		<bean id="zUserService" class="com.zenika.zbooks.services.impl.ZUserServiceImpl">
 			<property name="serverUrl" value="${URL}" />
 		</bean>
-		<bean id="homeController" class="com.zenika.zbooks.web.HomeController">
+		<bean id="homeController" class="com.zenika.zbooks.web.controllers.HomeController">
 			<property name="serverUrl" value="${URL.SSL}" />
 			<property name="isSecureWorking" value="${isSecureWorking}" />
 		</bean>

@@ -1,32 +1,28 @@
-package com.zenika.zbooks.web;
-
-import java.io.IOException;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+package com.zenika.zbooks.web.controllers;
 
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class HomeController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+
 	@Autowired
 	private ZUserService zUserService;
 	
-	private static final Logger logger = Logger.getLogger(HomeController.class);
 	private String serverUrl;
 	private boolean isSecureWorking = true;
 	
@@ -46,7 +42,7 @@ public class HomeController {
         return "index.html";
 	}
 
-	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public boolean logIn (@RequestBody ZUser user, HttpServletResponse response) {
 		String token = zUserService.connectZUser(user);
@@ -82,7 +78,7 @@ public class HomeController {
     @RequestMapping(value="/authenticated")
     @ResponseBody
     public boolean isAuthenticated (@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
-    	logger.debug("The zUser tried to see if he was connected. Response was : " + zUserService.isZUserAuthenticated(token));
+    	LOGGER.debug("The zUser tried to see if he was connected. Response was : {}", zUserService.isZUserAuthenticated(token));
     	return zUserService.isZUserAuthenticated(token);
     }
 	

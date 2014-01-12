@@ -1,23 +1,20 @@
-package com.zenika.zbooks.web;
+package com.zenika.zbooks.web.interceptors;
 
-import java.io.IOException;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.services.ZUserService;
+import com.zenika.zbooks.utils.ZBooksUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.services.ZUserService;
-import com.zenika.zbooks.utils.ZBooksUtils;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
-public class SpecialPowerAuthentificationInterceptor extends
-		HandlerInterceptorAdapter {
+public class SpecialPowerAuthentificationInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = Logger.getLogger(SpecialPowerAuthentificationInterceptor.class);
 	

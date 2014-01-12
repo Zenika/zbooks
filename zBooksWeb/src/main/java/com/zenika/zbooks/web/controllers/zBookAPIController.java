@@ -1,4 +1,4 @@
-package com.zenika.zbooks.web;
+package com.zenika.zbooks.web.controllers;
 
 import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
