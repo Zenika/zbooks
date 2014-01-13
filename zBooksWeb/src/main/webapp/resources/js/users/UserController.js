@@ -25,7 +25,7 @@ function UserController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         });
 
     $scope.edit = function () {
-        $location.path("/" + $routeParams.id + "/edit");
+        $location.path("/user/" + $routeParams.id + "/edit");
     }
 
     Breadcrumbs.setCrumbs([
