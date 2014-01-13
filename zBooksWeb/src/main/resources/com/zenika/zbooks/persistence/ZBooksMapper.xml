@@ -57,4 +57,12 @@
 		SET ISBN=#{ISBN},title=#{title},author=#{authors},edition=#{edition},pagesNumber=#{pagesNumber},releaseDate=#{releaseDate},language=#{language},cover=#{cover},zCollection=#{zCollection.ordinal}
 		WHERE book_id=#{id}
 	</update>
+
+
+    <insert id="borrowBook" parameterType="map" timeout="10">
+        INSERT INTO
+            zBook_borrowed (idBook, idBorrower, borrow_date)
+            VALUES
+            (#{book.id},#{user.id}, SYSDATE())
+    </insert>
 </mapper>

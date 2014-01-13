@@ -19,3 +19,11 @@ CREATE TABLE zUser  (
   password VARCHAR(100),
   zPower int(2)
 );
+
+CREATE TABLE zBooks_borrowed (
+  book_borrowed_id int AUTO_INCREMENT,
+  idBook int,
+  idBorrower int,
+  borrow_date DATE,
+  return_date DATE
+);

@@ -1,10 +1,10 @@
 package com.zenika.zbooks.persistence;
 
 import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface ZBooksMapper {
 
@@ -17,4 +17,19 @@ public interface ZBooksMapper {
     void deleteBook(int id);
 
     void updateBook(ZBook book);
+
+    /**
+     * Method to update the DB to borrow a zBook.
+     * @param book
+     * @param user
+     */
+    void borrowBook (
+            @Param("book") ZBook book,
+            @Param("user") ZUser user);
+
+    /**
+     * Method to update the DB to borrow or return a zBook
+     * @param book
+     */
+    void returnBook (@Param("book_id") ZBook book);
 }
