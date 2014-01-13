@@ -66,10 +66,9 @@ public class HomeController {
 	}
 	
     @RequestMapping(value="/logInWithGoogle")
-    public void logInWithGoogle (HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	String token = ZBooksUtils.getCookieValue(request.getCookies(), ZBooksUtils.COOKIE_TOKEN_KEY);
+    public void logInWithGoogle (@CookieValue(value=ZBooksUtils.COOKIE_TOKEN_KEY, required=false) String token, HttpServletRequest request, HttpServletResponse response) throws IOException {
     	if (token != null && zUserService.isZUserAuthenticated(token)) {
-    		response.sendRedirect("/#/list");
+    		response.sendRedirect("/");
     	} else {
 	    	String googleRequestURL = zUserService.connectUserWithGoogle("identifiedWithGoogle", request, response);
 	    	response.sendRedirect(googleRequestURL);
@@ -81,7 +80,7 @@ public class HomeController {
     	String token = zUserService.checkAuthentification(request);
     	if (token != null) {
     		response.addCookie(new Cookie(ZBooksUtils.COOKIE_TOKEN_KEY, token));
-    		response.sendRedirect(serverUrl+"#/list");
+    		response.sendRedirect("/");
     	} else {
     		response.sendRedirect("/");
     	}
@@ -89,9 +88,19 @@ public class HomeController {
     
     @RequestMapping(value="/authenticated")
     @ResponseBody
-    public boolean isAuthenticated (@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
+    public ResponseEntity isAuthenticated (@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token, UriComponentsBuilder builder) {
     	LOGGER.debug("The zUser tried to see if he was connected. Response was : {}", zUserService.isZUserAuthenticated(token));
-    	return zUserService.isZUserAuthenticated(token);
+    	ZUser authenticatedUser = zUserService.getAuthenticatedZUser(token);
+        if (authenticatedUser != null) {
+            if (token != null) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setLocation(builder.path("/api/users/{id}").buildAndExpand(authenticatedUser.getId()).toUri());
+
+                return new ResponseEntity<Boolean>(true, headers, HttpStatus.OK);
+            }
+        }
+
+		return new ResponseEntity<Boolean>(false, HttpStatus.OK);
     }
 	
     @RequestMapping(value="/disconnect", method=RequestMethod.PUT)
