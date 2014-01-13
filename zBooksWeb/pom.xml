@@ -378,7 +378,7 @@
                     <charset>UTF-8</charset>
                     <path>/</path>
                     <httpsPort>8443</httpsPort>
-                    <keystoreFile>/home/sebastien/outils/jdk1.7.0_45/jre/lib/security/cacerts</keystoreFile>
+                    <!--<keystoreFile>/home/sebastien/outils/jdk1.7.0_45/jre/lib/security/cacerts</keystoreFile>-->
                     <keystorePass>changeit</keystorePass>
                     <connectorHttpProtocol />
                     <!-- you NEED to define the URI encoding for JOpenId to work -->
