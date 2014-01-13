@@ -2,7 +2,9 @@ package com.zenika.zbooks.persistence;
 
 import com.zenika.zbooks.entity.ZUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ZUserMapper {
 
     void addZUser(ZUser user);

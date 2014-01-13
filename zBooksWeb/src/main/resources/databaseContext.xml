@@ -16,14 +16,10 @@
         <property name="configLocation" value="classpath:com/zenika/zbooks/mybatis-config.xml"/>
     </bean>
 
-    <bean id="zBooksMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.zenika.zbooks.persistence.ZBooksMapper"/>
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-    </bean>
-
-    <bean id="zUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.zenika.zbooks.persistence.ZUserMapper"/>
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.zenika.zbooks.persistence" />
+        <property name="annotationClass" value="org.springframework.stereotype.Repository" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 
     <!-- Used in PROD on CloudBees-->
