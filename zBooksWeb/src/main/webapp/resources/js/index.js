@@ -5,7 +5,16 @@ var app = angular.module("zBooks", ['ngRoute', 'ngCookies']).
         $routeProvider.when('/:id/edit', {templateUrl:'resources/templates/edit.html', controller:EditController});
         $routeProvider.when('/:id', {templateUrl:'resources/templates/detail.html', controller:DetailController});
         $routeProvider.when('/user/profile', {templateUrl:'resources/templates/users/profile.html', controller:UserController});
+
     });
+
+app.run(['$rootScope','$location', '$routeParams', function($rootScope, $location, $routeParams) {
+        $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
+            console.log('Current route name: ' + $location.path());
+            // Get all URL parameter
+            console.log($routeParams);
+        })
+    }]);
 
 app.filter('img404safe', function () {
     return function (src) {
@@ -115,10 +124,6 @@ function rootController($scope, $location, $http, Breadcrumbs, Authenticated, Us
     $scope.disconnectZUser = function () {
     	 $http({method:'PUT', url:'/disconnect', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
     	    });
-    }
-
-    $scope.myProfile = function () {
-        $location.path("/user/profile");
     }
 
     $scope.firstname = function () {
