@@ -1,21 +1,11 @@
 package com.zenika.zbooks.integration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import java.io.File;
-import java.sql.Connection;
-import java.sql.Statement;
-
-import javax.servlet.http.Cookie;
-
+import com.zenika.zbooks.IntegrationTest;
+import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.persistence.ServerCache;
+import com.zenika.zbooks.persistence.ZBooksMapper;
+import com.zenika.zbooks.persistence.ZUserMapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -32,12 +22,16 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.zenika.zbooks.IntegrationTest;
-import com.zenika.zbooks.entity.ZBook;
-import com.zenika.zbooks.entity.ZUser;
-import com.zenika.zbooks.persistence.ServerCache;
-import com.zenika.zbooks.persistence.ZBooksMapper;
-import com.zenika.zbooks.persistence.ZUserMapper;
+import javax.servlet.http.Cookie;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -89,31 +83,31 @@ public class GetApiTest implements IntegrationTest {
 
     @Test
     public void testGetBookWithoutAuthFail() throws Exception {
-        this.mockMvc.perform(get("/api/book/2").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(401));
+        this.mockMvc.perform(get("/api/books/2").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
     public void testDeleteBookWithoutAdminPowerFail() throws Exception {
-        this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
-                .andExpect(status().is(403));
+        this.mockMvc.perform(delete("/api/books/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
+                .andExpect(status().isForbidden());
     }
 
     @Test
     public void testDeleteBookWithAdminPowerSucceed() throws Exception {
-        this.mockMvc.perform(delete("/api/book/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
-                .andExpect(status().isOk());
+        this.mockMvc.perform(delete("/api/books/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
+                .andExpect(status().isNoContent());
         assertThat(zBooksMapper.getBook(2)).isNull();
     }
     
     @Test
     public void testBorrowBook () throws Exception {
-    	this.mockMvc.perform(put("/api/return/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
+    	this.mockMvc.perform(put("/api/books/2/return").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenRoot")))
         .andExpect(status().isOk());
     	ZUser zUserRoot = zUserMapper.getZUserWithEmail("root@zenika.com");
     	assertEquals(1, zUserRoot.getBorrowedBooks().size());
     	assertNotEquals(2, zUserRoot.getBorrowedBooks().get(0));
-    	this.mockMvc.perform(put("/api/borrow/2").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
+    	this.mockMvc.perform(put("/api/books/2/borrow").accept(MediaType.APPLICATION_JSON).cookie(new Cookie("token", "tokenTest")))
         .andExpect(status().isOk());
     	ZUser zUserTest = zUserMapper.getZUserWithEmail("user@zenika.com");
     	ZBook zBook = zBooksMapper.getBook(2);

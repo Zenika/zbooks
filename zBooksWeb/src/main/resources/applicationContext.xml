@@ -34,7 +34,7 @@
             <bean class="com.zenika.zbooks.web.interceptors.AuthentificationInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/api/books/**"/>
+            <mvc:mapping path="/api/books/*"/>
             <bean class="com.zenika.zbooks.web.interceptors.SpecialPowerAuthentificationInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
