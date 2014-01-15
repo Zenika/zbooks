@@ -8,7 +8,8 @@ CREATE TABLE zBooks (
   pagesNumber int(5),
   releaseDate VARCHAR(100),
   language char(2),
-  cover VARCHAR(400)
+  cover VARCHAR(400),
+  PRIMARY KEY (book_id)
 );
 
 CREATE TABLE zUser  (
@@ -16,7 +17,8 @@ CREATE TABLE zUser  (
   email VARCHAR(100),
   username VARCHAR(100),
   password VARCHAR(100),
-  zPower int(2)
+  zPower int(2)     ,
+  PRIMARY KEY (user_id)
 );
 
 CREATE TABLE zBooks_borrowed (
