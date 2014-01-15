@@ -15,7 +15,6 @@
         <result column="language" property="language"/>
         <result column="cover" property="cover"/>
         <result column="zCollection" property="zCollection" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
-    	<result column="idBorrower" property="borrowerName"/>
     </resultMap>
 
     <!-- ************************************************************************************* -->
@@ -23,19 +22,15 @@
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
     	SELECT 
-    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection, u.userName as idBorrower
+    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection
     		FROM zBooks as z
-    			LEFT OUTER JOIN zUser as u
-    				ON u.user_id = z.idBorrower
     	WHERE book_id = #{id}
     </select>
 
     <select id="getBooks" resultMap="ZBook" timeout="10">
     	SELECT 
-    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection, u.userName as idBorrower
+    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection
     		FROM zBooks as z
-    			LEFT OUTER JOIN zUser as u
-    				ON u.user_id = z.idBorrower
     </select>
 
     <insert id="addBook" parameterType="ZBook" timeout="10">
@@ -61,8 +56,14 @@
 
     <insert id="borrowBook" parameterType="map" timeout="10">
         INSERT INTO
-            zBook_borrowed (idBook, idBorrower, borrow_date)
+            zBooks_borrowed (idBook, idBorrower, borrow_date)
             VALUES
             (#{book.id},#{user.id}, SYSDATE())
     </insert>
+
+    <update id="returnBook" parameterType="ZBook" timeout="10">
+        UPDATE zBooks_borrowed
+        SET return_date=SYSDATE()
+        WHERE idBook=#{id}
+    </update>
 </mapper>

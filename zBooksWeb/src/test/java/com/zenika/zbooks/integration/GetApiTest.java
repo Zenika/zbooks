@@ -1,21 +1,11 @@
 package com.zenika.zbooks.integration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import java.io.File;
-import java.sql.Connection;
-import java.sql.Statement;
-
-import javax.servlet.http.Cookie;
-
+import com.zenika.zbooks.IntegrationTest;
+import com.zenika.zbooks.entity.ZBook;
+import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.persistence.ServerCache;
+import com.zenika.zbooks.persistence.ZBooksMapper;
+import com.zenika.zbooks.persistence.ZUserMapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -32,12 +22,17 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.zenika.zbooks.IntegrationTest;
-import com.zenika.zbooks.entity.ZBook;
-import com.zenika.zbooks.entity.ZUser;
-import com.zenika.zbooks.persistence.ServerCache;
-import com.zenika.zbooks.persistence.ZBooksMapper;
-import com.zenika.zbooks.persistence.ZUserMapper;
+import javax.servlet.http.Cookie;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -119,6 +114,5 @@ public class GetApiTest implements IntegrationTest {
     	ZBook zBook = zBooksMapper.getBook(2);
     	assertEquals(1, zUserTest.getBorrowedBooks().size());
     	assertEquals(zBook.getISBN(), zUserTest.getBorrowedBooks().get(0).getISBN());
-    	assertTrue(zBook.getBorrowerName().equals(zUserTest.getUserName()));
     }
 }

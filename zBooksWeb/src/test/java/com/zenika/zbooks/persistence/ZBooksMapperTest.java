@@ -37,7 +37,6 @@ public class ZBooksMapperTest extends AbstractDBTest implements UnitTest {
         assertEquals("John Wiley & Sons Ltd", zBook.getEdition());
         assertEquals("EN", zBook.getLanguage());
         assertEquals(ZCollection.NANTES, zBook.getZCollection());
-        assertEquals("Root", zBook.getBorrowerName());
 
         assertEquals("047094224X", zBook.getISBN());
         zBook = zBooksMapper.getBook(2);

@@ -26,5 +26,6 @@ CREATE TABLE zBooks_borrowed (
   idBook int,
   idBorrower int,
   borrow_date DATE,
-  return_date DATE
+  return_date DATE,
+  PRIMARY KEY (book_borrowed_id)
 );

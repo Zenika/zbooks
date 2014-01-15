@@ -31,5 +31,5 @@ public interface ZBooksMapper {
      * Method to update the DB to borrow or return a zBook
      * @param book
      */
-    void returnBook (@Param("book_id") ZBook book);
+    void returnBook (ZBook book);
 }

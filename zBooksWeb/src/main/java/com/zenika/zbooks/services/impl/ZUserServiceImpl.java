@@ -271,10 +271,9 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Override
 	public boolean borrowBook(ZUser zUser, ZBook zBook) {
-		if (zBook != null && zUser != null && zBook.getBorrowerName().isEmpty()) {
+		if (zBook != null && zUser != null) {
 			zUser.borrowBook(zBook);
-			zBook.setBorrowerName(zUser.getUserName());
-			zUserMapper.borrowOrReturnBook(zBook.getId(), zUser.getId());
+            zBooksMapper.borrowBook(zBook, zUser);
 			return true;
 		} else {
 			return false;
@@ -285,9 +284,8 @@ public class ZUserServiceImpl implements ZUserService {
 	public boolean returnBook(String token, int book_id) {
 		if (canReturnBook(token, book_id)) {
 			ZBook zBook = zBooksMapper.getBook(book_id);
-			if (zBook != null && !zBook.getBorrowerName().equals("")) {
-				zBook.setBorrowerName("");
-				zUserMapper.borrowOrReturnBook(book_id, 0);
+			if (zBook != null) {
+                zBooksMapper.returnBook(zBook);
 				return true;
 			}
 		}

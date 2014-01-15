@@ -1,10 +1,9 @@
 package com.zenika.zbooks.persistence;
 
-import static org.junit.Assert.*;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
+import com.zenika.zbooks.UnitTest;
+import com.zenika.zbooks.entity.ZPower;
+import com.zenika.zbooks.entity.ZUser;
+import com.zenika.zbooks.utils.ZBooksBddTool;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.zenika.zbooks.UnitTest;
-import com.zenika.zbooks.entity.ZPower;
-import com.zenika.zbooks.entity.ZUser;
-import com.zenika.zbooks.utils.ZBooksBddTool;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -72,13 +71,13 @@ public class ZUserMapperTest extends AbstractDBTest implements UnitTest {
     	assertEquals(2, user.getBorrowedBooks().get(1).getId());
     	
     	//Test the return
-    	zUserMapper.borrowOrReturnBook(2, 0);
+//    	zUserMapper.returnBook(2, 0);
     	user = zUserMapper.getZUserWithEmail("root@zenika.com");
     	assertEquals(1, user.getBorrowedBooks().size());
     	assertNotEquals(2, user.getBorrowedBooks().get(0).getId());
     	
     	//Test the borrow
-    	zUserMapper.borrowOrReturnBook(2, user.getId());
+//    	zUserMapper.borrowBook(2, user.getId());
     	user = zUserMapper.getZUserWithEmail("root@zenika.com");
     	assertEquals(2, user.getBorrowedBooks().size());
     	assertEquals(2, user.getBorrowedBooks().get(1).getId());

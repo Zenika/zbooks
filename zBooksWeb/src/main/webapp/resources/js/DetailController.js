@@ -9,7 +9,7 @@ function DetailController($scope, $routeParams, $http, $location, Breadcrumbs, U
     $scope.messageType;
     
     $scope.canReturnBook = function () {
-    	$http({method:'GET', url:'/api/old/canReturnBook/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+    	$http({method:'GET', url:'/api/users/canReturnBook/' + $routeParams.id, headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
 	 		  $scope.canBeReturned = data;
 	 	}); 	   
     }

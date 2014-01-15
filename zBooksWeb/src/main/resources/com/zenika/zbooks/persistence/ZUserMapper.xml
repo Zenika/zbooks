@@ -39,12 +39,6 @@
 		 	LEFT OUTER JOIN zBooks as z ON z.idBorrower=u.user_id 
 		 WHERE u.email=#{email}
 	</select>
-	
-	<update id="borrowOrReturnBook" parameterType="map" timeout="10">
-		UPDATE zBooks
-		SET idBorrower=#{idBorrower}
-		WHERE book_id=#{book_id}
-	</update>
 
     <select id="getUserWithProfile" parameterType="map" resultMap="ZUser" timeout="10">
 		SELECT
