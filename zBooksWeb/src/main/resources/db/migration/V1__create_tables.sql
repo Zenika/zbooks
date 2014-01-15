@@ -8,8 +8,7 @@ CREATE TABLE zBooks (
   pagesNumber int(5),
   releaseDate VARCHAR(100),
   language char(2),
-  cover VARCHAR(400),
-  idBorrower int
+  cover VARCHAR(400)
 );
 
 CREATE TABLE zUser  (
