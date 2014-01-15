@@ -4,6 +4,7 @@ import com.googlecode.flyway.core.Flyway;
 import com.zenika.zbooks.UnitTest;
 import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZCollection;
+import com.zenika.zbooks.entity.ZUser;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.test.annotation.DirtiesContext;
@@ -21,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.sql.DataSource;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -37,6 +40,9 @@ public class ZBooksMapperTest implements UnitTest {
 
     @Autowired
     private ZBooksMapper zBooksMapper;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Test
     public void getBook_should_return_a_book() {
@@ -109,7 +115,30 @@ public class ZBooksMapperTest implements UnitTest {
         assertThat(zBook.getLanguage()).isEqualTo("TS");
         assertThat(zBook.getPagesNumber()).isEqualTo(11);
         assertThat(zBook.getReleaseDate()).isEqualTo("25/10/2013");
+    }
 
+    @Test
+    public void borrowBook_should_add_a_borrowed_book_with_a_borrowed_date() {
+        ZBook book = zBooksMapper.getBook(1);
+
+        ZUser user = new ZUser();
+        user.setId(2);
+        zBooksMapper.borrowBook(book, user);
+        Integer numberOfBorrowedBook = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM ZBOOKS_BORROWED WHERE IDBOOK=?", new Object[]{1}, Integer.class);
+        assertThat(numberOfBorrowedBook).isEqualTo(1);
+    }
+
+    @Test
+    public void returnBook_should_update_a_borrowed_book_with_a_returned_date() {
+
+        this.jdbcTemplate.execute("INSERT INTO ZBOOKS_BORROWED (idBook, idBorrower, borrow_date) VALUES(1, 2, SYSDATE())");
+        ZBook book = zBooksMapper.getBook(1);
+
+        ZUser user = new ZUser();
+        user.setId(2);
+        zBooksMapper.returnBook(book);
+        Date returned_date = jdbcTemplate.queryForObject("SELECT return_date FROM ZBOOKS_BORROWED WHERE IDBOOK=?", new Object[]{1}, Date.class);
+        assertThat(returned_date).isNotNull();
     }
 
     @Deprecated
@@ -147,6 +176,11 @@ public class ZBooksMapperTest implements UnitTest {
             sessionFactory.setDataSource(dataSource());
             sessionFactory.setConfigLocation(new ClassPathResource("com/zenika/zbooks/mybatis-config.xml"));
             return sessionFactory.getObject();
+        }
+
+        @Bean
+        public JdbcTemplate jdbcTemplate() {
+            return new JdbcTemplate(dataSource());
         }
 
     }
