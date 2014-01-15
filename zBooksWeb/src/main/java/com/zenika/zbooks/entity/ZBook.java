@@ -14,7 +14,7 @@ public class ZBook {
     private String language;
     private String cover;
     private ZCollection zCollection;
-    private String borrowerName="";
+    private ZUser borrower;
 
     public ZBook() {
     }
@@ -99,12 +99,12 @@ public class ZBook {
 		this.zCollection = collection;
 	}
 
-	public String getBorrowerName() {
-		return this.borrowerName;
+	public ZUser getBorrower() {
+		return this.borrower;
 	}
 
-	public void setBorrowerName(String borrowerName) {
-		this.borrowerName = borrowerName;
+	public void setBorrower(ZUser borrower) {
+		this.borrower = borrower;
 	}
 
     public boolean isValid() {
@@ -130,7 +130,7 @@ public class ZBook {
                 .add("language", language)
                 .add("cover", cover)
                 .add("zCollection", zCollection)
-                .add("borrowerName", borrowerName)
+                .add("borrower", borrower)
                 .toString();
     }
 }
