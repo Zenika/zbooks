@@ -272,7 +272,7 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public boolean borrowBook(ZUser zUser, ZBook zBook) {
 		if (zBook != null && zUser != null) {
-			zUser.borrowBook(zBook);
+//			zUser.borrowBook(zBook);
             zBooksMapper.borrowBook(zBook, zUser);
 			return true;
 		} else {
@@ -313,12 +313,12 @@ public class ZUserServiceImpl implements ZUserService {
 		if (user.getZPower() == ZPower.ADMIN) {
 			hasBorrowed = true;
 		} else {
-			for (ZBook zBook : user.getBorrowedBooks()) {
-				if (zBook.getId() == idZBook) {
-					hasBorrowed = true;
-					break;
-				}
-			}
+//			for (ZBook zBook : user.getBorrowedBooks()) {
+//				if (zBook.getId() == idZBook) {
+//					hasBorrowed = true;
+//					break;
+//				}
+//			}
 		}
 		return hasBorrowed;
 	}

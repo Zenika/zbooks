@@ -8,7 +8,7 @@
         <result column="email" property="email"/>
         <result column="password" property="password"/>
         <result column="zPower" property="zPower" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
-    	<collection property="borrowedBooks" column="idBorrower" ofType="ZBook" javaType="ArrayList" resultMap="com.zenika.zbooks.persistence.ZBooksMapper.ZBook"/>
+    	<!--<collection property="borrowedBooks" column="idBorrower" ofType="ZBook" javaType="ArrayList" resultMap="com.zenika.zbooks.persistence.ZBooksMapper.ZBook"/>-->
     </resultMap>
 
     <insert id="addZUser" parameterType="ZUser" timeout="10">
@@ -25,18 +25,16 @@
     <select id="getZUser" parameterType="map" resultMap="ZUser" timeout="10">
 		SELECT 
 			*
-		FROM zUser as u 
-			LEFT OUTER JOIN zBooks as z 
-				ON z.idBorrower=u.user_id 
+		FROM zUser u
 		WHERE (u.email=#{email} AND u.password=#{password})
 	</select>
 
     <select id="getZUserWithEmail" parameterType="string" resultMap="ZUser" timeout="10">
 		SELECT
 		 	user_id,userName,email,zPower,  
-		 	book_id,ISBN,author,edition,title,pagesNumber,releaseDate,language,cover,zCollection,idBorrower 
-		 FROM zUser as u 
-		 	LEFT OUTER JOIN zBooks as z ON z.idBorrower=u.user_id 
+		 	book_id,
+            ISBN,author,edition,title,pagesNumber,releaseDate,language,cover
+		 FROM zUser as u
 		 WHERE u.email=#{email}
 	</select>
 
@@ -44,8 +42,6 @@
 		SELECT
 			*
 		FROM zUser as u
-			LEFT OUTER JOIN zBooks as z
-				ON z.idBorrower=u.user_id
 		    LEFT OUTER JOIN zUserProfile as up
 				ON up.idUser=u.user_id
 		WHERE u.user_id=#{user_id}
