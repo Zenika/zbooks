@@ -55,7 +55,6 @@ public class ZBooksMapperTest implements UnitTest {
         assertThat(zBook.getEdition()).isEqualTo("John Wiley & Sons Ltd");
         assertThat(zBook.getLanguage()).isEqualTo("EN");
         assertThat(zBook.isBorrowed()).isFalse();
-
     }
 
 
@@ -65,6 +64,14 @@ public class ZBooksMapperTest implements UnitTest {
 
         ZBook zBook = zBooksMapper.getBook(2);
         assertThat(zBook.isBorrowed()).isTrue();
+    }
+
+    @Test
+    public void getBook_should_return_an_available_book_if_book_has_been_returned() {
+        this.jdbcTemplate.execute("INSERT INTO ZBOOKS_BORROWED (idBook, idBorrower, borrow_date, return_date) VALUES(2, 2, SYSDATE(), SYSDATE())");
+
+        ZBook zBook = zBooksMapper.getBook(2);
+        assertThat(zBook.isBorrowed()).isFalse();
     }
 
     @Test

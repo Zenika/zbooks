@@ -33,7 +33,7 @@
             z.language,
             z.cover,
             z.zCollection,
-            CASE WHEN zb.book_borrowed_id IS NOT NULL THEN 1 ELSE 0 END as borrowed
+            zb.book_borrowed_id IS NOT NULL AND zb.return_date IS NULL as borrowed
     		FROM zBooks as z
             LEFT OUTER JOIN zbooks_borrowed zb ON zb.idBook=z.book_id
     	WHERE book_id = #{id}
