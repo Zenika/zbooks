@@ -9,7 +9,6 @@ CREATE TABLE zBooks (
   releaseDate VARCHAR(100),
   language char(2),
   cover VARCHAR(400),
-  idBorrower int,
   PRIMARY KEY (book_id)
 );
 
@@ -20,4 +19,13 @@ CREATE TABLE zUser  (
   password VARCHAR(100),
   zPower int(2)     ,
   PRIMARY KEY (user_id)
+);
+
+CREATE TABLE zBooks_borrowed (
+  book_borrowed_id int AUTO_INCREMENT,
+  idBook int,
+  idBorrower int,
+  borrow_date DATE,
+  return_date DATE,
+  PRIMARY KEY (book_borrowed_id)
 );

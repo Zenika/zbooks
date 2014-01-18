@@ -4,7 +4,10 @@ import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping(value = "/api/old")
 @Controller
@@ -19,9 +22,4 @@ public class zBookAPIController {
     	return zUserService.getUserFirstName(token);
     }
     
-    @RequestMapping(value="/canReturnBook/{id}", method=RequestMethod.GET)
-    @ResponseBody
-    public boolean canReturnBook(@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token, @PathVariable int id) {
-    	return zUserService.canReturnBook(token, id);
-    }
 }

@@ -1,8 +1,5 @@
 package com.zenika.zbooks.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ZUser {
 
     private int id;
@@ -10,12 +7,12 @@ public class ZUser {
     private String userName;
     private String password;
     private ZPower zPower;
-    private List<ZBook> borrowedBooks;
+//    private List<ZBook> borrowedBooks;
     private ZUserProfile profile;
 
     public ZUser() {
         zPower = ZPower.USER;
-        borrowedBooks = new ArrayList<>();
+//        borrowedBooks = new ArrayList<>();
     }
 
     public int getId() {
@@ -58,25 +55,25 @@ public class ZUser {
         this.userName = userName;
     }
 
-	public List<ZBook> getBorrowedBooks() {
-		return borrowedBooks;
-	}
-
-	public void setBorrowedBooks(List<ZBook> borrowedBooks) {
-		this.borrowedBooks = borrowedBooks;
-	}
+//	public List<ZBook> getBorrowedBooks() {
+//		return borrowedBooks;
+//	}
+//
+//	public void setBorrowedBooks(List<ZBook> borrowedBooks) {
+//		this.borrowedBooks = borrowedBooks;
+//	}
 	
-	public void borrowBook (ZBook zBook) {
-		this.borrowedBooks.add(zBook);
-	}
+//	public void borrowBook (ZBook zBook) {
+//		this.borrowedBooks.add(zBook);
+//	}
 	
-	public void returnBook(String isbn) {
-		for (ZBook zBook : borrowedBooks) {
-			if (zBook.getISBN().equals(isbn)) {
-				borrowedBooks.remove(zBook);
-			}
-		}
-	}
+//	public void returnBook(String isbn) {
+//		for (ZBook zBook : borrowedBooks) {
+//			if (zBook.getISBN().equals(isbn)) {
+//				borrowedBooks.remove(zBook);
+//			}
+//		}
+//	}
 
     public ZUserProfile getProfile() {
         return profile;

@@ -66,7 +66,8 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public void deleteZUser(ZUser user) {
 		ZUser userInDb = zUserMapper.getZUser(user.getEmail(), user.getPassword());
-		zUserMapper.deleteZUser(userInDb.getId());
+        zUserMapper.deleteZUserProfile(userInDb.getId());
+        zUserMapper.deleteZUser(userInDb.getId());
 	}
 
 	@Override
@@ -271,10 +272,8 @@ public class ZUserServiceImpl implements ZUserService {
 
 	@Override
 	public boolean borrowBook(ZUser zUser, ZBook zBook) {
-		if (zBook != null && zUser != null && zBook.getBorrowerName().isEmpty()) {
-			zUser.borrowBook(zBook);
-			zBook.setBorrowerName(zUser.getUserName());
-			zUserMapper.borrowOrReturnBook(zBook.getId(), zUser.getId());
+		if (zBook != null && zUser != null) {
+            zBooksMapper.borrowBook(zBook, zUser);
 			return true;
 		} else {
 			return false;
@@ -285,9 +284,8 @@ public class ZUserServiceImpl implements ZUserService {
 	public boolean returnBook(String token, int book_id) {
 		if (canReturnBook(token, book_id)) {
 			ZBook zBook = zBooksMapper.getBook(book_id);
-			if (zBook != null && !zBook.getBorrowerName().equals("")) {
-				zBook.setBorrowerName("");
-				zUserMapper.borrowOrReturnBook(book_id, 0);
+			if (zBook != null) {
+                zBooksMapper.returnBook(zBook);
 				return true;
 			}
 		}
@@ -315,12 +313,7 @@ public class ZUserServiceImpl implements ZUserService {
 		if (user.getZPower() == ZPower.ADMIN) {
 			hasBorrowed = true;
 		} else {
-			for (ZBook zBook : user.getBorrowedBooks()) {
-				if (zBook.getId() == idZBook) {
-					hasBorrowed = true;
-					break;
-				}
-			}
+            hasBorrowed = zUserMapper.hasBorrowedBook(user.getId(), idZBook);
 		}
 		return hasBorrowed;
 	}

@@ -8,7 +8,7 @@
         <result column="email" property="email"/>
         <result column="password" property="password"/>
         <result column="zPower" property="zPower" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
-    	<collection property="borrowedBooks" column="idBorrower" ofType="ZBook" javaType="ArrayList" resultMap="com.zenika.zbooks.persistence.ZBooksMapper.ZBook"/>
+    	<!--<collection property="borrowedBooks" column="idBorrower" ofType="ZBook" javaType="ArrayList" resultMap="com.zenika.zbooks.persistence.ZBooksMapper.ZBook"/>-->
     </resultMap>
 
     <insert id="addZUser" parameterType="ZUser" timeout="10">
@@ -19,41 +19,43 @@
 	</insert>
 
     <delete id="deleteZUser" parameterType="int" timeout="10">
-		DELETE FROM zUser WHERE user_id=#{id}
+		DELETE FROM zUser u WHERE u.user_id=#{id}
 	</delete>
+
+    <delete id="deleteZUserProfile" parameterType="int" timeout="10">
+        DELETE FROM ZUserProfile up WHERE up.idUser=#{id}
+    </delete>
 
     <select id="getZUser" parameterType="map" resultMap="ZUser" timeout="10">
 		SELECT 
 			*
-		FROM zUser as u 
-			LEFT OUTER JOIN zBooks as z 
-				ON z.idBorrower=u.user_id 
+		FROM zUser u
 		WHERE (u.email=#{email} AND u.password=#{password})
 	</select>
 
     <select id="getZUserWithEmail" parameterType="string" resultMap="ZUser" timeout="10">
 		SELECT
-		 	user_id,userName,email,zPower,  
-		 	book_id,ISBN,author,edition,title,pagesNumber,releaseDate,language,cover,zCollection,idBorrower 
-		 FROM zUser as u 
-		 	LEFT OUTER JOIN zBooks as z ON z.idBorrower=u.user_id 
+		 	user_id,
+            userName,
+            email,
+            zPower
+		 FROM zUser as u
 		 WHERE u.email=#{email}
 	</select>
-	
-	<update id="borrowOrReturnBook" parameterType="map" timeout="10">
-		UPDATE zBooks
-		SET idBorrower=#{idBorrower}
-		WHERE book_id=#{book_id}
-	</update>
 
     <select id="getUserWithProfile" parameterType="map" resultMap="ZUser" timeout="10">
 		SELECT
 			*
 		FROM zUser as u
-			LEFT OUTER JOIN zBooks as z
-				ON z.idBorrower=u.user_id
 		    LEFT OUTER JOIN zUserProfile as up
 				ON up.idUser=u.user_id
 		WHERE u.user_id=#{user_id}
 	</select>
+
+    <select id="hasBorrowedBook" parameterType="map" resultType="boolean" timeout="10">
+        SELECT
+         CASE WHEN count(*) > 0 THEN 1 ELSE 0 END
+        FROM zBooks_borrowed
+        WHERE idBorrower = #{user_id} AND idBook = #{book_id}
+    </select>
 </mapper>

@@ -2,15 +2,12 @@
 <!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
  
 <configuration>
-    <typeAliases>
+    <settings>
+        <setting name="autoMappingBehavior" value="PARTIAL" />
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
 
-      <!--  to specify alias explicitly -->
-        <typeAlias alias="ZBook" type="com.zenika.zbooks.entity.ZBook"/>
-        <typeAlias alias="ZUser" type="com.zenika.zbooks.entity.ZUser"/>
-      <!--  -->
+    <typeAliases>
+        <package name="com.zenika.zbooks.entity"/>
     </typeAliases>
-    <mappers>
-    	<mapper resource="com/zenika/zbooks/persistence/ZBooksMapper.xml"/>
-    	<mapper resource="com/zenika/zbooks/persistence/ZUserMapper.xml"/>
-    </mappers>
 </configuration>
