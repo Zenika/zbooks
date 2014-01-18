@@ -22,8 +22,8 @@
 
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
-    	SELECT 
-    		DISTINCT(z.book_id),
+        SELECT
+            DISTINCT(z.book_id),
             z.ISBN,
             z.author,
             z.edition,
@@ -34,9 +34,10 @@
             z.cover,
             z.zCollection,
             zb.book_borrowed_id IS NOT NULL AND zb.return_date IS NULL as borrowed
-    		FROM zBooks as z
-            LEFT OUTER JOIN zbooks_borrowed zb ON zb.idBook=z.book_id
-    	WHERE book_id = #{id}
+        FROM zBooks as z
+            LEFT OUTER JOIN zbooks_borrowed zb
+                ON zb.idBook=z.book_id AND zb.book_borrowed_id = (SELECT MAX(book_borrowed_id) FROM zbooks_borrowed)
+        WHERE book_id = #{id}
     </select>
 
     <select id="getBooks" resultMap="ZBook" timeout="10">

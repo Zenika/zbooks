@@ -77,6 +77,12 @@ public class ZUserServiceImplTest implements UnitTest {
     public void returnBook_should_call_mapper() {
         int book_id = 2;
         String token = "";
+        ZUser zUser = new ZUser();
+        zUser.setId(2);
+        when(serverCache.getZUser(token)).thenReturn(zUser);
+        ZBook zBook = new ZBook();
+        when(zBooksMapper.getBook(book_id)).thenReturn(zBook);
+        when(zUserMapperMock.hasBorrowedBook(zUser.getId(), book_id)).thenReturn(true);
         zUserService.returnBook(token, book_id);
         verify(zBooksMapper).returnBook(any(ZBook.class));
     }
@@ -107,8 +113,7 @@ public class ZUserServiceImplTest implements UnitTest {
 
         when(serverCache.getZUser(token)).thenReturn(zUser);
 
-        boolean returned_result = zUserService.canReturnBook(token, idZBook);
+        zUserService.canReturnBook(token, idZBook);
         verify(zUserMapperMock).hasBorrowedBook(zUser.getId(), idZBook);
-        assertThat(returned_result).isTrue();
     }
 }

@@ -111,8 +111,17 @@ public class ZUserMapperTest implements UnitTest {
 
     @Test
     public void deleteZUser_should_remove_the_user_in_db() throws NoSuchAlgorithmException {
-        zUserMapper.deleteZUser(1);
-        assertThat(zUserMapper.getZUser("root", hashPasswordInSHA256("pwd"))).isNull();
+        this.jdbcTemplate.execute("INSERT INTO zUser (userName,email, password, zPower) VALUES ('User','user@zenika.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1)");
+        zUserMapper.deleteZUser(3);
+        assertThat(zUserMapper.getZUser("User", hashPasswordInSHA256("test"))).isNull();
+    }
+
+    @Test
+    public void deleteZUserProfile_should_remove_the_userProfile_in_db() {
+        zUserMapper.deleteZUserProfile(1);
+        int numberOfRow  = this.jdbcTemplate.queryForObject("SELECT COUNT(*) FROM zUserProfile WHERE idUser = 1", Integer.class);
+
+        assertThat(numberOfRow).isEqualTo(0);
     }
 
     @Test

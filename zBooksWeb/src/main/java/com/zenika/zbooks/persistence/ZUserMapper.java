@@ -11,6 +11,8 @@ public interface ZUserMapper {
 
     void deleteZUser(int id);
 
+    void deleteZUserProfile(int id);
+
     ZUser getZUser(
             @Param("email") String email,
             @Param("password") String password);

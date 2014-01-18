@@ -19,8 +19,12 @@
 	</insert>
 
     <delete id="deleteZUser" parameterType="int" timeout="10">
-		DELETE FROM zUser WHERE user_id=#{id}
+		DELETE FROM zUser u WHERE u.user_id=#{id}
 	</delete>
+
+    <delete id="deleteZUserProfile" parameterType="int" timeout="10">
+        DELETE FROM ZUserProfile up WHERE up.idUser=#{id}
+    </delete>
 
     <select id="getZUser" parameterType="map" resultMap="ZUser" timeout="10">
 		SELECT 
@@ -31,9 +35,10 @@
 
     <select id="getZUserWithEmail" parameterType="string" resultMap="ZUser" timeout="10">
 		SELECT
-		 	user_id,userName,email,zPower,  
-		 	book_id,
-            ISBN,author,edition,title,pagesNumber,releaseDate,language,cover
+		 	user_id,
+            userName,
+            email,
+            zPower
 		 FROM zUser as u
 		 WHERE u.email=#{email}
 	</select>

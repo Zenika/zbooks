@@ -52,10 +52,10 @@
                     <tr>
                     	<th></th>
                     	<td>
-                    		<button type="button" class="btn btn-default" ng-click="borrow()" ng-hide="book.borrowerName">
+                    		<button type="button" class="btn btn-default" ng-click="borrow()" ng-hide="book.borrowed">
                     			Emprunter
 							</button>
-							<button type="button" class="btn btn-default" ng-click="return()" ng-show="book.borrowerName && canBeReturned">
+							<button type="button" class="btn btn-default" ng-click="return()" ng-show="book.borrowed && canBeReturned">
                     			Rendre le livre
 							</button>
 						</td>

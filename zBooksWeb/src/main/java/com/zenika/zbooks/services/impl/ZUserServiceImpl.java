@@ -66,7 +66,8 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public void deleteZUser(ZUser user) {
 		ZUser userInDb = zUserMapper.getZUser(user.getEmail(), user.getPassword());
-		zUserMapper.deleteZUser(userInDb.getId());
+        zUserMapper.deleteZUserProfile(userInDb.getId());
+        zUserMapper.deleteZUser(userInDb.getId());
 	}
 
 	@Override
