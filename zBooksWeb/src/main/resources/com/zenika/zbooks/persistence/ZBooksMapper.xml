@@ -14,6 +14,7 @@
         <result column="releaseDate" property="releaseDate"/>
         <result column="language" property="language"/>
         <result column="cover" property="cover"/>
+        <result column="borrowed" property="borrowed"/>
         <result column="zCollection" property="zCollection" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
     </resultMap>
 
@@ -22,15 +23,35 @@
 
     <select id="getBook" resultMap="ZBook" parameterType="int" timeout="10">
     	SELECT 
-    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection
+    		DISTINCT(z.book_id),
+            z.ISBN,
+            z.author,
+            z.edition,
+            z.title,
+            z.pagesNumber,
+            z.releaseDate,
+            z.language,
+            z.cover,
+            z.zCollection,
+            CASE WHEN zb.book_borrowed_id IS NOT NULL THEN 1 ELSE 0 END as borrowed
     		FROM zBooks as z
+            LEFT OUTER JOIN zbooks_borrowed zb ON zb.idBook=z.book_id
     	WHERE book_id = #{id}
     </select>
 
     <select id="getBooks" resultMap="ZBook" timeout="10">
     	SELECT 
-    		z.book_id, z.ISBN, z.author, z.edition, z.title, z.pagesNumber, z.releaseDate, z.language, z.cover, z.zCollection
-    		FROM zBooks as z
+    		z.book_id,
+            z.ISBN,
+            z.author,
+            z.edition,
+            z.title,
+            z.pagesNumber,
+            z.releaseDate,
+            z.language,
+            z.cover,
+            z.zCollection
+    		FROM zBooks z
     </select>
 
     <insert id="addBook" parameterType="ZBook" timeout="10">

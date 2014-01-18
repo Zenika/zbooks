@@ -18,4 +18,6 @@ public interface ZUserMapper {
     ZUser getZUserWithEmail(String email);
 
     ZUser getUserWithProfile(@Param("user_id") int id);
+
+    boolean hasBorrowedBook(@Param("user_id") int userId, @Param("book_id") int bookId);
 }

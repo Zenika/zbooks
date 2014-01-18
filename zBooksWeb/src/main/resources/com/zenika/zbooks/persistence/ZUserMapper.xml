@@ -46,4 +46,11 @@
 				ON up.idUser=u.user_id
 		WHERE u.user_id=#{user_id}
 	</select>
+
+    <select id="hasBorrowedBook" parameterType="map" resultType="boolean" timeout="10">
+        SELECT
+         CASE WHEN count(*) > 0 THEN 1 ELSE 0 END
+        FROM zBooks_borrowed
+        WHERE idBorrower = #{user_id} AND idBook = #{book_id}
+    </select>
 </mapper>
