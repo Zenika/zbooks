@@ -18,6 +18,21 @@
         </td>
     </tr>
 </table>
+<div class="row pagination pagination-centered">
+    <ul>
+        <li ng-class="{disabled: currentPage == 0}">
+            <a ng-href="{{$location.path()}}" ng-click="prevPage()" >«</a>
+        </li>
+        <li ng-repeat="n in range(bookList.numberOfPages)"
+            ng-class="{active: n == currentPage}"
+            ng-click="setPage()">
+            <a ng-href="{{$location.path()}}" ng-bind="n + 1">1</a>
+        </li>
+        <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+            <a ng-href="{{$location.path()}}" ng-click="nextPage()">»</a>
+        </li>
+    </ul>
+</div>
 <div class="row">
 	<div class="col-sm-2 col-sm-offset-10">
 		<button type="button" class="btn btn-default btn-block" ng-click="new()" ng-show="hasSpecialAccess">
