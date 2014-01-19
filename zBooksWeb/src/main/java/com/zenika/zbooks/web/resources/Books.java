@@ -1,7 +1,7 @@
 package com.zenika.zbooks.web.resources;
 
 import com.zenika.zbooks.entity.ZBook;
-import com.zenika.zbooks.web.resources.util.Links;
+import com.zenika.zbooks.web.resources.util.Link;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +9,12 @@ import java.util.List;
 public class Books {
 
     private List<ZBook> books;
-
     private int numberOfPages;
-    private Links links;
+    private List<Link> links;
 
     public Books() {
         this.books = new ArrayList<>();
+        this.links = new ArrayList<>();
     }
 
     public List<ZBook> getBooks() {
@@ -25,12 +25,16 @@ public class Books {
         this.books = books;
     }
 
-    public Links getLinks() {
+    public List<Link> getLinks() {
         return links;
     }
 
-    public void setLinks(Links links) {
+    public void setLinks(List<Link> links) {
         this.links = links;
+    }
+
+    public void addLink(Link link) {
+        this.links.add(link);
     }
 
     public int getNumberOfPages() {

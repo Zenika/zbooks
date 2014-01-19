@@ -8,7 +8,6 @@ import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
 import com.zenika.zbooks.web.resources.Books;
 import com.zenika.zbooks.web.resources.util.Link;
-import com.zenika.zbooks.web.resources.util.Links;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,18 +47,16 @@ public class BookController {
         LOGGER.debug("Liste des livres de la page {} : {}", page, books);
         LOGGER.trace("Nombre max de livres : {}", maxNumberOfBooks);
 
-        Links links = new Links();
-        links.addLink(new Link("current", uriBuilder.path("/api/books?page="+page).build().toUriString()));
+        books.addLink(new Link("self", uriBuilder.path("/api/books?page="+page).build().toUriString()));
 
         if (page<numberOfPages) {
-            links.addLink(new Link("next", uriBuilder.path("/api/books?page="+(page+1)).build().toUriString()));
+            books.addLink(new Link("next", uriBuilder.path("/api/books?page="+(page+1)).build().toUriString()));
         }
 
         if (page>1) {
-           links.addLink(new Link("previous", uriBuilder.path("/api/books?page="+(page-1)).build().toUriString()));
+            books.addLink(new Link("previous", uriBuilder.path("/api/books?page="+(page-1)).build().toUriString()));
         }
 
-        books.setLinks(links);
         return books;
     }
 

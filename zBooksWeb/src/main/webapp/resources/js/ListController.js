@@ -49,7 +49,7 @@ function ListController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     }
 
     $scope.nextPage = function() {
-        if ($scope.currentPage < $scope.consultantsList.numberOfPages) {
+        if ($scope.currentPage < $scope.bookList.numberOfPages) {
             $scope.currentPage++;
             console.info("++");
             $location.search('page',$scope.currentPage).path('/list');
