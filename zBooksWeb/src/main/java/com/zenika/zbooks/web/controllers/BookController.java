@@ -35,7 +35,7 @@ public class BookController {
     @ResponseBody
     public Books list(UriComponentsBuilder uriBuilder, @RequestParam(defaultValue = "0") int page) {
         Books books = new Books();
-        books.setBooks(zBooksMapper.getBooksOfPage(page,5));
+        books.setBooks(zBooksMapper.getBooksOfPage(page*MAX_ELEMENT_A_PAGE,MAX_ELEMENT_A_PAGE));
 
         int maxNumberOfBooks = zBooksMapper.getNumberOfBooks();
 
