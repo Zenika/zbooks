@@ -34,4 +34,6 @@ public interface ZBooksMapper {
      * @param book
      */
     void returnBook (ZBook book);
+
+    int getNumberOfBooks();
 }

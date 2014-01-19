@@ -55,6 +55,12 @@
     		FROM zBooks z
     </select>
 
+    <select id="getNumberOfBooks" resultType="int" timeout="10">
+        SELECT
+            COUNT(*)
+        FROM zBooks z
+    </select>
+
     <insert id="addBook" parameterType="ZBook" timeout="10">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID() as book_id
