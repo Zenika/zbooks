@@ -12,6 +12,8 @@ public interface ZBooksMapper {
 
     List<ZBook> getBooks();
 
+    List<ZBook> getBooksOfPage(@Param("currentPage") int currentPage, @Param("numberOfElementPerPage") int numberOfElementPerPage);
+
     ZBook getBook(int id);
 
     void addBook(ZBook book);

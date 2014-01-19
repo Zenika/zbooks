@@ -81,6 +81,19 @@ public class ZBooksMapperTest implements UnitTest {
     }
 
     @Test
+    public void getBooksOfPage_should_return_all_books_of_the_page() {
+        this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
+        this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
+        this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
+        this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
+        this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
+        this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
+
+        List<ZBook> zBooks = zBooksMapper.getBooksOfPage(0,5);
+        assertThat(zBooks).hasSize(5);
+    }
+
+    @Test
     public void deleteBook_should_delete_a_book() {
         assertThat(zBooksMapper.getBooks()).hasSize(3);
         zBooksMapper.deleteBook(2);

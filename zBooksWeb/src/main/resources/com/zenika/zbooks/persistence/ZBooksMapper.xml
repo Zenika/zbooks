@@ -52,7 +52,23 @@
             z.language,
             z.cover,
             z.zCollection
-    		FROM zBooks z
+        FROM zBooks z
+    </select>
+
+    <select id="getBooksOfPage" resultMap="ZBook" timeout="10">
+        SELECT
+            z.book_id,
+            z.ISBN,
+            z.author,
+            z.edition,
+            z.title,
+            z.pagesNumber,
+            z.releaseDate,
+            z.language,
+            z.cover,
+            z.zCollection
+        FROM zBooks z
+        LIMIT #{currentPage},#{numberOfElementPerPage}
     </select>
 
     <select id="getNumberOfBooks" resultType="int" timeout="10">
