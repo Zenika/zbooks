@@ -12,7 +12,10 @@ public interface ZBooksMapper {
 
     List<ZBook> getBooks();
 
-    List<ZBook> getBooksOfPage(@Param("currentPage") int currentPage, @Param("numberOfElementPerPage") int numberOfElementPerPage);
+    List<ZBook> getBooksOfPage(@Param("currentPage") int currentPage,
+                               @Param("numberOfElementPerPage") int numberOfElementPerPage,
+                               @Param("sortBy") String sortBy,
+                               @Param("order") String order);
 
     ZBook getBook(int id);
 

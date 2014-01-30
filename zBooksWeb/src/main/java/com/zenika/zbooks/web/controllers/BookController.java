@@ -33,9 +33,14 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Books list(UriComponentsBuilder uriBuilder, @RequestParam(defaultValue = "0") int page) {
+    public Books list(UriComponentsBuilder uriBuilder, @RequestParam(defaultValue = "0") int page,
+                      @RequestParam(defaultValue = "") String sortBy,  @RequestParam(defaultValue = "5") int nbResults,
+                      @RequestParam(defaultValue = "ASC") String order) {
+        sortBy = sortBy.equalsIgnoreCase("ASC")?"ASC":"DESC";
+        order = sortBy.equalsIgnoreCase("DESC")?"ASC":"DESC";
+
         Books books = new Books();
-        books.setBooks(zBooksMapper.getBooksOfPage(page*MAX_ELEMENT_A_PAGE,MAX_ELEMENT_A_PAGE));
+        books.setBooks(zBooksMapper.getBooksOfPage(page*MAX_ELEMENT_A_PAGE,MAX_ELEMENT_A_PAGE, sortBy, order));
 
         int maxNumberOfBooks = zBooksMapper.getNumberOfBooks();
 

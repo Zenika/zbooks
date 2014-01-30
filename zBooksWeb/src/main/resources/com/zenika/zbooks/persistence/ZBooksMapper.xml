@@ -69,6 +69,7 @@
             z.zCollection
         FROM zBooks z
         LIMIT #{currentPage},#{numberOfElementPerPage}
+        ORDER BY #{sortBy} #{order}
     </select>
 
     <select id="getNumberOfBooks" resultType="int" timeout="10">
