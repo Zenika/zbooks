@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zenika.zbooks.persistence.ActivityMapper">
+
+    <select id="getActivity" resultType="ZBook" parameterType="int" timeout="10">
+        SELECT
+            activity_id as "id",
+            type,
+            date
+        FROM Activity
+        WHERE activity_id = #{id}
+    </select>
+
+    <select id="getActivities" resultType="Activity" timeout="10">
+    	SELECT 
+    		activity_id as "id",
+            type,
+            date
+        FROM Activity
+    </select>
+
+    <select id="getActivitiesOfType" resultType="Activity" timeout="10">
+        SELECT
+            activity_id as "id",
+            type,
+            date
+        FROM Activity
+        WHERE
+            type = #{type}
+        LIMIT 0, 5
+        ORDER BY #{sortBy} #{order}
+    </select>
+
+    <insert id="addActivity" parameterType="Activity" timeout="10">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as activity_id
+        </selectKey>
+        INSERT INTO
+        Activity (type, date, userId)
+        VALUES
+        (#{type}, #{date}, #{user.id})
+    </insert>
+
+</mapper>

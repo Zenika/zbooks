@@ -20,7 +20,7 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, A
 	$scope.authenticateUser = function (headers) {
 		Authenticated.setAuthenticated(true);
 		User.setUri(headers('Location'));
-		$location.path("/list");
+		$location.path("/news");
 	}
 
 	$http({method:'GET', url:'/authenticated', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {

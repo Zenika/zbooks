@@ -1,6 +1,7 @@
 var app = angular.module("zBooks", ['ngRoute', 'ngCookies']).
     config(function ($routeProvider) {
         $routeProvider.when('/', {templateUrl:'resources/templates/login.html', controller:LoginController});
+        $routeProvider.when('/news', {templateUrl:'resources/templates/news.html', controller:NewsController});
         $routeProvider.when('/list', {templateUrl:'resources/templates/list.html', controller:ListController});
         $routeProvider.when('/:id/edit', {templateUrl:'resources/templates/edit.html', controller:EditController});
         $routeProvider.when('/:id', {templateUrl:'resources/templates/detail.html', controller:DetailController});
