@@ -89,7 +89,7 @@ public class ZBooksMapperTest implements UnitTest {
         this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
         this.jdbcTemplate.execute("INSERT INTO zBooks (ISBN,title,author,edition,zCollection,pagesNumber,releaseDate,language) VALUES ('047094224X','Professional NoSQL','auteur1','John Wiley & Sons Ltd',0,10,DATE '2000-10-13','EN')");
 
-        List<ZBook> zBooks = zBooksMapper.getBooksOfPage(0,5, "", "");
+        List<ZBook> zBooks = zBooksMapper.getBooksOfPage(0,5, "", "ASC");
         assertThat(zBooks).hasSize(5);
     }
 

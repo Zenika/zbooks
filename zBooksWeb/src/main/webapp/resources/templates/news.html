@@ -3,9 +3,11 @@
     <tr>
         <th>Type</th>
         <th>Date</th>
+        <th>Utilisateur</th>
     </tr>
     <tr ng-repeat="activity in activityList">
-        <td><h6>{{activity.type}}</h6></td>
-        <td>{{activity.Date}}</td>
+        <td><h6><b>{{activity.type | activityType}}</b></h6></td>
+        <td>{{activity.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{activity.user.userName}}</td>
     </tr>
 </table>

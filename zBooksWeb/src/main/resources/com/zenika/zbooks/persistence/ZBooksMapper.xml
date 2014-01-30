@@ -68,8 +68,11 @@
             z.cover,
             z.zCollection
         FROM zBooks z
+        <if test="sortBy">
+        ORDER BY releaseDate ASC
+        </if>
         LIMIT #{currentPage},#{numberOfElementPerPage}
-        ORDER BY #{sortBy} #{order}
+
     </select>
 
     <select id="getNumberOfBooks" resultType="int" timeout="10">

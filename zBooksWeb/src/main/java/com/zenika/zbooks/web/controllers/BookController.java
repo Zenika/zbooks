@@ -1,8 +1,11 @@
 package com.zenika.zbooks.web.controllers;
 
+import com.zenika.zbooks.entity.Activity;
+import com.zenika.zbooks.entity.ActivityType;
 import com.zenika.zbooks.entity.ZBook;
 import com.zenika.zbooks.entity.ZUser;
 import com.zenika.zbooks.exceptions.InvalidResourceException;
+import com.zenika.zbooks.persistence.ActivityMapper;
 import com.zenika.zbooks.persistence.ZBooksMapper;
 import com.zenika.zbooks.services.ZUserService;
 import com.zenika.zbooks.utils.ZBooksUtils;
@@ -19,6 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Date;
+
 @RequestMapping(value = "/api/books")
 @Controller
 public class BookController {
@@ -30,6 +35,9 @@ public class BookController {
     private ZBooksMapper zBooksMapper;
     @Autowired
     private ZUserService zUserService;
+
+    @Autowired
+    private ActivityMapper activityMapper;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -78,12 +86,21 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createBook(@RequestBody ZBook book, UriComponentsBuilder builder) {
+    public ResponseEntity createBook(@RequestBody ZBook book, UriComponentsBuilder builder, @CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
         if (book == null || !book.isValid()) {
             throw new InvalidResourceException(); // TODO add error description
         }
 
         zBooksMapper.addBook(book);
+
+        ZUser user = zUserService.getAuthenticatedZUser(token);
+
+        Activity addBook = new Activity();
+        addBook.setDate(new Date());
+        addBook.setType(ActivityType.BOOK);
+        addBook.setUser(user);
+
+        activityMapper.addActivity(addBook);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/api/books/{id}").buildAndExpand(book.getId()).toUri());

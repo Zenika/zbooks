@@ -14,10 +14,13 @@
 
     <select id="getActivities" resultType="Activity" timeout="10">
     	SELECT 
-    		activity_id as "id",
-            type,
-            date
-        FROM Activity
+    		a.activity_id as "id",
+            a.type,
+            a.date,
+            zuser.userName as "user.userName"
+        FROM Activity a
+        LEFT OUTER JOIN zUser zuser
+                ON a.userId=zuser.user_id
     </select>
 
     <select id="getActivitiesOfType" resultType="Activity" timeout="10">
@@ -28,8 +31,11 @@
         FROM Activity
         WHERE
             type = #{type}
+        <if test="sortBy">
+            ORDER BY date ASC
+        </if>
         LIMIT 0, 5
-        ORDER BY #{sortBy} #{order}
+
     </select>
 
     <insert id="addActivity" parameterType="Activity" timeout="10">

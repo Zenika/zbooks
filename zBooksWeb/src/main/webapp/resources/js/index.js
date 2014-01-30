@@ -37,6 +37,17 @@ app.filter('coverFilter', function () {
     };
 });
 
+app.filter('activityType', function () {
+    return function (src) {
+        if (src != undefined || src.length != 0) {
+            if (src == 'BOOK') {
+                return "Ajout d'un Livre";
+            }
+        }
+        return src;
+    };
+});
+
 app.factory("Breadcrumbs", function () {
     var crumbs = new Array();
     return {

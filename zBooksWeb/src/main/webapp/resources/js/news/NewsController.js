@@ -2,6 +2,10 @@ function NewsController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     $scope.hasSpecialAccess = false;
 
     $http({method:'GET', url:'/api/activities?sortBy=date&order=desc', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
+//        for (var activityId in data) {
+//            var activity = data[activityId];
+//            activity.date = new Date (activity.date);
+//        }
         $scope.activityList = data;
     });
 
