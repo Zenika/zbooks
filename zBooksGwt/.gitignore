@@ -1,8 +1,0 @@
-/target
-**/gwt-unitCache/*
-*.rpc
-/src/main/webapp/zBooksGwt/*
-**/WEB-INF/deploy/*
-**/META-INF/
-**/WEB-INF/classes/*
-**/WEB-INF/lib/*
