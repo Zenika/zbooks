@@ -1,8 +1,6 @@
 Outil de gestion de la bibliothèque Zenika
 
-zBooksGwt : POC pour apprentissage GWT + Spring + Hibernate
-
-zBooksWeb : disponible en intégration continue à l'adresse http://zbook.mmouterde.cloudbees.net/#/
+zBooksWeb : disponible en intégration continue à l'adresse https://zenika-ouest.ci.cloudbees.com/job/ZBooks/
 
 Itération 1 : FAIT
 - [Feature] : Tableau
