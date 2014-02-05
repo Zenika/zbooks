@@ -10,22 +10,21 @@
     <description>Application de gestion de la bibliotheque de Zenika</description>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com/ZenikaOuest/zBooks.git</developerConnection>
-        <connection>scm:git:ssh://git@github.com/ZenikaOuest/zBooks.git</connection>
-        <url>git:ssh://git@github.com/ZenikaOuest/zBooks.git</url>
-        <tag>HEAD</tag>
+        <developerConnection>scm:git:https://github.com/Zenika/zbooks.git</developerConnection>
+        <connection>scm:git:https://github.com/Zenika/zbooks.git</connection>
+        <url>git:https://github.com/Zenika/zbooks.git</url>
     </scm>
 
     <distributionManagement>
         <repository>
             <id>zbooks-release</id>
             <name>zBooks-release</name>
-            <url>dav:https://repository-mmouterde.forge.cloudbees.com/release/</url>
+            <url>dav:https://repository-zenika-ouest.forge.cloudbees.com/release/ </url>
         </repository>
         <snapshotRepository>
             <id>zbooks-snapshot</id>
             <name>zBooks-snapshot-repository</name>
-            <url>dav:https://repository-mmouterde.forge.cloudbees.com/snapshot/</url>
+            <url>dav:https://repository-zenika-ouest.forge.cloudbees.com/snapshot/ </url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -50,13 +49,13 @@
     </contributors>
     <ciManagement>
         <system>jenkins</system>
-        <url>https://mmouterde.ci.cloudbees.com/job/ZBooks/</url>
+        <url>https://zenika-ouest.ci.cloudbees.com/job/ZBooks/</url>
     </ciManagement>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/ZenikaOuest/zBooks/issues?state=open</url>
+        <url>https://github.com/Zenika/zbooks/issues?state=open</url>
     </issueManagement>
-    <url>http://zbook.mmouterde.cloudbees.net/</url>
+    <url>http://zbooks.zenika-ouest.cloudbees.net</url>
 
     <properties>
         <java-version>1.7</java-version>
@@ -378,7 +377,6 @@
                     <charset>UTF-8</charset>
                     <path>/</path>
                     <httpsPort>8443</httpsPort>
-                    <!--<keystoreFile>/home/sebastien/outils/jdk1.7.0_45/jre/lib/security/cacerts</keystoreFile>-->
                     <keystorePass>changeit</keystorePass>
                     <connectorHttpProtocol />
                     <!-- you NEED to define the URI encoding for JOpenId to work -->
@@ -411,7 +409,7 @@
             <plugin>
                 <groupId>com.googlecode.flyway</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>2.3</version>
+                <version>${flyway.version}</version>
                 <configuration>
                     <url>${jdbc.url}</url>
                 </configuration>
