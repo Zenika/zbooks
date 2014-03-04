@@ -1,6 +1,8 @@
 Outil de gestion de la bibliothèque Zenika
 
-zBooksWeb : disponible en intégration continue à l'adresse https://zenika-ouest.ci.cloudbees.com/job/ZBooks/
+Disponible en intégration continue à l'adresse https://zenika-ouest.ci.cloudbees.com/job/ZBooks/
+
+Déployé sur Cloudbees à : http://zbooks.zenika-ouest.cloudbees.net/
 
 Itération 1 : FAIT
 - [Feature] : Tableau
