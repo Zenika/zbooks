@@ -1,4 +1,6 @@
-function UserController($scope, $routeParams, $http, $location, Breadcrumbs, User) {
+var UsersControllers = angular.module('UsersControllers', ['Services', 'Filters'])
+
+UsersControllers.controller('UserController', function UserController($scope, $routeParams, $http, $location, Breadcrumbs, User) {
 	$scope.hasSpecialAccess = false;
     $scope.message = "";
     $scope.messageType;
@@ -31,4 +33,4 @@ function UserController($scope, $routeParams, $http, $location, Breadcrumbs, Use
     Breadcrumbs.setCrumbs([
         {label:"Profile", route:"/#/user/profile" }
     ]);
-}
+});

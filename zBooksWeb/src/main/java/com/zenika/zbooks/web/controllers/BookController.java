@@ -111,6 +111,7 @@ public class BookController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateBook(@RequestBody ZBook book) {
         if (book == null || !book.isValid()) {
+            LOGGER.info("Modification invalide : {}", book);
             throw new InvalidResourceException(); // TODO add error description
         }
 

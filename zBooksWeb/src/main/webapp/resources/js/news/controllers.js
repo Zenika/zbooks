@@ -1,4 +1,6 @@
-function NewsController($scope, $routeParams, $http, $location, Breadcrumbs, User) {
+var NewsControllers = angular.module('NewsControllers', ['Services', 'Filters'])
+
+NewsControllers.controller('NewsController', function ($scope, $routeParams, $http, $location, Breadcrumbs, User) {
     $scope.hasSpecialAccess = false;
 
     $http({method:'GET', url:'/api/activities?sortBy=date&order=desc', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
@@ -21,4 +23,4 @@ function NewsController($scope, $routeParams, $http, $location, Breadcrumbs, Use
         $scope.currentPage = 0;
     }
 
-}
+});
