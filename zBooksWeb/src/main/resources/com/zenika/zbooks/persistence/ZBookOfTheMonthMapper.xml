@@ -10,6 +10,7 @@
     private List<ZUser> supporters;
     -->
     <resultMap type="ZBookOfTheMonth" id="ZBookOfTheMonth">
+    	<result column="supporters" property="supporters"/>
     	<association property="book" javaType="ZBook">
 	        <id column="book_id" property="id"/>
 	        <result column="ISBN" property="ISBN"/>
@@ -28,9 +29,7 @@
 	        <result column="email" property="email"/>
 	        <!--result column="password" property="user.password"/-->
 	        <!--result column="zPower" property="zPower" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/-->
-		</association>
-        
-        
+		</association>		                
     </resultMap>
     
     <select id="getBookOfTheMonthById" resultMap="ZBookOfTheMonth"  parameterType="int" timeout="10">
@@ -47,11 +46,14 @@
            
            user.user_id user_id,
            user.userName userName,
-           user.email email
+           user.email email,
+
+			count(votes.book_id) supporters
         FROM zBookOfTheMonth botm
-<!-- INNER JOIN zBookOfTheMonthVotes votes on botm.book_id=votes.book_id -->        
+		LEFT JOIN zBookOfTheMonthVotes votes on botm.book_id=votes.book_id      
         INNER JOIN zUser user on botm.submitter_id=user.user_id
         WHERE botm.book_id=#{bookId}
+        GROUP by(votes.book_id )
     </select>
 
     <select id="getAllBooksOfTheMonth" resultMap="ZBookOfTheMonth"  timeout="10">
@@ -68,10 +70,13 @@
            
            user.user_id user_id,
            user.userName userName,
-           user.email email
+           user.email email,
+           count(votes.book_id) supporters
+           
         FROM zBookOfTheMonth botm
-<!-- INNER JOIN zBookOfTheMonthVotes votes on botm.book_id=votes.book_id -->        
+		LEFT JOIN zBookOfTheMonthVotes votes on botm.book_id=votes.book_id        
         INNER JOIN zUser user on botm.submitter_id=user.user_id
+        GROUP by(votes.book_id )
     </select>
 
 	<insert id="vote">

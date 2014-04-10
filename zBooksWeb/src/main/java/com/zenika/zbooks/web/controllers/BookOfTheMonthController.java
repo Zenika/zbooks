@@ -58,6 +58,7 @@ public class BookOfTheMonthController {
     	
     }
     
+    @RequestMapping(value="/{id}/vote",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void vote(@RequestParam int bookId,
     		@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token){
     	

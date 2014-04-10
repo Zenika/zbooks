@@ -56,6 +56,7 @@ public class ZBookOfTheMonthMapperTest {
 	    	assertThat(res.get(0).getSubmitter()).isNotNull();
 	    	assertThat(res.get(0).getBook().getTitle()).isEqualTo("Professional NoSQL");
 	    	assertThat(res.get(0).getSubmitter().getUserName()).isEqualTo("Root");
+	    	assertThat(res.get(0).getSupporters()).isEqualTo(1);
 	    	
 	    }
 	    
