@@ -9,6 +9,12 @@ BotmControllers.controller('BotmController', function ($scope, $routeParams, $ht
         $location.path("/botm/submit");
     }
 
+    $scope.star = function () {
+        $http({method:'POST', url:'/api/botm/vote/' + $routeParams.id, headers:{'Content-Type':'application/json'}}).success(function (data, status, headers, config) {
+            $location.path("/botm");
+        });
+    }
+
     if (!User.firstName()) {
         $http({method:'GET', url:'/api/old/getFirstName', headers:{'Accept':'application/json'}}).success(function (data, status, headers, config) {
             User.setFirstName(data);
@@ -20,11 +26,7 @@ BotmControllers.controller('BotmController', function ($scope, $routeParams, $ht
 });
 
 BooksControllers.controller('SubmitController', function ($scope, $routeParams, $http, $location, Breadcrumbs, User) {
-    $scope.botm = new Object();
     $scope.book = new Object();
-    $scope.botm.book = $scope.book;
-
-    $scope.botm.user = User.userName;
 
     $scope.showDelete = false;
 
@@ -74,10 +76,10 @@ BooksControllers.controller('SubmitController', function ($scope, $routeParams, 
     }
 
     $scope.update = function () {
-        $scope.botm.book.language = $scope.currentLanguage.code;
-        $scope.botm.book.zcollection=$scope.currentCollection.code;
+        $scope.book.language = $scope.currentLanguage.code;
+        $scope.book.zcollection=$scope.currentCollection.code;
 
-        $http({method:'POST', url:'/api/botm', data:$scope.botm, headers:{'Content-Type':'application/json'}}
+        $http({method:'POST', url:'/api/botm', data:$scope.book, headers:{'Content-Type':'application/json'}}
             ).
                 success(function (data, status, headers, config) {
                     $location.path("/botm");
@@ -97,18 +99,18 @@ BooksControllers.controller('SubmitController', function ($scope, $routeParams, 
         if (data.totalItems >= 1) {
             var volumeInfo = data.items[0].volumeInfo;
 
-            $scope.botm.book.title = volumeInfo.title;
+            $scope.book.title = volumeInfo.title;
             if (volumeInfo.authors)
-                $scope.botm.book.authors = volumeInfo.authors[0];
-            $scope.botm.book.pagesNumber = volumeInfo.pageCount
+                $scope.book.authors = volumeInfo.authors[0];
+            $scope.book.pagesNumber = volumeInfo.pageCount
             if (volumeInfo.imageLinks)
-                $scope.botm.book.cover = volumeInfo.imageLinks.smallThumbnail
+                $scope.book.cover = volumeInfo.imageLinks.smallThumbnail
             if (volumeInfo.language) {
-                $scope.botm.book.language = volumeInfo.language.toUpperCase();
+                $scope.book.language = volumeInfo.language.toUpperCase();
                 $scope.currentLanguage = $scope.getLanguage($scope.book.language);
             }
-            $scope.botm.book.releaseDate = volumeInfo.publishedDate;
-            $scope.botm.book.edition = volumeInfo.publisher;
+            $scope.book.releaseDate = volumeInfo.publishedDate;
+            $scope.book.edition = volumeInfo.publisher;
 
             $scope.message = "Les données du livre ont été mise à jour avec les données importées";
             $scope.messageType = $scope.INFO_TYPE;
