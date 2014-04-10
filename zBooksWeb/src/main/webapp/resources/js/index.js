@@ -9,6 +9,8 @@ var app = angular.module("zBooks", ['ngRoute', 'ngCookies']).
 
     });
 
+
+
 app.run(['$rootScope','$location', '$routeParams', function($rootScope, $location, $routeParams) {
         $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
             console.log('Current route name: ' + $location.path());
