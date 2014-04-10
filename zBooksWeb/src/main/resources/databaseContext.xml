@@ -43,8 +43,8 @@
     <beans profile="dev">
         <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="driverClassName" value="org.h2.Driver"/>
-            <property name="url" value="jdbc:h2:~/zBooks;"/>
-            <property name="username" value="root"/>
+            <property name="url" value="jdbc:h2:~/zBooks;AUTO_SERVER=TRUE"/>
+            <property name="username" value="sa"/>
             <property name="password" value=""/>
         </bean>
     </beans>
