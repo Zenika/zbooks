@@ -1,8 +1,10 @@
 package com.zenika.zbooks.entity;
 
 import com.google.common.base.Objects;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class ZBook {
+
 
     private int id;
     private String ISBN;
@@ -99,6 +101,7 @@ public class ZBook {
 		this.zCollection = collection;
 	}
 
+    @JsonIgnore
     public boolean isValid() {
         if (ISBN == null || ISBN.isEmpty()) {
             return false;

@@ -1,4 +1,6 @@
-function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, Authenticated, User) {
+var LoginControllers = angular.module('LoginControllers', ['Services', 'Filters'])
+
+LoginControllers.controller('LoginController', function ($scope, $location, $cookieStore, $http, Breadcrumbs, Authenticated, User) {
 	$scope.user = new Object();
 
 	$scope.message = "";
@@ -51,4 +53,4 @@ function LoginController ($scope, $location, $cookieStore, $http, Breadcrumbs, A
 	if (User.firstName()) {
 		User.setFirstName("");
 	}
-}
+});
