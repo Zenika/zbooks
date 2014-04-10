@@ -1,14 +1,12 @@
 package com.zenika.zbooks.entity;
 
-import  java.util.List;
-
 public class ZBookOfTheMonth {
 
     private ZBook book;
 
     private ZUser submitter;
 
-    private List<ZUser> supporters;
+    private int supporters;
 
     public ZBook getBook(){
         return book;
@@ -27,13 +25,7 @@ public class ZBookOfTheMonth {
         this.submitter = submitter;
     }
 
-    public List<ZUser> getSupporter(){
+    public int getSupporters(){
         return supporters;
-    }    
-
-
-    public void setSupporter(List<ZUser> supporters){
-        this.supporters = supporters;
-    }
-
+    }       
 }
