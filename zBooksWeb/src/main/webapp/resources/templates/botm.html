@@ -1,0 +1,23 @@
+<table class="table table-striped table-bordered table-hover table-condensed">
+    <tr>
+        <th>ISBN</th>
+        <th>Titre</th>
+        <th>Langue</th>
+        <th>Soumetteur</th>
+        <th>Nombre de vote</th>
+    </tr>
+    <tr ng-repeat="book in bookList.books">
+        <td class="text-muted"><h6>{{book.isbn}}</h6></td>
+        <td><a href="#/{{book.id}}">{{book.title}}</a></td>
+        <td><img ng-src="./resources/image/{{book.language|img404safe}}.png"></td>
+        <td>{{book.zuser}}</td>
+        <td>{{book.votes}} <img ng-src="./resources/image/star_red.png"></td>
+    </tr>
+</table>
+<div class="row">
+    <div class="col-sm-2 col-sm-offset-10">
+        <button type="button" class="btn btn-default btn-block" ng-click="new()">
+            <span class="glyphicon glyphicon-plus"></span> Proposer un livre
+        </button>
+    </div>
+</div>

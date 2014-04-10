@@ -46,6 +46,11 @@
             <email>sebastien dot brousse at zenika dot com</email>
             <organization>Zenika Ouest</organization>
         </contributor>
+        <contributor>
+            <name>Guillaume Gerbaud</name>
+            <email>guillaume dot gerbaud at zenika dot com</email>
+            <organization>Zenika Ouest</organization>
+        </contributor>
     </contributors>
     <ciManagement>
         <system>jenkins</system>
