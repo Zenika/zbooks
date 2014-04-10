@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface ZBookOfTheMonthMapper {
+	
+	ZBookOfTheMonth getBookOfTheMonthById(int bookId);
+	
 	List<ZBookOfTheMonth> getAllBooksOfTheMonth();
 
 	void vote(

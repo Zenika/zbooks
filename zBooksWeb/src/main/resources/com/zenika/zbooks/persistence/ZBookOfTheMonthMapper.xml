@@ -32,6 +32,27 @@
         
         
     </resultMap>
+    
+    <select id="getBookOfTheMonthById" resultMap="ZBookOfTheMonth"  parameterType="int" timeout="10">
+    	SELECT
+           botm.book_id book_id,
+           botm.ISBN ISBN,
+           botm.author author,
+           botm.edition edition,
+           botm.title title,
+           botm.pagesNumber pagesNumber,
+           botm.releaseDate releaseDate,
+           botm.language language,
+           botm.cover cover,
+           
+           user.user_id user_id,
+           user.userName userName,
+           user.email email
+        FROM zBookOfTheMonth botm
+<!-- INNER JOIN zBookOfTheMonthVotes votes on botm.book_id=votes.book_id -->        
+        INNER JOIN zUser user on botm.submitter_id=user.user_id
+        WHERE botm.book_id=#{bookId}
+    </select>
 
     <select id="getAllBooksOfTheMonth" resultMap="ZBookOfTheMonth"  timeout="10">
         SELECT

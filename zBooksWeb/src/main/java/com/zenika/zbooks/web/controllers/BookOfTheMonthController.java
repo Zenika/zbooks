@@ -57,6 +57,42 @@ public class BookOfTheMonthController {
     	return zBookOfTheMonthMapper.getAllBooksOfTheMonth();
     	
     }
+    
+    public void vote(@RequestParam int bookId,
+    		@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token){
+    	
+    	ZUser voter = zUserService.getAuthenticatedZUser(token);
+    	ZBookOfTheMonth zBookOfTheMonth = zBookOfTheMonthMapper.getBookOfTheMonthById(bookId);
+    	zBookOfTheMonthMapper.vote(voter, zBookOfTheMonth);
+    	
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity proposeBookOfTheMonth(
+    		@RequestBody ZBook book, 
+    		UriComponentsBuilder builder, 
+    		@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
+        if (book == null || !book.isValid()) {
+            throw new InvalidResourceException(); // TODO add error description
+        }
+        
+        ZUser user = zUserService.getAuthenticatedZUser(token);
+
+        zBookOfTheMonthMapper.addBookOfTheMonth(user, book);
+
+        
+
+        Activity addBook = new Activity();
+        addBook.setDate(new Date());
+        addBook.setType(ActivityType.BOOK_OF_THE_MONTH);
+        addBook.setUser(user);
+
+        activityMapper.addActivity(addBook);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/api/books/{id}").buildAndExpand(book.getId()).toUri());
+        return new ResponseEntity(headers, HttpStatus.CREATED);
+    }
         
 
 }
