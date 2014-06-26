@@ -24,7 +24,7 @@
 		</association>
 		
 		<association property="submitter" javaType="ZUser">
-		    <id column="user.user_id" property="user_id"/>
+		    <id column="user.user_id" property="id"/>
 	        <result column="userName" property="userName"/>
 	        <result column="email" property="email"/>
 	        <!--result column="password" property="user.password"/-->
@@ -70,13 +70,35 @@
            
            user.user_id user_id,
            user.userName userName,
-           user.email email,
-           count(votes.book_id) supporters
+           user.email email
            
-        FROM zBookOfTheMonth botm
-		LEFT JOIN zBookOfTheMonthVotes votes on botm.book_id=votes.book_id        
-        INNER JOIN zUser user on botm.submitter_id=user.user_id
-        GROUP by(votes.book_id )
+        FROM zBookOfTheMonth botm, zUser user
+        WHERE botm.submitter_id=user.user_id
+    </select>
+
+    <select id="getBooksOfPage" resultMap="ZBookOfTheMonth" timeout="10">
+        SELECT
+                   botm.book_id book_id,
+                   botm.ISBN ISBN,
+                   botm.author author,
+                   botm.edition edition,
+                   botm.title title,
+                   botm.pagesNumber pagesNumber,
+                   botm.releaseDate releaseDate,
+                   botm.language language,
+                   botm.cover cover,
+
+                   user.user_id user_id,
+                   user.userName userName,
+                   user.email email
+
+                FROM zBookOfTheMonth botm, zUser user
+                WHERE botm.submitter_id=user.user_id
+        <if test="sortBy">
+        ORDER BY releaseDate ASC
+        </if>
+        LIMIT #{currentPage},#{numberOfElementPerPage}
+
     </select>
 
 	<insert id="vote">
@@ -84,13 +106,22 @@
         VALUES(#{submitter.user_id}, #{book.book_id})
     </insert>
 
-    <insert id="addBookOfTheMonth">
+    <insert id="addBookOfTheMonth" parameterType="map" timeout="10">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+                SELECT LAST_INSERT_ID() as book_id
+        </selectKey>
         INSERT INTO zBookOfTheMonth 
         (ISBN, title, author, edition, pagesNumber, 
         releaseDate, language, cover, submitter_id)
         VALUES
         (#{book.ISBN}, #{book.title}, #{book.authors}, #{book.edition}, #{book.pagesNumber}, 
-        #{book.releaseDate}, #{book.language}, #{book.cover}, #{submitter.user_id})
-    </insert>   
+        #{book.releaseDate}, #{book.language}, #{book.cover}, #{submitter.id})
+    </insert>
+
+    <select id="getNumberOfBooks" resultType="int" timeout="10">
+        SELECT
+            COUNT(*)
+        FROM zBookOfTheMonth botm
+    </select>
 
 </mapper>

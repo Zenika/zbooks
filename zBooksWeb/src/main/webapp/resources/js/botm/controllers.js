@@ -25,7 +25,7 @@ BotmControllers.controller('BotmController', function ($scope, $routeParams, $ht
 
 });
 
-BooksControllers.controller('SubmitController', function ($scope, $routeParams, $http, $location, Breadcrumbs, User) {
+BotmControllers.controller('SubmitController', function ($scope, $routeParams, $http, $location, Breadcrumbs, User) {
     $scope.book = new Object();
 
     $scope.showDelete = false;

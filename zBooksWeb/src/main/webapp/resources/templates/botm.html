@@ -9,7 +9,7 @@
     </tr>
     <tr ng-repeat="botm in bookList">
         <td class="text-muted"><h6>{{botm.book.isbn}}</h6></td>
-        <td><a href="#/{{book.id}}">{{botm.book.title}}</a></td>
+        <td><a href="#/botm/{{botm.id}}">{{botm.book.title}}</a></td>
         <td><img ng-src="./resources/image/{{botm.book.language|img404safe}}.png"></td>
         <td>{{botm.submitter.userName}}</td>
         <td>{{botm.supporters}}</td>

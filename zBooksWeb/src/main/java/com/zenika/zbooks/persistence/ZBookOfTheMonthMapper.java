@@ -10,17 +10,19 @@ import java.util.List;
 
 @Repository
 public interface ZBookOfTheMonthMapper {
-	
-	ZBookOfTheMonth getBookOfTheMonthById(int bookId);
-	
-	List<ZBookOfTheMonth> getAllBooksOfTheMonth();
 
-	void vote(
-		@Param("voter") ZUser voter, 
-		@Param("book") ZBookOfTheMonth book);
+    ZBookOfTheMonth getBookOfTheMonthById(int bookId);
 
-	ZBookOfTheMonth addBookOfTheMonth(
-		@Param("submitter") ZUser submitter, 
-		@Param("book") ZBook book);
+    List<ZBookOfTheMonth> getAllBooksOfTheMonth();
+
+    void vote(
+            @Param("voter") ZUser voter,
+            @Param("book") ZBookOfTheMonth book);
+
+    void addBookOfTheMonth(
+            @Param("submitter") ZUser submitter,
+            @Param("book") ZBook book);
+
+    int getNumberOfBooks();
 
 }

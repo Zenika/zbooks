@@ -37,10 +37,10 @@ public class BookOfTheMonthController {
 
     @Autowired
     private ZBooksMapper zBooksMapper;
-    
+
     @Autowired
     private ZBookOfTheMonthMapper zBookOfTheMonthMapper;
-    
+
     @Autowired
     private ZUserService zUserService;
 
@@ -49,39 +49,41 @@ public class BookOfTheMonthController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<ZBookOfTheMonth> list(UriComponentsBuilder uriBuilder, 
+    public List<ZBookOfTheMonth> list(UriComponentsBuilder uriBuilder,
     		@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "") String sortBy,  
+            @RequestParam(defaultValue = "") String sortBy,
             @RequestParam(defaultValue = "5") int nbResults,
             @RequestParam(defaultValue = "ASC") String order) {
-    	return zBookOfTheMonthMapper.getAllBooksOfTheMonth();
-    	
+        return zBookOfTheMonthMapper.getAllBooksOfTheMonth();
+
     }
-    
+
     @RequestMapping(value="/{id}/vote",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void vote(@RequestParam int bookId,
     		@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token){
-    	
+        LOGGER.info("A vote for a BotM is being recorded");
+
     	ZUser voter = zUserService.getAuthenticatedZUser(token);
     	ZBookOfTheMonth zBookOfTheMonth = zBookOfTheMonthMapper.getBookOfTheMonthById(bookId);
     	zBookOfTheMonthMapper.vote(voter, zBookOfTheMonth);
-    	
+
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity proposeBookOfTheMonth(
-    		@RequestBody ZBook book, 
-    		UriComponentsBuilder builder, 
+    		@RequestBody ZBook book,
+    		UriComponentsBuilder builder,
     		@CookieValue(ZBooksUtils.COOKIE_TOKEN_KEY) String token) {
+        LOGGER.info("A BotM is being proposed");
         if (book == null || !book.isValid()) {
-            throw new InvalidResourceException(); // TODO add error description
+            throw new InvalidResourceException();
         }
-        
+
         ZUser user = zUserService.getAuthenticatedZUser(token);
 
         zBookOfTheMonthMapper.addBookOfTheMonth(user, book);
 
-        
+
 
         Activity addBook = new Activity();
         addBook.setDate(new Date());
@@ -94,6 +96,6 @@ public class BookOfTheMonthController {
         headers.setLocation(builder.path("/api/books/{id}").buildAndExpand(book.getId()).toUri());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
-        
+
 
 }
