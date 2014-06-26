@@ -5,11 +5,16 @@ La BDD est en H2 en local, MySQL sur CloudBees.
 Le SSL est activé en local mais désactivé sur CloudBees.
 
 
-Pour initialiser la base H2 pour le dev, il suffit de lancer la classe ZBooksBddTool.
-
-
 Des utilisateurs sont créés de base à l'initialisation (et présents sur CloudBees) :
  - root@zenika.com avec le mdp pwd qui est le seul admin
  - user@zenika.com avec le mdp test
 
 Vous pouvez vous connectez directement avec votre compte Zenika (et votre compte Zenika seulement) en cliquant sur le bouton "Se connecter avec Google".
+
+mvn -Dspring.profiles.active=dev flyway:info -Dflyway.url="jdbc:h2:~/zBooks;AUTO_SERVER=TRUE" -Dflyway.user=sa -Dflyway.schemas=PUBLIC
+mvn -Dspring.profiles.active=dev flyway:migrate -Dflyway.url="jdbc:h2:~/zBooks;AUTO_SERVER=TRUE" -Dflyway.user=sa -Dflyway.schemas=PUBLIC
+mvn -Dspring.profiles.active=dev flyway:clean -Dflyway.url="jdbc:h2:~/zBooks;AUTO_SERVER=TRUE" -Dflyway.user=sa -Dflyway.schemas=PUBLIC
+
+
+mvn -Dspring.profiles.active=dev tomcat:run -Dmaven.tomcat.path="/"
+http://localhost:8080/

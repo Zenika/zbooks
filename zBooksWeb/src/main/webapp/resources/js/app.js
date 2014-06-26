@@ -1,8 +1,10 @@
-var app = angular.module("zBooks", ['ngRoute', 'ngCookies', 'Controllers', 'Services', 'Filters', 'BooksControllers', 'LoginControllers', 'NewsControllers', 'UsersControllers']).
+var app = angular.module("zBooks", ['ngRoute', 'ngCookies', 'Controllers', 'Services', 'Filters', 'BooksControllers', 'LoginControllers', 'NewsControllers', 'UsersControllers', 'BotmControllers']).
     config(function ($routeProvider) {
         $routeProvider.when('/', {templateUrl:'resources/templates/login.html', controller:'LoginController'});
         $routeProvider.when('/news', {templateUrl:'resources/templates/news.html', controller:'NewsController'});
         $routeProvider.when('/list', {templateUrl:'resources/templates/list.html', controller:'ListController'});
+        $routeProvider.when('/botm', {templateUrl:'resources/templates/botm.html', controller:'BotmController'});
+        $routeProvider.when('/botm/submit', {templateUrl:'resources/templates/edit.html', controller:'SubmitController'});
         $routeProvider.when('/:id/edit', {templateUrl:'resources/templates/edit.html', controller:'EditController'});
         $routeProvider.when('/:id', {templateUrl:'resources/templates/detail.html', controller:'DetailController'});
         $routeProvider.when('/user/profile', {templateUrl:'resources/templates/users/profile.html', controller:'UserController'});

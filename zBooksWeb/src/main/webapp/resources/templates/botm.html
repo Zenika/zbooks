@@ -1,0 +1,25 @@
+<table class="table table-striped table-bordered table-hover table-condensed">
+    <tr>
+        <th>ISBN</th>
+        <th>Titre</th>
+        <th>Langue</th>
+        <th>Soumetteur</th>
+        <th>Nombre de vote</th>
+        <th>Voter</th>
+    </tr>
+    <tr ng-repeat="botm in bookList">
+        <td class="text-muted"><h6>{{botm.book.isbn}}</h6></td>
+        <td><a href="#/botm/{{botm.id}}">{{botm.book.title}}</a></td>
+        <td><img ng-src="./resources/image/{{botm.book.language|img404safe}}.png"></td>
+        <td>{{botm.submitter.userName}}</td>
+        <td>{{botm.supporters}}</td>
+        <td><img ng-src="./resources/image/star_red.png" ng-click="star()"></td>
+    </tr>
+</table>
+<div class="row">
+    <div class="col-sm-2 col-sm-offset-10">
+        <button type="button" class="btn btn-default btn-block" ng-click="new()">
+            <span class="glyphicon glyphicon-plus"></span> Proposer un livre
+        </button>
+    </div>
+</div>

@@ -8,3 +8,5 @@
 
 /zBooksWeb/*.db
 /zBooksWeb/*.db
+
+zBooksWeb/.idea/*
